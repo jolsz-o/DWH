@@ -11,8 +11,8 @@
   DTS:LocaleID="1045"
   DTS:ObjectName="sp_STG_DIM_Actual_Supplier2"
   DTS:PackageType="5"
-  DTS:VersionBuild="19"
-  DTS:VersionGUID="{525FEC93-2360-4A72-A5F7-7F7E5BB5FBD2}">
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{20FE36BA-A454-4F4A-B1E8-5073C1DF9108}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1015,16 +1015,16 @@
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="136,44"
-          Id="Package\Data Flow Task\Derived Column"
-          TopLeft="153.103773584906,262.820754716981" />
-        <NodeLayout
-          Size="136,44"
           Id="Package\Data Flow Task\Sort"
           TopLeft="48.4433962264151,97.4056603773585" />
         <NodeLayout
+          Size="145,57"
+          Id="Package\Data Flow Task\OLE DB ODS_OPER_D"
+          TopLeft="38.4433962264151,6.51886792452831" />
+        <NodeLayout
           Size="136,44"
-          Id="Package\Data Flow Task\Conditional Split"
-          TopLeft="155.5,352.481132075472" />
+          Id="Package\Data Flow Task\Derived Column"
+          TopLeft="153.103773584906,262.820754716981" />
         <NodeLayout
           Size="221,51"
           Id="Package\Data Flow Task\OLE DB ODS_DOSTAWCY"
@@ -1035,16 +1035,16 @@
           TopLeft="157.084905660377,191.216981132075" />
         <NodeLayout
           Size="136,44"
+          Id="Package\Data Flow Task\Sort 1"
+          TopLeft="269.066037735849,96.3867924528302" />
+        <NodeLayout
+          Size="136,44"
           Id="Package\Data Flow Task\Multicast"
           TopLeft="156.481132075472,432.481132075472" />
         <NodeLayout
-          Size="145,57"
-          Id="Package\Data Flow Task\OLE DB ODS_OPER_D"
-          TopLeft="38.4433962264151,6.51886792452831" />
-        <NodeLayout
           Size="136,44"
-          Id="Package\Data Flow Task\Sort 1"
-          TopLeft="269.066037735849,96.3867924528302" />
+          Id="Package\Data Flow Task\Conditional Split"
+          TopLeft="155.5,352.481132075472" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Sort Output1]"
           TopLeft="337.066037735849,140.38679245283">
@@ -1136,28 +1136,6 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Derived Column Output]"
-          TopLeft="222.301886792453,306.820754716981">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,45.6603773584905"
-              Start="0,0"
-              End="0,38.1603773584905">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.1603773584905" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
           TopLeft="113.693396226415,63.5188679245283">
           <EdgeLayout.Curve>
@@ -1171,6 +1149,50 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,26.3867924528302" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Merge Join Output]"
+          TopLeft="223.094339622641,235.216981132075">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.6037735849057"
+              Start="0,0"
+              End="0,20.1037735849057">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.1037735849057" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Derived Column Output]"
+          TopLeft="222.301886792453,306.820754716981">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.6603773584905"
+              Start="0,0"
+              End="0,38.1603773584905">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.1603773584905" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1203,33 +1225,11 @@
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Merge Join Output]"
-          TopLeft="223.094339622641,235.216981132075">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,27.6037735849057"
-              Start="0,0"
-              End="0,20.1037735849057">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.1037735849057" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Data Flow Task\OLE DB ODS_DOSTAWCY">
+    design-time-name="Package\Data Flow Task\OLE DB ODS_OPER_D">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1242,7 +1242,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Data Flow Task\OLE DB ODS_OPER_D">
+    design-time-name="Package\Data Flow Task\OLE DB ODS_DOSTAWCY">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
