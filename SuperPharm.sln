@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "SuperPharm", "SuperPharm.dtproj", "{75970599-BEDD-4F57-BA4C-5BB12876540E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75970599-BEDD-4F57-BA4C-5BB12876540E}.Development|Default.ActiveCfg = Development
+		{75970599-BEDD-4F57-BA4C-5BB12876540E}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2446E4C-DE4E-4CAF-A443-67375A5E168F}
+	EndGlobalSection
+EndGlobal
