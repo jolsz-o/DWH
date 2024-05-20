@@ -1,0 +1,1002 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/26/2011 2:29:21 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PANORAMA2K8"
+  DTS:CreatorName="SPP\elrana"
+  DTS:DTSID="{FC911E5F-037E-4AFC-964E-A40156B2885E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="DWH_Invoice_Factless_load"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{BBBADD72-95CC-4E83-82AA-165760341A74}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{348CEB5C-7360-41B9-A6DB-FCDF6032FC2B}"
+      DTS:ObjectName="PANORAMA2K8.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-DWH_Invoice_Factless_load-{348CEB5C-7360-41B9-A6DB-FCDF6032FC2B}PANORAMA2K8.SuperPharmPoland;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{48325F7E-644A-4547-8AE8-C545E36CD1ED}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\DWH_Invoice_FactLess"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DWH_Invoice_FactLess"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[DWH_Invoice_FactLess]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\DWH_Invoice_FactLess.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].Columns[InvoiceIdnt]"
+                      cachedDataType="numeric"
+                      cachedName="InvoiceIdnt"
+                      cachedPrecision="13"
+                      externalMetadataColumnId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceIdnt]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[InvoiceIdnt]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].Columns[INVOICE_ROW_NUMBER]"
+                      cachedDataType="i4"
+                      cachedName="INVOICE_ROW_NUMBER"
+                      externalMetadataColumnId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[INVOICE_ROW_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].Columns[ItemId1]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ItemId1"
+                      externalMetadataColumnId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[ItemId1]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[ItemId1]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].Columns[ItemId2]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ItemId2"
+                      externalMetadataColumnId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[ItemId2]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[ItemId2]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].Columns[Invoice_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Invoice_date"
+                      externalMetadataColumnId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[Invoice_date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceIdnt]"
+                      dataType="numeric"
+                      name="InvoiceIdnt"
+                      precision="13" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      name="INVOICE_ROW_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input].ExternalColumns[STORE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="STORE_ID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\DWH_Invoice_FactLess.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\DWH_Invoice_FactLess.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\DWH_Invoice_FactLess.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\DWH_Invoice_FactLess.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\FactlessLoadingQuery"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="FactlessLoadingQuery"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">declare 
+@MinDate datetime,
+@MaxDate datetime
+
+Select @MinDate = MIN(INVOICE_DATE), @MaxDate = case when MAX(INVOICE_DATE) &gt; getdate() then getdate() else Max(Invoice_date) end
+From STG_Invoice_Fact
+
+Select A.Invoice_date,A.InvoiceIdnt ,A.INVOICE_ROW_NUMBER , A.ITEM_ID as ItemId1, B.ITEM_ID as ItemId2
+From dbo.DWH_Invoice_Fact A
+	INNER JOIN dbo.DWH_Invoice_Fact B
+	ON A.InvoiceIdnt  = B.InvoiceIdnt  
+	AND A.ITEM_ID  &lt;&gt; B.ITEM_ID
+Where A.Invoice_date between @MinDate and @MaxDate 
+And B.Invoice_date between @MinDate and @MaxDate</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\FactlessLoadingQuery.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[InvoiceIdnt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[InvoiceIdnt]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[InvoiceIdnt]"
+                      name="InvoiceIdnt"
+                      precision="13"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[INVOICE_ROW_NUMBER]"
+                      name="INVOICE_ROW_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[ItemId1]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[ItemId1]"
+                      name="ItemId1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[ItemId2]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[ItemId2]"
+                      name="ItemId2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[Invoice_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[Invoice_date]"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].Columns[Invoice_date]"
+                      name="Invoice_date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[InvoiceIdnt]"
+                      dataType="numeric"
+                      name="InvoiceIdnt"
+                      precision="13" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      name="INVOICE_ROW_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output].ExternalColumns[Invoice_date]"
+                      dataType="dbTimeStamp"
+                      name="Invoice_date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[Invoice_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[Invoice_date]"
+                      name="Invoice_date" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[InvoiceIdnt]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[InvoiceIdnt]"
+                      name="InvoiceIdnt"
+                      precision="13" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[INVOICE_ROW_NUMBER]"
+                      name="INVOICE_ROW_NUMBER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ItemId1]"
+                      name="ItemId1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ItemId2]"
+                      name="ItemId2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\DWH_Invoice_FactLess.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\FactlessLoadingQuery.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2B9183E9-B1DC-4D58-B978-66FE28D9FFB9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{348CEB5C-7360-41B9-A6DB-FCDF6032FC2B}"
+          SQLTask:SqlStatementSource="declare &#xA;@MinDate datetime,&#xA;@MaxDate datetime&#xA;&#xA;Select @MinDate = MIN(INVOICE_DATE), @MaxDate = MAX(INVOICE_DATE)&#xA;From STG_Invoice_Fact&#xA;&#xA;Delete From DWH_Invoice_FactLess&#xA;Where INVOICE_DATE between @MinDate and @MaxDate " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\One Time Factless Loading"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{835C7DF2-817F-4B16-A50A-4C968AB29D60}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="One Time Factless Loading"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\One Time Factless Loading\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DWH_Invoice_FactLess_New]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\One Time Factless Loading\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Invoice_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Invoice_date"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_date]" />
+                    <inputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[STORE_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="STORE_ID"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STORE_ID]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[STORE_ID]" />
+                    <inputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InvoiceIdnt]"
+                      cachedDataType="numeric"
+                      cachedName="InvoiceIdnt"
+                      cachedPrecision="13"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceIdnt]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceIdnt]" />
+                    <inputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[INVOICE_ROW_NUMBER]"
+                      cachedDataType="i4"
+                      cachedName="INVOICE_ROW_NUMBER"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVOICE_ROW_NUMBER]" />
+                    <inputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemId1]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ItemId1"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemId1]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId1]" />
+                    <inputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ItemId2]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ItemId2"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemId2]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId2]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STORE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="STORE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceIdnt]"
+                      dataType="numeric"
+                      name="InvoiceIdnt"
+                      precision="13" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      name="INVOICE_ROW_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId1" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\One Time Factless Loading\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\One Time Factless Loading\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\One Time Factless Loading\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\One Time Factless Loading\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select A.Invoice_date,A.STORE_ID , A.InvoiceIdnt ,A.INVOICE_ROW_NUMBER , A.ITEM_ID as ItemId1, B.ITEM_ID as ItemId2
+From dbo.DWH_Invoice_Fact A
+	INNER JOIN dbo.DWH_Invoice_Fact B
+	ON A.InvoiceIdnt  = B.InvoiceIdnt  
+	AND A.ITEM_ID  &lt;&gt; B.ITEM_ID
+Where A.STORE_ID &lt;&gt; '94'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\One Time Factless Loading\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Invoice_date]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_date]"
+                      name="Invoice_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[STORE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STORE_ID]"
+                      length="3"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[STORE_ID]"
+                      name="STORE_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceIdnt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InvoiceIdnt]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceIdnt]"
+                      name="InvoiceIdnt"
+                      precision="13"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVOICE_ROW_NUMBER]"
+                      name="INVOICE_ROW_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemId1]"
+                      length="10"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId1]"
+                      name="ItemId1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemId2]"
+                      length="10"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].Columns[ItemId2]"
+                      name="ItemId2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Invoice_date]"
+                      dataType="dbTimeStamp"
+                      name="Invoice_date" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STORE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="STORE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InvoiceIdnt]"
+                      dataType="numeric"
+                      name="InvoiceIdnt"
+                      precision="13" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      name="INVOICE_ROW_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId1" />
+                    <externalMetadataColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Invoice_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Invoice_date]"
+                      name="Invoice_date" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STORE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STORE_ID]"
+                      name="STORE_ID" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InvoiceIdnt]"
+                      dataType="numeric"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InvoiceIdnt]"
+                      name="InvoiceIdnt"
+                      precision="13" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[INVOICE_ROW_NUMBER]"
+                      dataType="i4"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[INVOICE_ROW_NUMBER]"
+                      name="INVOICE_ROW_NUMBER" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemId1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemId1]"
+                      name="ItemId1" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemId2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ItemId2]"
+                      name="ItemId2" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\One Time Factless Loading.Paths[OLE DB Source Output]"
+              endId="Package\One Time Factless Loading\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\One Time Factless Loading\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4CF73791-1B2C-4A6E-B17C-0DFECF0C5551}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task"
+          TopLeft="59.5,95.3490566037736" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Execute SQL Task"
+          TopLeft="71.3867924528302,5.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\One Time Factless Loading"
+          TopLeft="353.160377358491,101.537735849057" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="139.38679245283,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11.8867924528302,45.8490566037736"
+              Start="0,0"
+              End="-11.8867924528302,38.3490566037736">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.9245283018868" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.9245283018868"
+                    Point2="0,22.9245283018868"
+                    Point3="-4,22.9245283018868" />
+                  <mssgle:LineSegment
+                    End="-7.88679245283021,22.9245283018868" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7.88679245283021,22.9245283018868"
+                    Point2="-11.8867924528302,22.9245283018868"
+                    Point3="-11.8867924528302,26.9245283018868" />
+                  <mssgle:LineSegment
+                    End="-11.8867924528302,38.3490566037736" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task\DWH_Invoice_FactLess"
+          TopLeft="40.4433962264151,143.27358490566" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task\FactlessLoadingQuery"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="73.3867924528302,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="34.9433962264151,93.8490566037736"
+              Start="0,0"
+              End="34.9433962264151,86.3490566037736">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9056603773585" />
+                  <mssgle:LineSegment
+                    End="34.9433962264151,46.9056603773585" />
+                  <mssgle:LineSegment
+                    End="34.9433962264151,86.3490566037736" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\FactlessLoadingQuery">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

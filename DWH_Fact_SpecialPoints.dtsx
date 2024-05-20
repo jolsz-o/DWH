@@ -1,0 +1,725 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/9/2020 8:59:24 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{B6A437C7-9363-4386-BBD0-B60A6F505D0F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="DWH_Fact_SpecialPoints"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{DDD690F2-C500-4E26-9BAD-41AE2F2E702E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{05E7A7FC-B9F5-4BC9-BA24-F62D92D34AC8}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\INSERT INTO DWH_Fact_SpecialPoints"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{9E470618-3B23-40E8-9161-DD9FF3C6C60D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="INSERT INTO DWH_Fact_SpecialPoints"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DWH_Fact_SpecialPoints"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DWH_Fact_SpecialPoints]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[RecordId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RecordId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[RecordId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[RecordId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[dtDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dtDate"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[dtDate]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[HourId]"
+                      cachedDataType="i2"
+                      cachedName="HourId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[HourId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[HourId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[ClientId]"
+                      cachedDataType="i4"
+                      cachedName="ClientId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[ClientId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[ClientId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[Employee_Id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="Employee_Id"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[Employee_Id]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Employee_Id]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[SpecialPointTypeId]"
+                      cachedDataType="i4"
+                      cachedName="SpecialPointTypeId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[SpecialPointTypeId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[SpecialPointTypeId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[StoreId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="StoreId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[StoreId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[InvoiceID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="InvoiceID"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceID]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[InvoiceID]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[Points]"
+                      cachedDataType="i4"
+                      cachedName="Points"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[Points]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Points]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].Columns[Desciption]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Desciption"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[Desciption]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Desciption]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[RecordId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="RecordId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[HourId]"
+                      dataType="i2"
+                      name="HourId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[ClientId]"
+                      dataType="i4"
+                      name="ClientId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[Employee_Id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      name="Employee_Id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[SpecialPointTypeId]"
+                      dataType="i4"
+                      name="SpecialPointTypeId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[Points]"
+                      dataType="i4"
+                      name="Points" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input].ExternalColumns[Desciption]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="Desciption" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STG_Fact_SpecialPoints"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_DIM_Time]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select * From STG_Fact_SpecialPoints
+Where dtdate &gt; '20090101'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[RecordId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[RecordId]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[RecordId]"
+                      name="RecordId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[dtDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[dtDate]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[dtDate]"
+                      name="dtDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[HourId]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[HourId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[HourId]"
+                      name="HourId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[ClientId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[ClientId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[ClientId]"
+                      name="ClientId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Employee_Id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[Employee_Id]"
+                      length="15"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Employee_Id]"
+                      name="Employee_Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[SpecialPointTypeId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[SpecialPointTypeId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[SpecialPointTypeId]"
+                      name="SpecialPointTypeId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[StoreId]"
+                      length="3"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[StoreId]"
+                      name="StoreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[InvoiceID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[InvoiceID]"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[InvoiceID]"
+                      name="InvoiceID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Points]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[Points]"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Points]"
+                      name="Points"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Desciption]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[Desciption]"
+                      length="100"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].Columns[Desciption]"
+                      name="Desciption"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[RecordId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="RecordId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[HourId]"
+                      dataType="i2"
+                      name="HourId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[ClientId]"
+                      dataType="i4"
+                      name="ClientId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[Employee_Id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      name="Employee_Id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[SpecialPointTypeId]"
+                      dataType="i4"
+                      name="SpecialPointTypeId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[InvoiceID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[Points]"
+                      dataType="i4"
+                      name="Points" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output].ExternalColumns[Desciption]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="Desciption" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[RecordId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[RecordId]"
+                      name="RecordId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[dtDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[dtDate]"
+                      name="dtDate" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[HourId]"
+                      dataType="i2"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[HourId]"
+                      name="HourId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[ClientId]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[ClientId]"
+                      name="ClientId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[Employee_Id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[Employee_Id]"
+                      name="Employee_Id" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[SpecialPointTypeId]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[SpecialPointTypeId]"
+                      name="SpecialPointTypeId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[StoreId]"
+                      name="StoreId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[InvoiceID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[InvoiceID]"
+                      name="InvoiceID" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[Points]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[Points]"
+                      name="Points" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[Desciption]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[Desciption]"
+                      name="Desciption" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\INSERT INTO DWH_Fact_SpecialPoints.Paths[OLE DB Source Output]"
+              endId="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table DWH_Fact_SpecialPoints"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FA35D954-4E1E-4ECA-8AD2-F2AD257670E5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table DWH_Fact_SpecialPoints"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{05E7A7FC-B9F5-4BC9-BA24-F62D92D34AC8}"
+          SQLTask:SqlStatementSource="Truncate Table DWH_Fact_SpecialPoints" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C1AA929E-94F5-4219-8043-55D549F5FDD0}"
+      DTS:From="Package\Truncate Table DWH_Fact_SpecialPoints"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\INSERT INTO DWH_Fact_SpecialPoints" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="263,42"
+          Id="Package\INSERT INTO DWH_Fact_SpecialPoints"
+          TopLeft="41,131" />
+        <NodeLayout
+          Size="270,42"
+          Id="Package\Truncate Table DWH_Fact_SpecialPoints"
+          TopLeft="36,50" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="171.75,92">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="&#xA;&#xA;"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="29,72"
+          Id="4cb80912-8a46-4db6-a050-081443f7de76"
+          TopLeft="455,78" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\INSERT INTO DWH_Fact_SpecialPoints">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="191,42"
+          Id="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints"
+          TopLeft="197,51" />
+        <NodeLayout
+          Size="196,42"
+          Id="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints"
+          TopLeft="202,156" />
+        <EdgeLayout
+          Id="Package\INSERT INTO DWH_Fact_SpecialPoints.Paths[OLE DB Source Output]"
+          TopLeft="296.25,93">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63"
+              Start="0,0"
+              End="0,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO DWH_Fact_SpecialPoints\DWH_Fact_SpecialPoints">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO DWH_Fact_SpecialPoints\STG_Fact_SpecialPoints">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

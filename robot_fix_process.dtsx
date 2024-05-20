@@ -1,0 +1,576 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/14/2023 11:42:34 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{294669BB-0274-41A0-B4C3-B8787582A7B1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="robot_fix_process"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{B54953A8-8921-4720-B2A9-514516CBA2A4}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0C1E6D63-1512-441A-A9BC-272775EC9734}"
+      DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.FARMAX">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;Initial Catalog=FARMAX;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1AC72D83-C897-40A9-82CA-58AD6A64F89E}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Farmax --&gt; SUPERDW"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F2247B57-C8FA-4867-9905-F04D3C89B7B8}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Farmax --&gt; SUPERDW"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Farmax --&gt; SUPERDW\FARMAX"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="FARMAX"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select 
+       oper_p.[DATA_OP] as inv_date,
+       oper_p.[LP] as line_number,
+       oper_p.[NR_OPER] as invoice_id,
+       oper_p.[ID_SKLEP] as store_id,
+       oper_p.[Robot] as is_robot
+from OPER (nolock) ,oper_p  (nolock)
+where oper_p.ID_SKLEP = OPER.ID_SKLEP
+  and oper_p.NR_OPER = OPER.NR_OPER
+  and DH_OPER in ('PAR','FAV','ZWR','REC')
+and OPER.DATA_OP &gt;= cast('2023-08-01'as datetime)
+and oper_p.[Robot] is not null
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Farmax --&gt; SUPERDW\FARMAX.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[inv_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[inv_date]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[inv_date]"
+                      name="inv_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[line_number]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[line_number]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[line_number]"
+                      name="line_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[invoice_id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[invoice_id]"
+                      length="10"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[invoice_id]"
+                      name="invoice_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[store_id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      length="3"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[store_id]"
+                      name="store_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[is_robot]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[is_robot]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[is_robot]"
+                      name="is_robot"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[inv_date]"
+                      dataType="dbTimeStamp"
+                      name="inv_date" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[line_number]"
+                      dataType="i4"
+                      name="line_number" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[invoice_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="invoice_id" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="store_id" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].ExternalColumns[is_robot]"
+                      dataType="bool"
+                      name="is_robot" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[inv_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[inv_date]"
+                      name="inv_date" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[line_number]"
+                      dataType="i4"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[line_number]"
+                      name="line_number" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[invoice_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[invoice_id]"
+                      name="invoice_id" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      name="store_id" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[is_robot]"
+                      dataType="bool"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[is_robot]"
+                      name="is_robot" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Farmax --&gt; SUPERDW\SUPERDW"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SUPERDW"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[is_robot_fix_20231214]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].Columns[inv_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="inv_date"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[inv_date]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[inv_date]" />
+                    <inputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].Columns[line_number]"
+                      cachedDataType="i4"
+                      cachedName="line_number"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[line_number]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[line_number]" />
+                    <inputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].Columns[invoice_id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="invoice_id"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[invoice_id]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[invoice_id]" />
+                    <inputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].Columns[store_id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="store_id"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[store_id]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[store_id]" />
+                    <inputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].Columns[is_robot]"
+                      cachedDataType="bool"
+                      cachedName="is_robot"
+                      externalMetadataColumnId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[is_robot]"
+                      lineageId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output].Columns[is_robot]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[inv_date]"
+                      dataType="dbTimeStamp"
+                      name="inv_date" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[line_number]"
+                      dataType="i4"
+                      name="line_number" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[invoice_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="invoice_id" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[store_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="store_id" />
+                    <externalMetadataColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input].ExternalColumns[is_robot]"
+                      dataType="bool"
+                      name="is_robot" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Farmax --&gt; SUPERDW\SUPERDW.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Farmax --&gt; SUPERDW\SUPERDW.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Farmax --&gt; SUPERDW\SUPERDW.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Farmax --&gt; SUPERDW.Paths[OLE DB Source Output]"
+              endId="Package\Farmax --&gt; SUPERDW\SUPERDW.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Farmax --&gt; SUPERDW\FARMAX.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table in SUPERDW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{057C2CEA-6E69-4B0F-B55D-C9043E24C946}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table in SUPERDW"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1AC72D83-C897-40A9-82CA-58AD6A64F89E}"
+          SQLTask:SqlStatementSource="truncate table is_robot_fix_20231214" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B9FF14AA-99E6-4968-9FBC-1B959CF80529}"
+      DTS:From="Package\Truncate table in SUPERDW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Farmax --&gt; SUPERDW" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="184,41.6"
+          Id="Package\Farmax --&gt; SUPERDW"
+          TopLeft="189.714288945101,150.494119757682" />
+        <NodeLayout
+          Size="209.6,41.6"
+          Id="Package\Truncate table in SUPERDW"
+          TopLeft="189.142860363941,44.0470594412728" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="293.942860363941,85.6470594412728">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12.2285714188402,64.8470603164092"
+              Start="0,0"
+              End="-12.2285714188402,57.3470603164092">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.4235301582046" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.4235301582046"
+                    Point2="0,32.4235301582046"
+                    Point3="-4,32.4235301582046" />
+                  <mssgle:LineSegment
+                    End="-8.2285714188402,32.4235301582046" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.2285714188402,32.4235301582046"
+                    Point2="-12.2285714188402,32.4235301582046"
+                    Point3="-12.2285714188402,36.4235301582046" />
+                  <mssgle:LineSegment
+                    End="-12.2285714188402,57.3470603164092" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Farmax --&gt; SUPERDW">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="117.6,41.6"
+          Id="Package\Farmax --&gt; SUPERDW\FARMAX"
+          TopLeft="122.857144949388,100.329413171788" />
+        <NodeLayout
+          Size="126.4,41.6"
+          Id="Package\Farmax --&gt; SUPERDW\SUPERDW"
+          TopLeft="305.714290920569,101.552942600712" />
+        <EdgeLayout
+          Id="Package\Farmax --&gt; SUPERDW.Paths[OLE DB Source Output]"
+          TopLeft="240.457144949388,121.74117788625">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.2571459711815,0"
+              Start="0,0"
+              End="57.7571459711815,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="57.7571459711815,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Farmax --&gt; SUPERDW\FARMAX">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Farmax --&gt; SUPERDW\SUPERDW">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,982 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/12/2021 7:24:11 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{BCE78256-DC33-4E33-9C1B-CF9C9C23C410}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="Planograms_old"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="61"
+  DTS:VersionGUID="{F1468A60-9A52-42E9-9E95-C5085C6732AA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:Disabled="True"
+      DTS:DTSID="{3519868B-1A1A-4B83-89F5-42F5C62C3977}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\insert into Planograms_2020_2021 All Data"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D66737A5-8F61-4F0F-8077-FB019A6CDDA6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="insert into Planograms_2020_2021 All Data"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="Insert into STG_Fact_Planogram&#xA;&#xA;SELECT  B.PlanogramId,B.StoreId,B.StartDate,B.EndDate,B.ItemId,B.TotalFacing_sum AS TotalFacing,TotalMeters_sum/100 AS TotalMeters,TotalLenghFacing_sum/100  AS TotalLenghFacing&#xA;FROM (&#xA;&#xA;SELECT A.PlanogramId,A.StoreId,A.ItemId,A.StartDate,A.EndDate,SUM(A.TotalFacing) as TotalFacing_sum,SUM(a.TotalMeters)  as TotalMeters_sum,sum(a.TotalLenghFacing) as  TotalLenghFacing_sum&#xA; FROM(&#xA;&#xA;SELECT ISNULL(replace(pr.WIDTH,0,1),1) AS WIDTH,t.HORIZ_SPACE&#xA;      ,T.[PLN_ID] AS PlanogramId&#xA;     ,RIGHT('0' + PS.StoreId,2) AS StoreId&#xA; ,convert(char(19),convert(datetime,Replace(PP.StartDate,'.','-'),103),120) AS StartDate,&#xA; CASE when CONVERT(char(19),CONVERT(datetime,Replace(PP.EndDate,'.','-'),103),120)='1900-01-01 00:00:00' then '' else convert(char(19),convert(datetime,Replace(PP.EndDate,'.','-'),103),120) end as EndDate&#xA;&#xA;&#xA;      ,PR.[NR_CEN] AS ItemId&#xA;     -- ,[DEPTH_FACINGS] AS DepthFacing&#xA;      ,[TOTAL_FACINGS] AS TotalFacing&#xA;      ,(T.HORIZ_SPACE*PR.WIDTH)   AS TotalMeters&#xA;      ,T.[HORIZ_SPACE]   AS TotalLenghFacing&#xA;&#x9;    ,[DEPTH_FACINGS] &#xA;  ,[TOTAL_FACINGS]&#xA;&#xA;FROM ODS_Planogram_Position T&#xA;&#xA;LEFT JOIN ODS_Planogram_PlnStoreConnect PS&#xA;ON T.PLN_ID=PS.PLN_ID&#xA;LEFT JOIN ODS_Planogram_Planogram PP&#xA;ON T.PLN_ID=PP.PLN_ID&#xA;LEFT JOIN ODS_Planogram_Products PR&#xA;ON T.PRODUCT_ID= PR.PRODUCT_ID&#xA;&#xA;&#xA;Where not ISNULL(PP.StartDate,'') = ''&#xA;And RIGHT(PP.StartDate,4) &gt;= 2020&#xA;&#xA;AND (ENDDATE='' &#xA;OR CONVERT(INT,RIGHT(PP.ENDDATE,4))&gt;=2020&#xA;OR CONVERT(INT,RIGHT(ENDDATE,4))=1900)&#xA;&#xA;) A&#xA;GROUP BY A.PlanogramId,A.StoreId,A.ItemId,A.StartDate,A.EndDate&#xA;&#xA;)B&#xA;&#xA;Order BY&#xA;   &#xA;  B.PlanogramId&#xA; ,B.StoreId &#xA; ,B.ItemId&#xA; ,B.StartDate&#xA; ,B.EndDate&#xA; &#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Truncate table DWH_Fact_Planogram"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{CC118C49-77B1-47CD-8147-2762275F94F5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate table DWH_Fact_Planogram"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="Truncate table DWH_Fact_Planogram" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Truncate table STG_Fact_Planogram 2"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{452AF4C9-F0EF-4380-92FE-547012DD2BB8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate table STG_Fact_Planogram 2"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="Truncate table STG_Fact_Planogram" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{40380F6B-181E-47AF-AC9E-2C4DFFFBD57E}"
+          DTS:From="Package\Sequence Container\Truncate table STG_Fact_Planogram 2"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container\insert into Planograms_2020_2021 All Data" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{5DD6DCFB-E04F-4B96-8C29-1A6A2266DF9E}"
+          DTS:From="Package\Sequence Container\insert into Planograms_2020_2021 All Data"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container\Truncate table DWH_Fact_Planogram" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container2"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:Disabled="True"
+      DTS:DTSID="{B40DC2F3-45AC-470E-AA5C-DBBD1C9722CF}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container2">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid   between 71 and 80"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{02B50637-9D25-4D46-9EF6-9D5951C52071}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid   between 71 and 80"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 71 and 80&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid  between 41 and 50"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8BACDC4C-520C-4DC9-8ECA-26F6F7ACB683}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid  between 41 and 50"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;    SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 41 and 50&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid  between 51 and 60"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{4002AD2E-C84E-4C78-BADF-F7DE9C559898}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid  between 51 and 60"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 51 and 60&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid  between 61 and 70"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{07295CC3-99C5-4E35-B0F7-4C8B3415DF19}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid  between 61 and 70"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 61 and 70&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid  between 81 and 90"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A3A39DA4-AEE9-4E3F-A698-777526AFB00F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid  between 81 and 90"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;    SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 81 and 90&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid  equal or greater then 91"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{DCAE5E11-1F0A-4D92-B5C2-588B94D6024F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid  equal or greater then 91"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid&gt;= 91 &#xA;) A&#xA;ORDER BY &#xA;&#xA;  A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid between 11 and 20"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C96F0C2A-BAC0-45FB-B6D8-5ED889D21F11}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid between 11 and 20"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;where storeid between 11 and 20&#xA;) A&#xA;ORDER BY &#xA;&#xA;  A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid between 21 and 30"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{E1B6334A-D0EC-4626-8C3B-C9536E4C072F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid between 21 and 30"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 21 and 30&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate&#xA;&#xA;&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid between 31 and 40"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{B3361FFB-DBC3-4CEC-B796-9D9EE1B81195}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid between 31 and 40"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;  where storeid between 31 and 40&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container2\storeid equal or less then 10"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{54772EBC-5F4F-4A32-BB08-2DF1B79D4CEF}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="storeid equal or less then 10"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO  DWH_Fact_Planogram&#xA;&#xA;SELECT A.* FROM (&#xA;  SELECT  [PlanogramId]&#xA;      ,[StoreId]&#xA;      ,[ItemId]&#xA;      ,[StartDate]&#xA;      ,[EndDate]&#xA;      ,convert(varchar(19),D.Date,120)  AS [DtDate]&#xA;      ,[TotalFacing]&#xA;      ,[TotalMeters]&#xA;      ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;         INNER JOIN &#xA;&#xA;       DWH_Dates D&#xA;&#xA;       ON CAST(D.DATE AS DATE) &gt;=CAST(StartDate AS DATE) AND CAST(D.DATE AS DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)   END ) AND YEAR(D.DATE)&gt;=2021&#xA;where storeid&lt;=10&#xA;) A&#xA;ORDER BY &#xA;&#xA; A.PlanogramId&#xA;,A.StoreId&#xA;,A.ItemId &#xA; ,A.DtDate&#xA; ,StartDate&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{335B1248-FF43-4950-88C7-C792D4232D23}"
+          DTS:From="Package\Sequence Container2\storeid equal or less then 10"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container2\storeid between 11 and 20" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{B06BF351-2E3C-4492-9180-2E93F9D71F7E}"
+          DTS:From="Package\Sequence Container2\storeid between 11 and 20"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container2\storeid between 21 and 30" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{0FB6906F-F519-42D9-BA8B-112927F40D24}"
+          DTS:From="Package\Sequence Container2\storeid between 21 and 30"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container2\storeid between 31 and 40" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{79192FAD-474D-40A1-BE75-73B7D2029EBC}"
+          DTS:From="Package\Sequence Container2\storeid between 31 and 40"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence Container2\storeid  between 41 and 50" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{CB86D68A-AD92-4942-AFD5-96BA26987A4F}"
+          DTS:From="Package\Sequence Container2\storeid  between 41 and 50"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Sequence Container2\storeid  between 51 and 60" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{56675ABC-6FE3-4FBE-A38D-E1C96FF697E3}"
+          DTS:From="Package\Sequence Container2\storeid  between 51 and 60"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\Sequence Container2\storeid  between 61 and 70" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{1FB3AD8C-EF1E-493F-84DE-751993EB0F08}"
+          DTS:From="Package\Sequence Container2\storeid  between 61 and 70"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\Sequence Container2\storeid   between 71 and 80" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 7]"
+          DTS:CreationName=""
+          DTS:DTSID="{7BF73DBF-BE93-4E6F-91B6-A28CEB535D61}"
+          DTS:From="Package\Sequence Container2\storeid   between 71 and 80"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 7"
+          DTS:To="Package\Sequence Container2\storeid  between 81 and 90" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container2.PrecedenceConstraints[Constraint 8]"
+          DTS:CreationName=""
+          DTS:DTSID="{DC031298-0266-4235-9730-F03EACD860DE}"
+          DTS:From="Package\Sequence Container2\storeid  between 81 and 90"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 8"
+          DTS:To="Package\Sequence Container2\storeid  equal or greater then 91" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update last 5 days"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{447E4E46-CB6F-4C45-BE7A-826E9C0DD429}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update last 5 days">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Update last 5 days\Delete from DWH_Fact_Planogram"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{DFFBF040-1422-45CA-8D53-049F648FFEC5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Delete from DWH_Fact_Planogram"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="  DELETE  FROM DWH_Fact_Planogram&#xA;  WHERE CAST(dtdate AS DATE) BETWEEN CAST(GETDATE()-5 AS DATE) AND CAST(GETDATE()-1 AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Update last 5 days\insert into STG_Fact_Planogram"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ABBB9976-2337-4408-B75F-7E624EC13F85}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="insert into STG_Fact_Planogram"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="Insert into STG_Fact_Planogram&#xA;&#xA;SELECT  B.PlanogramId,B.StoreId,B.StartDate,B.EndDate,B.ItemId,B.TotalFacing_sum AS TotalFacing,TotalMeters_sum/100 AS TotalMeters,TotalLenghFacing_sum/100  AS TotalLenghFacing&#xA;FROM (&#xA;&#xA;SELECT A.PlanogramId,A.StoreId,A.ItemId,A.StartDate,A.EndDate,SUM(A.TotalFacing) as TotalFacing_sum,SUM(a.TotalMeters)  as TotalMeters_sum,sum(a.TotalLenghFacing) as  TotalLenghFacing_sum&#xA; FROM(&#xA;&#xA;SELECT ISNULL(replace(pr.WIDTH,0,1),1) AS WIDTH,t.HORIZ_SPACE&#xA;      ,T.[PLN_ID] AS PlanogramId&#xA;     ,RIGHT('0' + PS.StoreId,2) AS StoreId&#xA; ,convert(char(19),convert(datetime,Replace(PP.StartDate,'.','-'),103),120) AS StartDate,&#xA; CASE when CONVERT(char(19),CONVERT(datetime,Replace(PP.EndDate,'.','-'),103),120)='1900-01-01 00:00:00' then '' else convert(char(19),convert(datetime,Replace(PP.EndDate,'.','-'),103),120) end as EndDate&#xA;&#xA;&#xA;      ,PR.[NR_CEN] AS ItemId&#xA;     -- ,[DEPTH_FACINGS] AS DepthFacing&#xA;      ,[TOTAL_FACINGS] AS TotalFacing&#xA;      ,(T.HORIZ_SPACE*PR.WIDTH)   AS TotalMeters&#xA;      ,T.[HORIZ_SPACE]   AS TotalLenghFacing&#xA;&#x9;    ,[DEPTH_FACINGS] &#xA;  ,[TOTAL_FACINGS]&#xA;&#xA;FROM ODS_Planogram_Position T&#xA;&#xA;LEFT JOIN ODS_Planogram_PlnStoreConnect PS&#xA;ON T.PLN_ID=PS.PLN_ID&#xA;LEFT JOIN ODS_Planogram_Planogram PP&#xA;ON T.PLN_ID=PP.PLN_ID&#xA;LEFT JOIN ODS_Planogram_Products PR&#xA;ON T.PRODUCT_ID= PR.PRODUCT_ID&#xA;&#xA;&#xA;Where not ISNULL(PP.StartDate,'') = ''&#xA;And RIGHT(PP.StartDate,4) &gt;= 2020&#xA;&#xA;AND (ENDDATE='' &#xA;OR CONVERT(INT,RIGHT(PP.ENDDATE,4))&gt;=2020&#xA;OR CONVERT(INT,RIGHT(ENDDATE,4))=1900)&#xA;&#xA;) A&#xA;GROUP BY A.PlanogramId,A.StoreId,A.ItemId,A.StartDate,A.EndDate&#xA;&#xA;)B&#xA;&#xA;Order BY&#xA;   &#xA;  B.PlanogramId&#xA; ,B.StoreId &#xA; ,B.ItemId&#xA; ,B.StartDate&#xA; ,B.EndDate&#xA; &#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Update last 5 days\Truncate table STG_Fact_Planogram"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{70892AD2-3DD7-4533-89F2-49F5E8CC1C0F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate table STG_Fact_Planogram"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="Truncate table STG_Fact_Planogram" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Update last 5 days\Update last 5 days into DWH_Fact_Planogram"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{56C32474-09A5-4F0A-A36F-B35D37B68E13}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update last 5 days into DWH_Fact_Planogram"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{27FF6270-2467-4D70-8F57-25D914B5303C}"
+              SQLTask:SqlStatementSource="INSERT INTO DWH_Fact_Planogram&#xA;&#xA;SELECT  [PlanogramId]&#xA;   ,[StoreId]&#xA;   ,[ItemId]&#xA;   ,[StartDate]&#xA;   ,[EndDate]&#xA;   ,CONVERT(VARCHAR,D.Date,20)  AS dtDate&#xA;   ,[TotalFacing]&#xA;   ,[TotalMeters]&#xA;   ,[TotalLenghFacing]&#xA;  FROM [SuperPharmPoland].[dbo].[STG_Fact_Planogram]&#xA;  INNER JOIN  DWH_Dates D&#xA; ON &#xA;(CAST(D.DATE as DATE) BETWEEN  CAST(GETDATE()-5 AS DATE)  AND  CAST(GETDATE()-1 AS DATE) )&#xA;AND&#xA;CAST(D.DATE as DATE) &gt;=CAST(StartDate as DATE) AND CAST(D.DATE as DATE)&lt;=(CASE WHEN EndDate='' THEN CAST(GETDATE()-1 AS DATE) ELSE  CAST(EndDate AS DATE)  END )&#xA;&#xA;WHERE CAST(D.DATE as Date) BETWEEN CAST(GETDATE()-5 AS Date) AND CAST(GETDATE()-1 as Date) AND StoreId IS NOT NULL&#xA;&#xA;--ORDER BY&#xA;     --  [PlanogramId]&#xA;     -- ,[StoreId]&#xA;     -- ,[ItemId]&#xA;     -- ,[StartDate]&#xA;    --  ,[DtDate]&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Update last 5 days.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{D3436911-0BD4-4CFC-9CAB-5B64C92136F9}"
+          DTS:From="Package\Update last 5 days\Delete from DWH_Fact_Planogram"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Update last 5 days\Update last 5 days into DWH_Fact_Planogram" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Update last 5 days.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{96467F23-6518-4754-95DB-59790B8F86B4}"
+          DTS:From="Package\Update last 5 days\Truncate table STG_Fact_Planogram"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Update last 5 days\insert into STG_Fact_Planogram" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Update last 5 days.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{9360A873-80CA-4A94-A919-3BCDDC8231D7}"
+          DTS:From="Package\Update last 5 days\insert into STG_Fact_Planogram"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\Update last 5 days\Delete from DWH_Fact_Planogram" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EE7B09DD-7F51-44F1-A3B6-4A3AC26323F0}"
+      DTS:From="Package\Sequence Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Sequence Container2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{179E8083-E616-428A-BC19-3EE9B6DEF18C}"
+      DTS:From="Package\Sequence Container2"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Update last 5 days" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="282,42"
+          Id="Package\Sequence Container\insert into Planograms_2020_2021 All Data"
+          TopLeft="6.5,73.5" />
+        <NodeLayout
+          Size="278,42"
+          Id="Package\Sequence Container\Truncate table DWH_Fact_Planogram"
+          TopLeft="5.5,142.5" />
+        <NodeLayout
+          Size="260,42"
+          Id="Package\Sequence Container\Truncate table STG_Fact_Planogram 2"
+          TopLeft="13.5,5.5" />
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="145.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26"
+              Start="0,0"
+              End="0,18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          TopLeft="146,115.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="294,239"
+          Size="294,282"
+          Id="Package\Sequence Container"
+          TopLeft="309,3" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\Sequence Container2\storeid   between 71 and 80"
+          TopLeft="27,542" />
+        <NodeLayout
+          Size="208,42"
+          Id="Package\Sequence Container2\storeid  between 41 and 50"
+          TopLeft="28,320" />
+        <NodeLayout
+          Size="208,42"
+          Id="Package\Sequence Container2\storeid  between 51 and 60"
+          TopLeft="27,390" />
+        <NodeLayout
+          Size="208,42"
+          Id="Package\Sequence Container2\storeid  between 61 and 70"
+          TopLeft="24,468" />
+        <NodeLayout
+          Size="208,42"
+          Id="Package\Sequence Container2\storeid  between 81 and 90"
+          TopLeft="23,614" />
+        <NodeLayout
+          Size="233,42"
+          Id="Package\Sequence Container2\storeid  equal or greater then 91"
+          TopLeft="9,690" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Sequence Container2\storeid between 11 and 20"
+          TopLeft="31,112" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Sequence Container2\storeid between 21 and 30"
+          TopLeft="31,188" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Sequence Container2\storeid between 31 and 40"
+          TopLeft="31,255" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\Sequence Container2\storeid equal or less then 10"
+          TopLeft="25,36" />
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint]"
+          TopLeft="132.5,78">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 1]"
+          TopLeft="133.5,154">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 2]"
+          TopLeft="133.5,230">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25"
+              Start="0,0"
+              End="0,17.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 3]"
+          TopLeft="132.75,297">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23"
+              Start="0,0"
+              End="0,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 4]"
+          TopLeft="131.5,362">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28"
+              Start="0,0"
+              End="0,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 5]"
+          TopLeft="129.5,432">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36"
+              Start="0,0"
+              End="0,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 6]"
+          TopLeft="130.5,510">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32"
+              Start="0,0"
+              End="0,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 7]"
+          TopLeft="130,584">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30"
+              Start="0,0"
+              End="0,22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container2.PrecedenceConstraints[Constraint 8]"
+          TopLeft="126.25,656">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="377,838"
+          Size="377,881"
+          Id="Package\Sequence Container2"
+          TopLeft="269,309" />
+        <NodeLayout
+          Size="243,42"
+          Id="Package\Update last 5 days\Delete from DWH_Fact_Planogram"
+          TopLeft="52.5,184" />
+        <NodeLayout
+          Size="230,42"
+          Id="Package\Update last 5 days\insert into STG_Fact_Planogram"
+          TopLeft="64.5,107" />
+        <NodeLayout
+          Size="251,42"
+          Id="Package\Update last 5 days\Truncate table STG_Fact_Planogram"
+          TopLeft="56.5,26" />
+        <NodeLayout
+          Size="296,42"
+          Id="Package\Update last 5 days\Update last 5 days into DWH_Fact_Planogram"
+          TopLeft="23.5,269" />
+        <EdgeLayout
+          Id="Package\Update last 5 days.PrecedenceConstraints[Constraint 3]"
+          TopLeft="172.75,226">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update last 5 days.PrecedenceConstraints[Constraint 4]"
+          TopLeft="180.75,68">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update last 5 days.PrecedenceConstraints[Constraint 5]"
+          TopLeft="176.75,149">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="374,363"
+          Size="374,406"
+          Id="Package\Update last 5 days"
+          TopLeft="267,1230" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="456.75,285">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24"
+              Start="0,0"
+              End="0,16.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="455.75,1190">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Split date range to multiple rows by startdate,  from source table STG_Fact_Planogram to DWH_Fact_Planogram (rows that exist since 2021 and forward)"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="488,56"
+          Id="a256e592-b401-466f-b13f-d0b39de88d0d"
+          TopLeft="661,345" />
+        <AnnotationLayout
+          Text="Insert all planograms that were started since 2020 into the table STG_Fact_Planogram "
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="303,56"
+          Id="9c9a671b-03e7-4091-b634-830653161b5b"
+          TopLeft="609,108" />
+        <AnnotationLayout
+          Text="Run only once to fill the table"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="185,40"
+          Id="2dfbc406-f8b8-485f-ad94-3680ab280fe4"
+          TopLeft="663,299" />
+        <AnnotationLayout
+          Text="Delete all planograms that have Startdate that is from the last 5 days"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="310,56"
+          Id="378c28a7-14e8-4dc5-a517-fa8919aee6f4"
+          TopLeft="645,1242" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

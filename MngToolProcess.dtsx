@@ -1,0 +1,1987 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/25/2010 3:38:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PANORAMA2K8"
+  DTS:CreatorName="SPP\elrana"
+  DTS:DTSID="{9580BDB9-EC86-42BB-AD47-B4CB901F9A4D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="MngToolProcess"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="100"
+  DTS:VersionGUID="{0BD5D773-8C05-4C8D-80A1-2F3C895B54B2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+      DTS:ObjectName="PANORAMA2K8.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package3-{01E476CE-5770-4AEE-944A-C65F80262668}PANORAMA2K8.SuperPharmPoland;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[panorama2k8.SuperPharmSSAS]"
+      DTS:CreationName="MSOLAP100"
+      DTS:DTSID="{505A7F10-2A33-4388-B39D-7F8316CFC4FE}"
+      DTS:ObjectName="panorama2k8.SuperPharmSSAS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmSSAS;Provider=MSOLAP.8;Integrated Security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW_MDX.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3BED6F0B-A149-451D-B4EF-4DDB5DE62829}"
+      DTS:ObjectName="SUPERDW_MDX.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=local;Initial Catalog=SuperPharmSSAS;Provider=MSOLAP.5;Integrated Security=SSPI;Extended Properties=Format=Tabular;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BBD04B73-F2EB-426A-9AB4-0163950F579E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dtDate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F8989AF4-62D2-4C1C-8288-4DBBDD09EA57}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot; INSERT INTO STG_MngTool_Migvan (iStoreId,dItemInternalKey)  SELECT  store_id,item_id from dbo.DWH_Invoice_Fact where INVOICE_DATE between '&quot; +(DT_WSTR,19) @[User::StartDate] +&quot;' AND '&quot;+ (DT_WSTR,19)@[User::dtDate] &#xA;+&quot;' group by store_id,item_id having sum(QUANTITY) &gt;= 30 and SUM(Net_Revenue) &gt; 100&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR1">
+      <DTS:VariableValue
+        DTS:DataType="8"> INSERT INTO STG_MngTool_Migvan (iStoreId,dItemInternalKey)  SELECT  store_id,item_id from dbo.DWH_Invoice_Fact where INVOICE_DATE between '' AND '' group by store_id,item_id having sum(QUANTITY) &gt;= 30 and SUM(Net_Revenue) &gt; 100</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{50664341-05C2-4327-8544-53A3106840B7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;insert into STG_MngTool_NetItemSales &#xA;select INVOICE_DATE,item_id,sum(Net_Revenue),sum(QUANTITY)&#xA;from DWH_Invoice_Fact &#xA;where INVOICE_DATE = '&quot;+  (DT_WSTR,19)@[User::dtDate] + &quot;'  &#xA;group by INVOICE_DATE,item_id&#xA;having sum(QUANTITY) &gt;= 10 &quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR2">
+      <DTS:VariableValue
+        DTS:DataType="8">insert into STG_MngTool_NetItemSales 
+select INVOICE_DATE,item_id,sum(Net_Revenue),sum(QUANTITY)
+from DWH_Invoice_Fact 
+where INVOICE_DATE = ''  
+group by INVOICE_DATE,item_id
+having sum(QUANTITY) &gt;= 10 </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B496C8C1-174B-46CE-A0AB-A64D7D908ED5}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;Insert Into STG_MngTool_Fact &#xA;Select INVOICE_DATE,store_id,item_id,sum(QUANTITY),sum(Net_Revenue),0&#xA;From DWH_Invoice_Fact&#xA;Where INVOICE_DATE ='&quot;+(DT_WSTR,19)@[User::dtDate] &#xA; +&quot;' Group by INVOICE_DATE,store_id,item_id &quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR3">
+      <DTS:VariableValue
+        DTS:DataType="8">Insert Into STG_MngTool_Fact 
+Select INVOICE_DATE,store_id,item_id,sum(QUANTITY),sum(Net_Revenue),0
+From DWH_Invoice_Fact
+Where INVOICE_DATE ='' Group by INVOICE_DATE,store_id,item_id </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8B3F6239-819D-4ACC-921E-23F970AA85DB}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;Insert Into STG_MngTool_Fact&#xA; Select distinct '&quot;+(DT_WSTR,19)@[User::dtDate] +&quot;'dtDate,STG_MngTool_Migvan.iStoreId,STG_MngTool_Migvan.dItemInternalKey,0 qty,0 sales,0&#xA;From STG_MngTool_Migvan&#xA;Where not exists (Select *&#xA;                  From STG_MngTool_Fact&#xA;                  Where STG_MngTool_Fact.iStoreId = STG_MngTool_Migvan.iStoreId&#xA;                    AND STG_MngTool_Fact.dItemInternalKey = STG_MngTool_Migvan.dItemInternalKey)&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR4">
+      <DTS:VariableValue
+        DTS:DataType="8">Insert Into STG_MngTool_Fact
+ Select distinct ''dtDate,STG_MngTool_Migvan.iStoreId,STG_MngTool_Migvan.dItemInternalKey,0 qty,0 sales,0
+From STG_MngTool_Migvan
+Where not exists (Select *
+                  From STG_MngTool_Fact
+                  Where STG_MngTool_Fact.iStoreId = STG_MngTool_Migvan.iStoreId
+                    AND STG_MngTool_Fact.dItemInternalKey = STG_MngTool_Migvan.dItemInternalKey)</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9CA19348-68F5-4866-AFEB-BD9EF6A7D732}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;delete from DWH_MngTool_Fact &#xA;where  dtDate ='&quot;+(DT_WSTR,19)@[User::dtDate] +&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR6">
+      <DTS:VariableValue
+        DTS:DataType="8">delete from DWH_MngTool_Fact 
+where  dtDate =''</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CB252DFF-9011-44C7-BCF8-BECE6AC2ECDF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StartDate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Analysis Services Processing Task"
+      DTS:CreationName="Microsoft.DTSProcessingTask"
+      DTS:Description="Analysis Services Processing Task"
+      DTS:DTSID="{86fbcec4-ff35-4e72-8bbc-30f1dab289ef}"
+      DTS:ExecutableType="Microsoft.DTSProcessingTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Analysis Services Processing Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ASProcessingData
+          ConnectionName="panorama2k8.SuperPharmSSAS"
+          ProcessingCommands="&lt;Batch xmlns=&quot;http://schemas.microsoft.com/analysisservices/2003/engine&quot;&gt;&#xA;  &lt;Process xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ddl2=&quot;http://schemas.microsoft.com/analysisservices/2003/engine/2&quot; xmlns:ddl2_2=&quot;http://schemas.microsoft.com/analysisservices/2003/engine/2/2&quot; xmlns:ddl100_100=&quot;http://schemas.microsoft.com/analysisservices/2008/engine/100/100&quot; xmlns:ddl200=&quot;http://schemas.microsoft.com/analysisservices/2010/engine/200&quot; xmlns:ddl200_200=&quot;http://schemas.microsoft.com/analysisservices/2010/engine/200/200&quot; xmlns:ddl300=&quot;http://schemas.microsoft.com/analysisservices/2011/engine/300&quot; xmlns:ddl300_300=&quot;http://schemas.microsoft.com/analysisservices/2011/engine/300/300&quot; xmlns:ddl400=&quot;http://schemas.microsoft.com/analysisservices/2012/engine/400&quot; xmlns:ddl400_400=&quot;http://schemas.microsoft.com/analysisservices/2012/engine/400/400&quot; xmlns:ddl500=&quot;http://schemas.microsoft.com/analysisservices/2013/engine/500&quot; xmlns:ddl500_500=&quot;http://schemas.microsoft.com/analysisservices/2013/engine/500/500&quot;&gt;&#xA;    &lt;Object&gt;&#xA;      &lt;DatabaseID&gt;SuperPharmSSAS&lt;/DatabaseID&gt;&#xA;      &lt;CubeID&gt;Sales&lt;/CubeID&gt;&#xA;      &lt;MeasureGroupID&gt;DWH Mng Tool Fact&lt;/MeasureGroupID&gt;&#xA;      &lt;PartitionID&gt;DWH Mng Tool_2022&lt;/PartitionID&gt;&#xA;    &lt;/Object&gt;&#xA;    &lt;Type&gt;ProcessFull&lt;/Type&gt;&#xA;    &lt;WriteBackTableCreation&gt;UseExisting&lt;/WriteBackTableCreation&gt;&#xA;  &lt;/Process&gt;&#xA;&lt;/Batch&gt;" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DWH_Fact_MngTool"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{3BB55EF0-6B33-4D5B-947F-CA9615CB2CEE}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DWH_Fact_MngTool">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\delete from DWH_MngTool_Fact where date equal to Yesterday"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{78D409CE-BEFC-4655-9E24-53EDCB21E458}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="delete from DWH_MngTool_Fact where date equal to Yesterday"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::EXPR6" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\Insert Into DWH_MngTool_Fact"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{64761030-0991-4dab-a1bc-5af91bb27f24}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert Into DWH_MngTool_Fact"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStatementSource="Insert Into DWH_MngTool_Fact&#xA;select STG_MngTool_Fact.*,NeworkSales,NetworkQty,cast(SalesPercentage as float),cast(QtyPercentage as float),round(NeworkSales*cast(SalesPercentage as float),2),round(NetworkQty*cast(QtyPercentage as float),0)&#xA;from STG_MngTool_Fact,STG_MngTool_NetItemSales,STG_MngTool_Dep_Pct--,DWH_DIM_Items&#xA;where STG_MngTool_Fact.dItemInternalKey = STG_MngTool_NetItemSales.dItemInternalKey&#xA;and STG_MngTool_Fact.dtDate = STG_MngTool_NetItemSales.dtDate&#xA;and STG_MngTool_Fact.iStoreId = STG_MngTool_Dep_Pct.iStoreId&#xA;--and STG_MngTool_Fact.dItemInternalKey = DWH_DIM_Items.Item_ID&#xA;and STG_MngTool_Dep_Pct.iDepartmentId = STG_MngTool_Fact.dItemInternalKey&#xA;--and NeworkSales*cast(SalesPercentage as float) &gt;= 1 and NetworkQty*cast(QtyPercentage as float) &gt;= 0.8&#xA;and round(NeworkSales*cast(SalesPercentage as float),0) &gt;= 1 and round(NetworkQty*cast(QtyPercentage as float),0) &gt;= 1" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3f5d08ce-f1d2-4c2a-88f2-816a12770670}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:ExecValue=""
+          DTS:ExecValueType="8"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert Into STG_MngTool_Fact"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::EXPR3"
+              SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::dtDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact Continue"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{995bf376-79fb-4d74-a064-3c50c8d4ccac}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:ExecValue=""
+          DTS:ExecValueType="8"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert Into STG_MngTool_Fact Continue"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::EXPR4"
+              SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::dtDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\insert into STG_MngTool_Migvan"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{99ed0886-6206-443a-a588-b65bad1ac18f}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:ExecValue=""
+          DTS:ExecValueType="8"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="insert into STG_MngTool_Migvan"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::EXPR1"
+              SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::StartDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::dtDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\insert into STG_MngTool_NetItemSales"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{d8e79f7b-cd67-40e0-bfb2-876f8c7165f0}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:ExecValue=""
+          DTS:ExecValueType="8"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="insert into STG_MngTool_NetItemSales"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::EXPR2"
+              SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::dtDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\TRUNCATE TABLE STG_MngTool_Fact"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2ed8f4a0-f3cc-4460-bb84-3c1f9c9b294c}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TRUNCATE TABLE STG_MngTool_Fact"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE STG_MngTool_Fact" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\truncate table STG_MngTool_Migvan"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{f9fb7322-61e6-473d-b770-df627d96f905}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="truncate table STG_MngTool_Migvan"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE STG_MngTool_Migvan" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\truncate table STG_MngTool_NetItemSales"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1cad1ac1-e5e1-4e1f-ac41-98b7d9af6307}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="truncate table STG_MngTool_NetItemSales"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE  STG_MngTool_NetItemSales" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\Update STG_MngTool_Fact"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{fb36fd71-332d-4afe-9878-97e08b339103}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update STG_MngTool_Fact"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStatementSource="Update STG_MngTool_Fact Set&#xA;        EODInv = isnull(T1.qty,0)&#xA;From (Select dtDate, iStoreId, dItemInternalKey, SUM(Qunatity) Qty&#xA;   From DWH_Fact_Inventory, STG_MngTool_Fact&#xA;   Where DWH_Fact_Inventory.Store_ID = STG_MngTool_Fact.iStoreId&#xA;   And DWH_Fact_Inventory.Item_ID = STG_MngTool_Fact.dItemInternalKey&#xA;   And DWH_Fact_Inventory.Dt_Key = STG_MngTool_Fact.dtDate&#xA;   Group by dtDate, iStoreId, dItemInternalKey) T1&#xA;Where STG_MngTool_Fact.dtDate = T1.dtDate &#xA;And STG_MngTool_Fact.dItemInternalKey = T1.dItemInternalKey &#xA;And STG_MngTool_Fact.iStoreId = T1.iStoreId " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\DWH_Fact_MngTool\Variable StartDate DtDate"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{80489877-591b-45d6-bb60-e39b7a85f846}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Variable StartDate DtDate"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+              SQLTask:SqlStatementSource="SELECT&#xA; CONVERT(VARCHAR,(CONVERT(varchar,dateadd(mm,-3,CAST(getdate() AS DATE)),120)+' 00:00:00'),120) AS StartDate,&#xA;CONVERT(VARCHAR,(CONVERT(varchar,CAST(GETDATE()-1 AS DATE),120)+' 00:00:00'),120)  As dtDate&#xA;"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::StartDate" />
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="1"
+                SQLTask:DtsVariableName="User::dtDate" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{5AC630C0-5B10-4583-81E1-04C1FB1F9B21}"
+          DTS:From="Package\DWH_Fact_MngTool\Update STG_MngTool_Fact"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\DWH_Fact_MngTool\delete from DWH_MngTool_Fact where date equal to Yesterday" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{2D21B538-B12A-4EBA-ADE9-3C38CFFAC68A}"
+          DTS:From="Package\DWH_Fact_MngTool\delete from DWH_MngTool_Fact where date equal to Yesterday"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\DWH_Fact_MngTool\Insert Into DWH_MngTool_Fact" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 1 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{160d0135-3220-4d3a-8646-4726eb017d56}"
+          DTS:From="Package\DWH_Fact_MngTool\Variable StartDate DtDate"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1 1"
+          DTS:To="Package\DWH_Fact_MngTool\insert into STG_MngTool_Migvan" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 2 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{49b3efda-9023-4e9a-ab83-526164b85db9}"
+          DTS:From="Package\DWH_Fact_MngTool\insert into STG_MngTool_Migvan"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2 1"
+          DTS:To="Package\DWH_Fact_MngTool\truncate table STG_MngTool_NetItemSales" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 3 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{aac09124-7d10-4dda-a53b-ac94b9ff2dcd}"
+          DTS:From="Package\DWH_Fact_MngTool\truncate table STG_MngTool_NetItemSales"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3 1"
+          DTS:To="Package\DWH_Fact_MngTool\insert into STG_MngTool_NetItemSales" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{f4fe7280-f4c2-494b-a4dd-b7279f54731a}"
+          DTS:From="Package\DWH_Fact_MngTool\truncate table STG_MngTool_Migvan"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\DWH_Fact_MngTool\Variable StartDate DtDate" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 4 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{b11e5615-52bc-4a53-97d0-9ff70987619a}"
+          DTS:From="Package\DWH_Fact_MngTool\insert into STG_MngTool_NetItemSales"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4 1"
+          DTS:To="Package\DWH_Fact_MngTool\TRUNCATE TABLE STG_MngTool_Fact" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{39c1f35c-9338-4988-90ae-d38874953f45}"
+          DTS:From="Package\DWH_Fact_MngTool\TRUNCATE TABLE STG_MngTool_Fact"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{d13bb85e-d848-471d-b85f-c547003a0d91}"
+          DTS:From="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact Continue" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 7]"
+          DTS:CreationName=""
+          DTS:DTSID="{ccc3978c-b89e-43fc-b583-7da3dfe01452}"
+          DTS:From="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact Continue"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 7"
+          DTS:To="Package\DWH_Fact_MngTool\Update STG_MngTool_Fact" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{02d32b7a-e68f-4b6b-9c21-602b85f639b5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="MDX to temp table STG_MngTool_Dep_Pct_nvarchar"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_MngTool_Dep_Pct_nvarchar]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[[Measures].[QUANTITY]]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="[Measures].[QUANTITY]"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[QUANTITY]]" />
+                    <inputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[[Measures].[storekey]]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="[Measures].[storekey]"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[storekey]"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[storekey]]" />
+                    <inputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[[Measures].[itemkey]]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="[Measures].[itemkey]"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[itemkey]"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[itemkey]]" />
+                    <inputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[[Measures].[AllStroesQty]]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="[Measures].[AllStroesQty]"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AllStroesQty]"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[AllStroesQty]]" />
+                    <inputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[[Measures].[Net Revenue]]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="[Measures].[Net Revenue]"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue]"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[Net Revenue]]" />
+                    <inputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[[Measures].[AllStroesRev]]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="[Measures].[AllStroesRev]"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AllStroesRev]"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[AllStroesRev]]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      dataType="wstr"
+                      length="255"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[storekey]"
+                      dataType="wstr"
+                      length="255"
+                      name="storekey" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[itemkey]"
+                      dataType="wstr"
+                      length="255"
+                      name="itemkey" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AllStroesQty]"
+                      dataType="wstr"
+                      length="255"
+                      name="AllStroesQty" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue]"
+                      dataType="wstr"
+                      length="255"
+                      name="Net_Revenue" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AllStroesRev]"
+                      dataType="wstr"
+                      length="255"
+                      name="AllStroesRev" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">with member [MEASURES].[AllStroesRev]
+ AS ([Stores].[Stores].[All], [Measures].[Net Revenue])
+
+
+member [MEASURES].[AllStroesQty]
+ AS ([Stores].[Stores].[All], [Measures].[Quantity])
+
+member [MEASURES].[storekey]
+as [Stores].[Stores].currentmember.member_key
+
+member [MEASURES].[itemkey]
+as [Items].[Items].currentmember.member_key
+
+select  {[MEASURES].[storekey],[MEASURES].[itemkey],[Measures].[Quantity],[MEASURES].[AllStroesQty],[Measures].[Net Revenue],[MEASURES].[AllStroesRev]}  on columns, 
+non empty filter
+({[Stores].[Stores].[Store Desc].members} *  Except([Items].[Items].[Item ID].members,[Items].[Items].[0.0.0.0 - UNKNOWN_SUBCAT].children),[MEASURES].[Quantity] &gt;= 30 and [Measures].[Net Revenue] &gt;= 100) on rows 
+from DataForMngTool</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW_MDX.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW_MDX.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[storekey]]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[storekey]]"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[storekey]]"
+                      name="[Measures].[storekey]"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[itemkey]]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[itemkey]]"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[itemkey]]"
+                      name="[Measures].[itemkey]"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[QUANTITY]]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[QUANTITY]]"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[QUANTITY]]"
+                      name="[Measures].[QUANTITY]"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[AllStroesQty]]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[AllStroesQty]]"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[AllStroesQty]]"
+                      name="[Measures].[AllStroesQty]"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[Net Revenue]]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[Net Revenue]]"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[Net Revenue]]"
+                      name="[Measures].[Net Revenue]"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[AllStroesRev]]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[AllStroesRev]]"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].Columns[[Measures].[AllStroesRev]]"
+                      name="[Measures].[AllStroesRev]"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Stores].[Stores].[Parent Store].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Stores].[Stores].[Parent Store].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Stores].[Stores].[Store Desc].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Stores].[Stores].[Store Desc].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Items].[Items].[Department ID].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Items].[Items].[Department ID].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Items].[Items].[Sub Department ID].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Items].[Items].[Sub Department ID].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Items].[Items].[Category ID].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Items].[Items].[Category ID].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Items].[Items].[Sub Category ID].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Items].[Items].[Sub Category ID].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Items].[Items].[Item ID].[MEMBER_CAPTION]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Items].[Items].[Item ID].[MEMBER_CAPTION]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[storekey]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Measures].[storekey]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[itemkey]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Measures].[itemkey]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[QUANTITY]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Measures].[QUANTITY]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[AllStroesQty]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Measures].[AllStroesQty]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[Net Revenue]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Measures].[Net Revenue]" />
+                    <externalMetadataColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[[Measures].[AllStroesRev]]"
+                      dataType="wstr"
+                      length="255"
+                      name="[Measures].[AllStroesRev]" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[storekey]]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[storekey]]"
+                      name="[Measures].[storekey]" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[itemkey]]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[itemkey]]"
+                      name="[Measures].[itemkey]" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[QUANTITY]]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[QUANTITY]]"
+                      name="[Measures].[QUANTITY]" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[AllStroesQty]]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[AllStroesQty]]"
+                      name="[Measures].[AllStroesQty]" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[Net Revenue]]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[Net Revenue]]"
+                      name="[Measures].[Net Revenue]" />
+                    <outputColumn
+                      refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[AllStroesRev]]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[[Measures].[AllStroesRev]]"
+                      name="[Measures].[AllStroesRev]" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar.Paths[OLE DB Source Output]"
+              endId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SP_MngToolOlapDataExtract"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{EBF0C4AC-C624-4ABF-857E-FA8BF04B4C04}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SP_MngToolOlapDataExtract"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+          SQLTask:SqlStatementSource="exec SP_MngToolOlapDataExtract" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{5182AC94-1AE1-4452-B8E5-09ECF8366C37}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_MngTool_Dep_Pct]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[QtyPercentage]"
+                      cachedDataType="numeric"
+                      cachedName="QtyPercentage"
+                      cachedPrecision="38"
+                      cachedScale="20"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[QtyPercentage]"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[QtyPercentage]" />
+                    <inputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SalesPercentage]"
+                      cachedDataType="numeric"
+                      cachedName="SalesPercentage"
+                      cachedPrecision="38"
+                      cachedScale="20"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SalesPercentage]"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesPercentage]" />
+                    <inputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[storekey]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="storekey"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[iStoreId]"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[storekey]" />
+                    <inputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[itemkey]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="itemkey"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[iDepartmentId]"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[itemkey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[iStoreId]"
+                      dataType="wstr"
+                      length="255"
+                      name="iStoreId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[iDepartmentId]"
+                      dataType="wstr"
+                      length="255"
+                      name="iDepartmentId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[QtyPercentage]"
+                      dataType="r8"
+                      name="QtyPercentage" />
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SalesPercentage]"
+                      dataType="r8"
+                      name="SalesPercentage" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_MngTool_Dep_Pct_nvarchar]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select [storekey],[itemkey], cast([Quantity] AS decimal(18,2))/CAST([AllStroesQty] AS decimal (18,2)) AS QtyPercentage
+,cast([Net_Revenue] AS decimal(18,2))/CAST( [AllStroesRev]AS decimal (18,2))  as SalesPercentage
+from STG_MngTool_Dep_Pct_nvarchar</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[PANORAMA2K8.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[storekey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[storekey]"
+                      length="255"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[storekey]"
+                      name="storekey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[itemkey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[itemkey]"
+                      length="255"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[itemkey]"
+                      name="itemkey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[QtyPercentage]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QtyPercentage]"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[QtyPercentage]"
+                      name="QtyPercentage"
+                      precision="38"
+                      scale="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesPercentage]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesPercentage]"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesPercentage]"
+                      name="SalesPercentage"
+                      precision="38"
+                      scale="20"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[storekey]"
+                      dataType="wstr"
+                      length="255"
+                      name="storekey" />
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[itemkey]"
+                      dataType="wstr"
+                      length="255"
+                      name="itemkey" />
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QtyPercentage]"
+                      dataType="numeric"
+                      name="QtyPercentage"
+                      precision="38"
+                      scale="20" />
+                    <externalMetadataColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesPercentage]"
+                      dataType="numeric"
+                      name="SalesPercentage"
+                      precision="38"
+                      scale="20" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[storekey]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[storekey]"
+                      name="storekey" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[itemkey]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[itemkey]"
+                      name="itemkey" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QtyPercentage]"
+                      dataType="numeric"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QtyPercentage]"
+                      name="QtyPercentage"
+                      precision="38"
+                      scale="20" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesPercentage]"
+                      dataType="numeric"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesPercentage]"
+                      name="SalesPercentage"
+                      precision="38"
+                      scale="20" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct.Paths[OLE DB Source Output]"
+              endId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table STG_MngTool_Dep_Pct   STG_MngTool_Dep_Pct_nvarchar"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3A9DB061-7453-41DC-B9E3-DA0A4DDC2BB9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table STG_MngTool_Dep_Pct   STG_MngTool_Dep_Pct_nvarchar"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8610B0FF-E3B2-4B0D-9D86-1784C87B5EAC}"
+          SQLTask:SqlStatementSource="Truncate table STG_MngTool_Dep_Pct_nvarchar&#xA;Truncate table STG_MngTool_Dep_Pct" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C0E60E1A-797C-4A82-BDD6-8A5B87AF6C27}"
+      DTS:From="Package\Truncate table STG_MngTool_Dep_Pct   STG_MngTool_Dep_Pct_nvarchar"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{79BC72F1-AF57-455C-BDC6-0A1D969D5B04}"
+      DTS:From="Package\DWH_Fact_MngTool"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Analysis Services Processing Task" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{BC6247EF-514C-4882-98EC-35CCF02C720F}"
+      DTS:From="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{29A74F70-936D-47E9-92DF-2596A8309BDC}"
+      DTS:From="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\DWH_Fact_MngTool" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="237,42"
+          Id="Package\Analysis Services Processing Task"
+          TopLeft="170,606" />
+        <NodeLayout
+          Size="380,42"
+          Id="Package\DWH_Fact_MngTool\delete from DWH_MngTool_Fact where date equal to Yesterday"
+          TopLeft="5.5,794" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\DWH_Fact_MngTool\Insert Into DWH_MngTool_Fact"
+          TopLeft="76.5,874.5" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact"
+          TopLeft="36.5,517.5" />
+        <NodeLayout
+          Size="269,42"
+          Id="Package\DWH_Fact_MngTool\Insert Into STG_MngTool_Fact Continue"
+          TopLeft="21.5,590.5" />
+        <NodeLayout
+          Size="234,42"
+          Id="Package\DWH_Fact_MngTool\insert into STG_MngTool_Migvan"
+          TopLeft="19.5,174.5" />
+        <NodeLayout
+          Size="264,42"
+          Id="Package\DWH_Fact_MngTool\insert into STG_MngTool_NetItemSales"
+          TopLeft="11.5,347.5" />
+        <NodeLayout
+          Size="259,42"
+          Id="Package\DWH_Fact_MngTool\TRUNCATE TABLE STG_MngTool_Fact"
+          TopLeft="15.5,429.5" />
+        <NodeLayout
+          Size="252,42"
+          Id="Package\DWH_Fact_MngTool\truncate table STG_MngTool_Migvan"
+          TopLeft="4,4" />
+        <NodeLayout
+          Size="282,42"
+          Id="Package\DWH_Fact_MngTool\truncate table STG_MngTool_NetItemSales"
+          TopLeft="4.5,252.5" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\DWH_Fact_MngTool\Update STG_MngTool_Fact"
+          TopLeft="58,692.75" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\DWH_Fact_MngTool\Variable StartDate DtDate"
+          TopLeft="29.5,98.5" />
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint]"
+          TopLeft="161.5,734.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34,59.25"
+              Start="0,0"
+              End="34,51.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.625" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.625"
+                    Point2="0,29.625"
+                    Point3="4,29.625" />
+                  <mssgle:LineSegment
+                    End="30,29.625" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30,29.625"
+                    Point2="34,29.625"
+                    Point3="34,33.625" />
+                  <mssgle:LineSegment
+                    End="34,51.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 1]"
+          TopLeft="193,836">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.5"
+              Start="0,0"
+              End="0,31">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 1 1]"
+          TopLeft="133.25,140.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 2 1]"
+          TopLeft="136.5,216.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9,36"
+              Start="0,0"
+              End="9,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="5,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5,18"
+                    Point2="9,18"
+                    Point3="9,22" />
+                  <mssgle:LineSegment
+                    End="9,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 3 1]"
+          TopLeft="144.5,294.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53"
+              Start="0,0"
+              End="0,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 4]"
+          TopLeft="130,46">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.5"
+              Start="0,0"
+              End="0,45">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 4 1]"
+          TopLeft="144.25,389.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 5]"
+          TopLeft="146.75,471.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46"
+              Start="0,0"
+              End="0,38.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 6]"
+          TopLeft="152.25,559.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DWH_Fact_MngTool.PrecedenceConstraints[Constraint 7]"
+          TopLeft="158.75,632.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.25"
+              Start="0,0"
+              End="0,52.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="426,982"
+          Size="426,1024"
+          Id="Package\DWH_Fact_MngTool"
+          TopLeft="539,34" />
+        <NodeLayout
+          Size="328,42"
+          Id="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar"
+          TopLeft="128,226" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\SP_MngToolOlapDataExtract"
+          TopLeft="5.5,35.5" />
+        <NodeLayout
+          Size="362,42"
+          Id="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct"
+          TopLeft="109,310" />
+        <NodeLayout
+          Size="428,42"
+          Id="Package\Truncate table STG_MngTool_Dep_Pct   STG_MngTool_Dep_Pct_nvarchar"
+          TopLeft="53,140" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="267,182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="25,44"
+              Start="0,0"
+              End="25,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18"
+                    Point2="0,22"
+                    Point3="4,22" />
+                  <mssgle:LineSegment
+                    End="21,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21,22"
+                    Point2="25,22"
+                    Point3="25,26" />
+                  <mssgle:LineSegment
+                    End="25,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="539,715.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-132,-88.3333333333333"
+              Start="0,0"
+              End="-124.5,-88.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-48.9235569422777,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-48.9235569422777,0"
+                    Point2="-52.9235569422777,0"
+                    Point3="-52.9235569422777,-4" />
+                  <mssgle:LineSegment
+                    End="-52.9235569422777,-84.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-52.9235569422777,-84.3333333333333"
+                    Point2="-52.9235569422777,-88.3333333333333"
+                    Point3="-56.9235569422777,-88.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-124.5,-88.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="291,268">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="471,331">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68,45.6666666666666"
+              Start="0,0"
+              End="60.5,45.6666666666666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="36.7363494539782,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36.7363494539782,0"
+                    Point2="40.7363494539782,0"
+                    Point3="40.7363494539782,4" />
+                  <mssgle:LineSegment
+                    End="40.7363494539782,41.6666666666666" />
+                  <mssgle:CubicBezierSegment
+                    Point1="40.7363494539782,41.6666666666666"
+                    Point2="40.7363494539782,45.6666666666666"
+                    Point3="44.7363494539782,45.6666666666666" />
+                  <mssgle:LineSegment
+                    End="60.5,45.6666666666666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="MngToolOlapDataExtract"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="161,40"
+          Id="bc448cb7-2345-4f1f-9a91-ac4930315f47"
+          TopLeft="208,91" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <ConnectionManager
+    design-time-name="Package.ConnectionManagers[panorama2k8.SuperPharmSSAS]">
+    <ProjectReferenceName></ProjectReferenceName>
+  </ConnectionManager>
+  <TaskHost
+    design-time-name="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source"
+          TopLeft="245,70" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination"
+          TopLeft="236.5,161.5" />
+        <EdgeLayout
+          Id="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar.Paths[OLE DB Source Output]"
+          TopLeft="321,112">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.5"
+              Start="0,0"
+              End="0,42">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text=" &#xA;Truncate table dbo.STG_MngTool_Dep_Pct&#xA; &#xA;Insert into dbo.STG_MngTool_Dep_Pct&#xA;select &quot;[MEASURES].[storekey]&quot;,&quot;[MEASURES].[itemkey]&quot;,cast(&quot;[Measures].[Quantity]&quot; as float)/cast(&quot;[MEASURES].[AllStroesQty]&quot; as float),cast(&quot;[Measures].[Net Revenue]&quot; as float)/cast(&quot;[MEASURES].[AllStroesRev]&quot; as float)&#xA;from openquery(olap,"
+          ParentId="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar"
+          FontInfo="{assembly:Null}"
+          Size="1183,120"
+          Id="821b9ef0-2e02-4e27-a699-3fe58eef4783"
+          TopLeft="495,224" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\MDX to temp table STG_MngTool_Dep_Pct_nvarchar\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source"
+          TopLeft="236,80" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination"
+          TopLeft="221.5,180.5" />
+        <EdgeLayout
+          Id="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct.Paths[OLE DB Source Output]"
+          TopLeft="309,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58.5"
+              Start="0,0"
+              End="0,51">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_MngTool_Dep_Pct_nvarchar to STG_MngTool_Dep_Pct\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

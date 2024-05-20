@@ -1,0 +1,911 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/28/2018 9:47:57 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERPANORAMA"
+  DTS:CreatorName="SPP\Elrana"
+  DTS:DTSID="{8D556D3B-870F-4386-B339-819B90A91615}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="ecommerce_for_updating_LSid"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{823BCFB9-1160-4212-BB07-DC5329CB4362}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B0A4985E-9178-4DFE-A8FD-3BD14B8D6709}"
+      DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.ecommerce">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;Initial Catalog=ecommerce;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-ODS_eComm-{B0A4985E-9178-4DFE-A8FD-3BD14B8D6709}HEADOFFICE\FARMAX_SQLSRV.ecommerce;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A91C9E02-B4B7-4B1E-A194-2FAD3A48BA15}"
+      DTS:ObjectName="localhost.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-ODS_eComm-{A91C9E02-B4B7-4B1E-A194-2FAD3A48BA15}localhost.SuperPharmPoland;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{5971588C-AA86-4278-98C1-EAC2F19B9A7E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="eCommerce_v_Sales_for_updating_LSID"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[eCommerce_v_Sales_for_updating_LSID]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input].Columns[OrderNumber]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="OrderNumber"
+                      externalMetadataColumnId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input].ExternalColumns[OrderNumber]"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].Columns[OrderNumber]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input].Columns[LifestyleClientId]"
+                      cachedDataType="i4"
+                      cachedName="LifestyleClientId"
+                      externalMetadataColumnId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input].ExternalColumns[LifestyleClientId]"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].Columns[LifestyleClientId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input].ExternalColumns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="OrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input].ExternalColumns[LifestyleClientId]"
+                      dataType="i4"
+                      name="LifestyleClientId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\v_sales ecomm 1"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="v_sales ecomm 1"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select 
+distinct a.OrderNumber, a.LifestyleClientId
+from [ecommerce].[eCommerce].[v_Sales] a
+where cast(a.Data_Order  as date)&gt;= '2022-01-01'
+and a.LifestyleClientId &gt; 0
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\v_sales ecomm 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].Columns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].ExternalColumns[OrderNumber]"
+                      length="10"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].Columns[OrderNumber]"
+                      name="OrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].Columns[LifestyleClientId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].ExternalColumns[LifestyleClientId]"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].Columns[LifestyleClientId]"
+                      name="LifestyleClientId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].ExternalColumns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="OrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output].ExternalColumns[LifestyleClientId]"
+                      dataType="i4"
+                      name="LifestyleClientId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[OrderNumber]"
+                      name="OrderNumber" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[LifestyleClientId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[LifestyleClientId]"
+                      name="LifestyleClientId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task 1.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task 1\v_sales ecomm 1.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task 2"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{f97cbd17-4068-47a1-9ffb-321b49e3e263}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task 2"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="eCommerce_v_Sales_for_updating_LSID_2"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[eCommerce_v_Sales_for_updating_LSID_2]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].Columns[LifestyleClientId]"
+                      cachedDataType="i4"
+                      cachedName="LifestyleClientId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].ExternalColumns[LifestyleClientId]"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[LifestyleClientId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].Columns[INVOICE_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="INVOICE_ID"
+                      externalMetadataColumnId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ID]"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[INVOICE_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].Columns[INVOICE_DATE]"
+                      cachedDataType="dbDate"
+                      cachedName="INVOICE_DATE"
+                      externalMetadataColumnId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].ExternalColumns[LifestyleClientId]"
+                      dataType="i4"
+                      name="LifestyleClientId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="INVOICE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbDate"
+                      name="INVOICE_DATE" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\v_sales ecomm 2"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="v_sales ecomm 2"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select distinct a.NR_OPER as INVOICE_ID, cast(a.Data_Order as date) as [INVOICE_DATE], a.LifestyleClientId
+from [ecommerce].[eCommerce].[v_Sales] a
+where cast(a.Data_Order as date) &gt;= '2022-01-01'
+and NR_OPER is not null
+and a.LifestyleClientId &gt; 0
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\v_sales ecomm 2.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[LifestyleClientId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].ExternalColumns[LifestyleClientId]"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[LifestyleClientId]"
+                      name="LifestyleClientId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ID]"
+                      length="10"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[INVOICE_ID]"
+                      name="INVOICE_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].ExternalColumns[LifestyleClientId]"
+                      dataType="i4"
+                      name="LifestyleClientId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="INVOICE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbDate"
+                      name="INVOICE_DATE" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[INVOICE_ID]"
+                      name="INVOICE_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[LifestyleClientId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[LifestyleClientId]"
+                      name="LifestyleClientId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task 2.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task 2\v_sales ecomm 2.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{18595712-3BE8-4ACD-9AF9-D9C60346AC7C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A91C9E02-B4B7-4B1E-A194-2FAD3A48BA15}"
+          SQLTask:SqlStatementSource="truncate table eCommerce_v_Sales_for_updating_LSID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate 2"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{d0ba2957-bd9e-44e2-9cf6-a74fa6d2c3fd}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate 2"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A91C9E02-B4B7-4B1E-A194-2FAD3A48BA15}"
+          SQLTask:SqlStatementSource="truncate table eCommerce_v_Sales_for_updating_LSID_2" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7D41EA34-8402-4077-84F2-5A91DECFDB83}"
+      DTS:From="Package\truncate 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{82D4281B-7D8E-4805-B132-038BE86FB007}"
+      DTS:From="Package\truncate 2"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Data Flow Task 2" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\Data Flow Task 1"
+          TopLeft="223.109167359359,117.06337426909" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\Data Flow Task 2"
+          TopLeft="223.109167359359,218.66337426909" />
+        <NodeLayout
+          Size="126.4,41.6"
+          Id="Package\truncate 1"
+          TopLeft="57.1428581159942,114.400001604417" />
+        <NodeLayout
+          Size="126.4,41.6"
+          Id="Package\truncate 2"
+          TopLeft="44.0000007493156,219.01176777744" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="183.542858115994,136.531687936754">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="39.566309243365,0"
+              Start="0,0"
+              End="32.066309243365,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.066309243365,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="170.400000749316,239.637571023265">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="52.7091666100436,0"
+              Start="0,0"
+              End="45.2091666100436,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="45.2091666100436,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="per orderNum"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="104.8,60"
+          Id="ab678cc5-5639-48a9-a5ae-8f1272ef5bd6"
+          TopLeft="397.14286390616,119.294119320114" />
+        <AnnotationLayout
+          Text="per InvoiceID"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="98.4,60"
+          Id="fe57ee57-703b-4260-897a-6bc966c87ff4"
+          TopLeft="393.14286383804,212.282355918356" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="159.2,41.6"
+          Id="Package\Data Flow Task 1\v_sales ecomm 1"
+          TopLeft="103.78571595951,108.276472029637" />
+        <NodeLayout
+          Size="269.6,41.6"
+          Id="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID"
+          TopLeft="51.4285723043947,179.858826051864" />
+        <EdgeLayout
+          Id="Package\Data Flow Task 1.Paths[OLE DB Source Output]"
+          TopLeft="184.807144131952,149.876472029637">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.9823540222274"
+              Start="0,0"
+              End="0,22.4823540222274">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.4823540222274" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task 1\v_sales ecomm 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task 1\eCommerce_v_Sales_for_updating_LSID">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Data Flow Task 2">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="159.2,41.6"
+          Id="Package\Data Flow Task 2\v_sales ecomm 2"
+          TopLeft="432.142864502206,109.400000109392" />
+        <NodeLayout
+          Size="281.6,41.6"
+          Id="Package\Data Flow Task 2\eCommerce_v_Sales_for_updating_LSID_2"
+          TopLeft="405.714292623559,182.764708445559" />
+        <EdgeLayout
+          Id="Package\Data Flow Task 2.Paths[OLE DB Source Output]"
+          TopLeft="511.742864502206,151.000000109392">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34.7714281213528,31.764708336167"
+              Start="0,0"
+              End="34.7714281213528,24.264708336167">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.8823541680835" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.8823541680835"
+                    Point2="0,15.8823541680835"
+                    Point3="4,15.8823541680835" />
+                  <mssgle:LineSegment
+                    End="30.7714281213528,15.8823541680835" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30.7714281213528,15.8823541680835"
+                    Point2="34.7714281213528,15.8823541680835"
+                    Point3="34.7714281213528,19.8823541680835" />
+                  <mssgle:LineSegment
+                    End="34.7714281213528,24.264708336167" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task 2\v_sales ecomm 2">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,2840 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/8/2019 1:51:59 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERPANORAMA"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{A28617BF-8FC4-4BFB-A4AF-BC5433860D16}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="STG_Fact_WorkHours"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="193"
+  DTS:VersionGUID="{CB03DB1E-CDBE-4B18-85E7-38AA922BEF12}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\create temp table and filling it with the old RCP data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F9828FDA-071D-4E5F-BC0F-4213DEF15DF5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create temp table and filling it with the old RCP data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+          SQLTask:SqlStatementSource="select dtDate,&#xA;&#x9;&#x9;StoreId,&#xA;&#x9;&#x9;DepartmentId,&#xA;&#x9;&#x9;EmployeeId,&#xA;&#x9;&#x9;EventType,&#xA;&#x9;&#x9;INVOICE_TIME_ID,&#xA; case when datepart(&quot;Hour&quot;,convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8)) &gt; datepart(&quot;Hour&quot;,StartTime) &#xA; then case when datepart(&quot;Hour&quot;,convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8)) &lt; DATEPART(&quot;Hour&quot;,EndTime)&#xA; Then 60 else datediff(&quot;Minute&quot;,convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8),EndTime) end&#xA; Else case when datepart(&quot;Hour&quot;,convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8)) = DATEPART(&quot;Hour&quot;,EndTime)&#xA; then datediff(MINUTE ,StartTime,EndTime)&#xA; Else 60 - DATEPART(&quot;Minute&quot;,Starttime)End &#xA; End WorkingMin,&#xA; 2 as SystemId &#xA; Into #TT&#xA; FROM dbo.STG_Fact_RCPCWorkHours&#xA; , DWH_DIM_Time&#xA; where YEAR(dtDate) &gt;= 2013 &#xA; and datepart(&quot;Hour&quot;,CONVERT(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8))&#xA; between datepart(&quot;Hour&quot;,startTime) and datepart(&quot;Hour&quot;,EndTime)&#xA; &#xA; --Now we will add missing data in the new HR system from RCP&#xA; Insert Into STG_Fact_WorkHours &#xA; Select * From #TT&#xA; Where not exists (select * &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;from STG_Fact_WorkHours &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;Where STG_Fact_WorkHours.dtDate = #TT.dtDate&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;And STG_Fact_WorkHours.StoreId = #TT.StoreId&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;--And STG_Fact_WorkHours.DepartmentId = #TT.DepartmentId&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;And STG_Fact_WorkHours.EmployeeId = #TT.EmployeeId&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;--And STG_Fact_WorkHours.EventType = #TT.EventType&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;And STG_Fact_WorkHours.HourId = #TT.INVOICE_TIME_ID)&#xA;&#xA;Drop Table #TT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\HR Table Preparations"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C6AD589E-1A68-4C51-A68E-4785C6B9E259}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="HR Table Preparations"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\HR Table Preparations\ODS_HRWorkHours"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ODS_HRWorkHours"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ODS_HRWorkHours].*,
+		Dateadd("MI", Datepart("HOUR", CONVERT(time,[duration])) * 60 + Datepart("MI", CONVERT(time,[duration])),CONVERT(time,[time])) as EndTime,
+		Employee_ID 
+  FROM [SuperPharmPoland].[dbo].[ODS_HRWorkHours]
+  Left Join DWH_DIM_Employees
+  on ODS_HRWorkHours.pesel = DWH_DIM_Employees.EmpInternalId</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\HR Table Preparations\ODS_HRWorkHours.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[id]"
+                      name="id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[pesel]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[pesel]"
+                      length="11"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[pesel]"
+                      name="pesel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[employee]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[employee]"
+                      length="120"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[employee]"
+                      name="employee"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[date]"
+                      length="10"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[date]"
+                      name="date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[time]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[time]"
+                      length="16"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[time]"
+                      name="time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[duration]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[duration]"
+                      length="16"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[duration]"
+                      name="duration"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[action]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[action]"
+                      length="100"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[action]"
+                      name="action"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[is_productive]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[is_productive]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[is_productive]"
+                      name="is_productive"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[absence_reason]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[absence_reason]"
+                      length="100"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[absence_reason]"
+                      name="absence_reason"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[department]"
+                      length="10"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[department]"
+                      name="department"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[shop]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[shop]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[shop]"
+                      name="shop"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[is_break]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[is_break]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[is_break]"
+                      name="is_break"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[EndTime]"
+                      dataType="dbTime2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[EndTime]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[EndTime]"
+                      name="EndTime"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[Employee_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[Employee_ID]"
+                      length="3"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[Employee_ID]"
+                      name="Employee_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[pesel]"
+                      codePage="1250"
+                      dataType="str"
+                      length="11"
+                      name="pesel" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[employee]"
+                      codePage="1250"
+                      dataType="str"
+                      length="120"
+                      name="employee" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[date]"
+                      dataType="wstr"
+                      length="10"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[time]"
+                      dataType="wstr"
+                      length="16"
+                      name="time" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[duration]"
+                      dataType="wstr"
+                      length="16"
+                      name="duration" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[action]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="action" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[is_productive]"
+                      dataType="bool"
+                      name="is_productive" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[absence_reason]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="absence_reason" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="department" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[shop]"
+                      dataType="i4"
+                      name="shop" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[is_break]"
+                      dataType="bool"
+                      name="is_break" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[EndTime]"
+                      dataType="dbTime2"
+                      name="EndTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].ExternalColumns[Employee_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="Employee_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[pesel]"
+                      codePage="1250"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[pesel]"
+                      name="pesel" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[employee]"
+                      codePage="1250"
+                      dataType="str"
+                      length="120"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[employee]"
+                      name="employee" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[date]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[date]"
+                      name="date" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[time]"
+                      dataType="wstr"
+                      length="16"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[time]"
+                      name="time" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[duration]"
+                      dataType="wstr"
+                      length="16"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[duration]"
+                      name="duration" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[action]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[action]"
+                      name="action" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[is_productive]"
+                      dataType="bool"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[is_productive]"
+                      name="is_productive" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[absence_reason]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[absence_reason]"
+                      name="absence_reason" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[department]"
+                      name="department" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[shop]"
+                      dataType="i4"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[shop]"
+                      name="shop" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[is_break]"
+                      dataType="bool"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[is_break]"
+                      name="is_break" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[EndTime]"
+                      dataType="dbTime2"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[EndTime]"
+                      name="EndTime"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[Employee_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[Employee_ID]"
+                      name="Employee_ID" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\HR Table Preparations\STG_Fact_WorkHours"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="STG_Fact_WorkHours"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_Fact_HRWorkHours]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\HR Table Preparations\STG_Fact_WorkHours.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[pesel]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="pesel"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[pesel]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[pesel]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[employee]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="120"
+                      cachedName="employee"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[employee]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[employee]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[date]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="date"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[date]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[date]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[time]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="time"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[time]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[time]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[duration]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="duration"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[duration]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[duration]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[action]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="action"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[action]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[action]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[is_productive]"
+                      cachedDataType="bool"
+                      cachedName="is_productive"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[is_productive]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[is_productive]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[absence_reason]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="absence_reason"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[absence_reason]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[absence_reason]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[department]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="department"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[department]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[department]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[shop]"
+                      cachedDataType="i4"
+                      cachedName="shop"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[shop]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[shop]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[is_break]"
+                      cachedDataType="bool"
+                      cachedName="is_break"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[is_break]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[is_break]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[EndTime]"
+                      cachedDataType="dbTime2"
+                      cachedName="EndTime"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EndTime]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[EndTime]" />
+                    <inputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[Employee_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="Employee_ID"
+                      externalMetadataColumnId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[Employee_ID]"
+                      lineageId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output].Columns[Employee_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[pesel]"
+                      codePage="1250"
+                      dataType="str"
+                      length="11"
+                      name="pesel" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[employee]"
+                      codePage="1250"
+                      dataType="str"
+                      length="120"
+                      name="employee" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[date]"
+                      dataType="wstr"
+                      length="10"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[time]"
+                      dataType="wstr"
+                      length="16"
+                      name="time" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[duration]"
+                      dataType="wstr"
+                      length="16"
+                      name="duration" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[action]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="action" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[is_productive]"
+                      dataType="bool"
+                      name="is_productive" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[absence_reason]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="absence_reason" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="department" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[shop]"
+                      dataType="i4"
+                      name="shop" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[is_break]"
+                      dataType="bool"
+                      name="is_break" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EndTime]"
+                      dataType="dbTime2"
+                      name="EndTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[Employee_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="Employee_ID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\HR Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\HR Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\HR Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\HR Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\HR Table Preparations.Paths[OLE DB Source Output]"
+              endId="Package\HR Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\HR Table Preparations\ODS_HRWorkHours.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\STG_Fact_RCPCWorkHours 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{24C518E2-9BD4-4149-942C-011A596D7689}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="STG_Fact_RCPCWorkHours 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="begin shift information"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select   i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD,convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end) EventId,replace(min(i.GODZ_OP),'24:','00:') as StartTime,ActualEmpDep
+From dbo.ODS_RCP i with(nolock)
+Where  Year(DATA_OP) &gt; 2011 and DATA_OP &lt; getdate() and KOD = 'POC' and not GODZ_OP is null
+Group by  i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD, convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end),ActualEmpDep</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      name="DATA_OP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[KOD_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[KOD_UZYT]"
+                      length="3"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[KOD_UZYT]"
+                      name="KOD_UZYT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[KOD]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[KOD]"
+                      length="3"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[KOD]"
+                      name="KOD"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[EventId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[EventId]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[EventId]"
+                      name="EventId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[StartTime]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[StartTime]"
+                      length="8000"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[StartTime]"
+                      name="StartTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[ActualEmpDep]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[ActualEmpDep]"
+                      length="10"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[ActualEmpDep]"
+                      name="ActualEmpDep"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[KOD_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="KOD_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[KOD]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="KOD" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[EventId]"
+                      dataType="i4"
+                      name="EventId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[StartTime]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8000"
+                      name="StartTime" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].ExternalColumns[ActualEmpDep]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ActualEmpDep" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[KOD_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[KOD_UZYT]"
+                      name="KOD_UZYT" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[KOD]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[KOD]"
+                      name="KOD" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[EventId]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[EventId]"
+                      name="EventId" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[StartTime]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8000"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[StartTime]"
+                      name="StartTime" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ActualEmpDep]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ActualEmpDep]"
+                      name="ActualEmpDep" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="STG_Fact_RCPCWorkHours"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_Fact_RCPCWorkHours]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[EventId]"
+                      cachedDataType="i4"
+                      cachedName="EventId"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventId]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[EventId]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[StartTime]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="8000"
+                      cachedName="StartTime"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StartTime]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[StartTime]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[DATA_OP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DATA_OP"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[DATA_OP]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[KOD_UZYT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="KOD_UZYT"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[KOD_UZYT]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[KOD]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="KOD"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventType]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[KOD]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[ActualEmpDep]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ActualEmpDep"
+                      externalMetadataColumnId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentId]"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output].Columns[ActualEmpDep]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EventType" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventId]"
+                      dataType="i4"
+                      name="EventId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StartTime]"
+                      dataType="dbTime2"
+                      name="StartTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EndTime]"
+                      dataType="dbTime2"
+                      name="EndTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="DepartmentId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\STG_Fact_RCPCWorkHours 1.Paths[OLE DB Source Output]"
+              endId="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\STG_Fact_RCPCWorkHours 1\begin shift information.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\STG_Fact_WorkHours Table Preparations"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{821D15B1-7AFD-47B4-A72D-F6362770BD34}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="STG_Fact_WorkHours Table Preparations"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="First filling the STG table with the new HR system data"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select  [date] dtDate, 
+		right('0' + cast(shop as varchar(3)),2) StoreId,
+		department,
+		Employee_ID EmployeeId,
+		Case when is_break =1 then 'P_P' else 'POC' end EventType,
+		INVOICE_TIME_ID,
+ case when datepart("Hour",convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8)) &gt; datepart("Hour",[time]) 
+ then case when datepart("Hour",convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8)) &lt; DATEPART("Hour",EndTime)
+ Then 60 else datediff("Minute",convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8),EndTime) end
+ Else case when datepart("Hour",convert(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8)) = DATEPART("Hour",EndTime)
+ then datediff(MINUTE ,[time],EndTime)
+ Else 60 - DATEPART("Minute",[time])End 
+ End WorkingMin,
+ 1 as SystemId 
+ FROM [SuperPharmPoland].[dbo].[STG_Fact_HRWorkHours]
+ , DWH_DIM_Time
+ where datepart("Hour",CONVERT(time, right('0' + case when INVOICE_TIME_id = 0 then '00:00' else INVOICE_TIME_DESC end + ':00',8),8))
+ between datepart("Hour",[Time]) and datepart("Hour",EndTime)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[dtDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[dtDate]"
+                      length="10"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[dtDate]"
+                      name="dtDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[StoreId]"
+                      length="2"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[StoreId]"
+                      name="StoreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[department]"
+                      length="10"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[department]"
+                      name="department"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[EmployeeId]"
+                      length="3"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[EmployeeId]"
+                      name="EmployeeId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[EventType]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[EventType]"
+                      length="3"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[EventType]"
+                      name="EventType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[INVOICE_TIME_ID]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_TIME_ID]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[INVOICE_TIME_ID]"
+                      name="INVOICE_TIME_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[WorkingMin]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[WorkingMin]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[WorkingMin]"
+                      name="WorkingMin"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[SystemId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[SystemId]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[SystemId]"
+                      name="SystemId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[dtDate]"
+                      dataType="wstr"
+                      length="10"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="department" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[EventType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EventType" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_TIME_ID]"
+                      dataType="i2"
+                      name="INVOICE_TIME_ID" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[WorkingMin]"
+                      dataType="i4"
+                      name="WorkingMin" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].ExternalColumns[SystemId]"
+                      dataType="i4"
+                      name="SystemId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[dtDate]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[dtDate]"
+                      name="dtDate" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[StoreId]"
+                      name="StoreId" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[department]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[department]"
+                      name="department" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[EmployeeId]"
+                      name="EmployeeId" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[EventType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[EventType]"
+                      name="EventType" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[INVOICE_TIME_ID]"
+                      dataType="i2"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[INVOICE_TIME_ID]"
+                      name="INVOICE_TIME_ID" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[WorkingMin]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[WorkingMin]"
+                      name="WorkingMin" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[SystemId]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[SystemId]"
+                      name="SystemId" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="STG_Fact_WorkHours"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_Fact_WorkHours]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[dtDate]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="dtDate"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[dtDate]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[StoreId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="StoreId"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[StoreId]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[EmployeeId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="EmployeeId"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[EmployeeId]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[EventType]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="EventType"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventType]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[EventType]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[SystemId]"
+                      cachedDataType="i4"
+                      cachedName="SystemId"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[SystemId]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[SystemId]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[department]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="department"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentId]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[department]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[INVOICE_TIME_ID]"
+                      cachedDataType="i2"
+                      cachedName="INVOICE_TIME_ID"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[HourId]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[INVOICE_TIME_ID]" />
+                    <inputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].Columns[WorkingMin]"
+                      cachedDataType="i4"
+                      cachedName="WorkingMin"
+                      externalMetadataColumnId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[WorkTime]"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output].Columns[WorkingMin]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="DepartmentId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EventType" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[HourId]"
+                      dataType="i2"
+                      name="HourId" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[WorkTime]"
+                      dataType="i4"
+                      name="WorkTime" />
+                    <externalMetadataColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input].ExternalColumns[SystemId]"
+                      dataType="ui1"
+                      name="SystemId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\STG_Fact_WorkHours Table Preparations.Paths[OLE DB Source Output]"
+              endId="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table STG_Fact_HRWorkHours"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{15e827e9-cdc4-4b3a-9ebe-9aa86ab0d4fa}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table STG_Fact_HRWorkHours"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+          SQLTask:SqlStatementSource="Truncate table STG_Fact_HRWorkHours&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table STG_Fact_RCPCWorkHours 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{d1fbfa94-76b6-44fd-9a0a-aa7fdf35a9b4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table STG_Fact_RCPCWorkHours 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+          SQLTask:SqlStatementSource="Truncate Table dbo.STG_Fact_RCPCWorkHours" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table STG_Fact_WorkHours1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F28B2112-8AE2-435C-9A06-27F409184A01}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table STG_Fact_WorkHours1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+          SQLTask:SqlStatementSource="Truncate Table STG_Fact_WorkHours" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Break end"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{99249F47-1A05-4564-9EB2-D2373E72B66C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Break end"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+          SQLTask:SqlStatementSource="Update STG_Fact_RCPCWorkHours Set&#xA;&#x9;EndTime = TT.EventTime&#xA;From (Select   i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD,convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end) EventId,replace(max(i.GODZ_OP),'24:','00:') EventTime&#xA;&#x9;  From dbo.ODS_RCP i with(nolock)&#xA;&#x9;  Where  Year(DATA_OP) &gt; 2011 and DATA_OP &lt; getdate() and KOD = 'P_K' and not GODZ_OP is null&#xA;&#x9;  Group by  i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD, convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end)) TT&#xA;Where STG_Fact_RCPCWorkHours.dtDate = TT.DATA_OP&#xA;  And STG_Fact_RCPCWorkHours.StoreId = TT.ID_SKLEP&#xA;  And STG_Fact_RCPCWorkHours.EmployeeId = TT.KOD_UZYT&#xA;  And STG_Fact_RCPCWorkHours.EventType = 'P_P'&#xA;  And STG_Fact_RCPCWorkHours.EventId &lt; TT.EventId " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updating the break start info for each entrance"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{6A8DAE86-5FE5-48AA-B858-6C64C40D2D17}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updating the break start info for each entrance"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="STG_Fact_RCPCWorkHours"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_Fact_RCPCWorkHours]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[EventId]"
+                      cachedDataType="i4"
+                      cachedName="EventId"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventId]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[EventId]" />
+                    <inputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[StartTime]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="8000"
+                      cachedName="StartTime"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StartTime]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[StartTime]" />
+                    <inputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[DATA_OP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DATA_OP"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[DATA_OP]" />
+                    <inputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[KOD_UZYT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="KOD_UZYT"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[KOD_UZYT]" />
+                    <inputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].Columns[KOD]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="KOD"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventType]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[KOD]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EventType" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EventId]"
+                      dataType="i4"
+                      name="EventId" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[StartTime]"
+                      dataType="dbTime2"
+                      name="StartTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[EndTime]"
+                      dataType="dbTime2"
+                      name="EndTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input].ExternalColumns[DepartmentId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="DepartmentId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\updating the break start info for each entrance\updating the break start info for each entrance"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="updating the break start info for each entrance"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select   i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD,convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end) EventId,replace(min(i.GODZ_OP),'24:','00:') AS StartTime
+From dbo.ODS_RCP i with(nolock)
+Where  Year(DATA_OP) &gt; 2011 and DATA_OP &lt; getdate() and KOD = 'P_P' and not GODZ_OP is null
+Group by  i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD, convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      name="DATA_OP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[KOD_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[KOD_UZYT]"
+                      length="3"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[KOD_UZYT]"
+                      name="KOD_UZYT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[KOD]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[KOD]"
+                      length="3"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[KOD]"
+                      name="KOD"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[EventId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[EventId]"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[EventId]"
+                      name="EventId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[StartTime]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[StartTime]"
+                      length="8000"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].Columns[StartTime]"
+                      name="StartTime"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[KOD_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="KOD_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[KOD]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="KOD" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[EventId]"
+                      dataType="i4"
+                      name="EventId" />
+                    <externalMetadataColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output].ExternalColumns[StartTime]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8000"
+                      name="StartTime" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[KOD_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[KOD_UZYT]"
+                      name="KOD_UZYT" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[KOD]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[KOD]"
+                      name="KOD" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[EventId]"
+                      dataType="i4"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[EventId]"
+                      name="EventId" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[StartTime]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8000"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[StartTime]"
+                      name="StartTime" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\updating the break start info for each entrance.Paths[OLE DB Source Output]"
+              endId="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\updating the break start info for each entrance\updating the break start info for each entrance.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updating the end shift info for each entrance"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{32C11059-5F04-4A3A-814C-8E997E0CA37F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updating the end shift info for each entrance"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30B5E175-D822-4E25-A714-0E6FA4D7D42D}"
+          SQLTask:SqlStatementSource="Update STG_Fact_RCPCWorkHours Set&#xA;&#x9;EndTime = TT.EventTime&#xA;From (Select   i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD,convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end) EventId,replace(max(i.GODZ_OP),'24:','00:') EventTime&#xA;&#x9;  From dbo.ODS_RCP i with(nolock)&#xA;&#x9;  Where  Year(DATA_OP) &gt; 2011 and DATA_OP &lt; getdate() and KOD = 'KON' and not GODZ_OP is null&#xA;&#x9;  Group by  i.DATA_OP,i.ID_SKLEP,i.KOD_UZYT,KOD, convert(int,case when charindex('/',ID) &gt; 0 then LEFT(ID,len(ID)-3) else ID end)) TT&#xA;Where STG_Fact_RCPCWorkHours.dtDate = TT.DATA_OP&#xA;  And STG_Fact_RCPCWorkHours.StoreId = TT.ID_SKLEP&#xA;  And STG_Fact_RCPCWorkHours.EmployeeId = TT.KOD_UZYT&#xA;  And STG_Fact_RCPCWorkHours.EventType = 'POC'&#xA;  And STG_Fact_RCPCWorkHours.EventId &lt; TT.EventId " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{1F52B0C1-AE47-460B-8F73-0C0480D3F75B}"
+      DTS:From="Package\Update Break end"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\Truncate Table STG_Fact_HRWorkHours" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{531AC838-FCA2-470E-88BF-148BF183DEAD}"
+      DTS:From="Package\Truncate Table STG_Fact_HRWorkHours"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\HR Table Preparations" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
+      DTS:CreationName=""
+      DTS:DTSID="{98DB24AC-11EE-48A8-8A91-71B9A0A557C6}"
+      DTS:From="Package\HR Table Preparations"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 12"
+      DTS:To="Package\Truncate Table STG_Fact_WorkHours1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
+      DTS:CreationName=""
+      DTS:DTSID="{A142B819-8692-4908-B76A-552735F03608}"
+      DTS:From="Package\Truncate Table STG_Fact_WorkHours1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 13"
+      DTS:To="Package\STG_Fact_WorkHours Table Preparations" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
+      DTS:CreationName=""
+      DTS:DTSID="{65ADA3AC-7D36-403D-BB04-6CAACC6BDB7B}"
+      DTS:From="Package\STG_Fact_WorkHours Table Preparations"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 14"
+      DTS:To="Package\create temp table and filling it with the old RCP data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{D3844D5C-7200-4282-9D2C-0A7D2DBE3847}"
+      DTS:From="Package\STG_Fact_RCPCWorkHours 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\updating the end shift info for each entrance" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{14987D5F-463A-4D38-B2E1-D8BCB7CA0F1F}"
+      DTS:From="Package\Truncate Table STG_Fact_RCPCWorkHours 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\STG_Fact_RCPCWorkHours 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{DBB85EC1-6D38-4F21-B602-49E7AECCF550}"
+      DTS:From="Package\updating the end shift info for each entrance"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\updating the break start info for each entrance" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{97EEEB83-CB45-4253-82A4-9FB9F9862CDC}"
+      DTS:From="Package\updating the break start info for each entrance"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\Update Break end" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph">
+        <AnnotationLayout
+          Text="-STG_Fact_WorkHours Table Preparations"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="245,40"
+          Id="d59f3b89-5ead-420a-9b70-2f5313d665b1"
+          TopLeft="361,577" />
+        <AnnotationLayout
+          Text="--First filling the STG table with the new HR system data"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="324,40"
+          Id="5e4d78eb-0894-4f90-b680-2e3c6cef5577"
+          TopLeft="359,742" />
+        <AnnotationLayout
+          Text=" --Now we create temp table with same structure as STG and filling it with the old RCP data"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="510,40"
+          Id="18e9e8aa-ef72-4751-a9df-388829dba6b8"
+          TopLeft="423,834" />
+        <NodeLayout
+          Size="216,42"
+          Id="Package\STG_Fact_RCPCWorkHours 1"
+          TopLeft="99,202" />
+        <NodeLayout
+          Size="290,42"
+          Id="Package\updating the end shift info for each entrance"
+          TopLeft="69,275" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="210.5,244">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="281,43"
+          Id="Package\Truncate Table STG_Fact_RCPCWorkHours 1"
+          TopLeft="67,132" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="207.25,175">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="300,42"
+          Id="Package\updating the break start info for each entrance"
+          TopLeft="71,357" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="217.5,317">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Update Break end"
+          TopLeft="143,436" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="222.75,399">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="184,42"
+          Id="Package\HR Table Preparations"
+          TopLeft="138,577" />
+        <NodeLayout
+          Size="270,42"
+          Id="Package\Truncate Table STG_Fact_HRWorkHours"
+          TopLeft="86,512" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="222.75,478">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="221,554">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9,23"
+              Start="0,0"
+              End="9,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.5"
+                    Point2="0,11.5"
+                    Point3="4,11.5" />
+                  <mssgle:LineSegment
+                    End="5,11.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5,11.5"
+                    Point2="9,11.5"
+                    Point3="9,15.5" />
+                  <mssgle:LineSegment
+                    End="9,15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="262,42"
+          Id="Package\Truncate Table STG_Fact_WorkHours1"
+          TopLeft="92,651" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="226.5,619">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32"
+              Start="0,0"
+              End="0,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="273,42"
+          Id="Package\STG_Fact_WorkHours Table Preparations"
+          TopLeft="93,749" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="226.25,693">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56"
+              Start="0,0"
+              End="0,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="326,42"
+          Id="Package\create temp table and filling it with the old RCP data"
+          TopLeft="73,835" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="232.75,791">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\STG_Fact_RCPCWorkHours 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="185,42"
+          Id="Package\STG_Fact_RCPCWorkHours 1\begin shift information"
+          TopLeft="151,93" />
+        <AnnotationLayout
+          Text="First we inserting the begin shift information (can be more than 1 in a day)"
+          ParentId="Package\STG_Fact_RCPCWorkHours 1"
+          FontInfo="{assembly:Null}"
+          Size="422,60"
+          Id="361e35d0-15ac-42c8-9a2d-134fbd79e718"
+          TopLeft="361,92" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours"
+          TopLeft="140,175" />
+        <EdgeLayout
+          Id="Package\STG_Fact_RCPCWorkHours 1.Paths[OLE DB Source Output]"
+          TopLeft="243.5,135">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_Fact_RCPCWorkHours 1\begin shift information">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_Fact_RCPCWorkHours 1\STG_Fact_RCPCWorkHours">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\updating the break start info for each entrance">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="300,42"
+          Id="Package\updating the break start info for each entrance\updating the break start info for each entrance"
+          TopLeft="167,58" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours"
+          TopLeft="212,141" />
+        <EdgeLayout
+          Id="Package\updating the break start info for each entrance.Paths[OLE DB Source Output]"
+          TopLeft="316.25,100">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\updating the break start info for each entrance\updating the break start info for each entrance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\updating the break start info for each entrance\STG_Fact_RCPCWorkHours">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\HR Table Preparations">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\HR Table Preparations\ODS_HRWorkHours"
+          TopLeft="142,65" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\HR Table Preparations\STG_Fact_WorkHours"
+          TopLeft="141,146" />
+        <EdgeLayout
+          Id="Package\HR Table Preparations.Paths[OLE DB Source Output]"
+          TopLeft="229.75,107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\HR Table Preparations\ODS_HRWorkHours">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\HR Table Preparations\STG_Fact_WorkHours">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\STG_Fact_WorkHours Table Preparations">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="337,42"
+          Id="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data"
+          TopLeft="97,45" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours"
+          TopLeft="178,124" />
+        <EdgeLayout
+          Id="Package\STG_Fact_WorkHours Table Preparations.Paths[OLE DB Source Output]"
+          TopLeft="267.25,87">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_Fact_WorkHours Table Preparations\First filling the STG table with the new HR system data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_Fact_WorkHours Table Preparations\STG_Fact_WorkHours">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

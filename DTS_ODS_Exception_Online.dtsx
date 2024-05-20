@@ -1,0 +1,3041 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/28/2009 1:29:34 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PANORAMA55"
+  DTS:CreatorName="SPP\elrana"
+  DTS:DTSID="{EDA8C7B9-745B-4317-A0D2-BA30C5121B4A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="DTS_ODS_Exception_Online"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{A7F8C542-EE5E-4474-B1F2-F209D07EFF42}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CE00EDF8-1FE0-419F-954D-BFD419721730}"
+      DTS:ObjectName="Microsoft OLE DB Provider for SQL Server">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;User ID=panorama;Initial Catalog=FARMAX;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-DTS_ODS_Exception-{CE00EDF8-1FE0-419F-954D-BFD419721730}Microsoft OLE DB Provider for SQL Server;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="qylZQ+UKKAE="
+            IV="gEhkQGMUzh10ayMgeVSyow==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>gEhkQGMUzh10ayMgeVSyoxX6Omqx7IJxRvJZSZ6KCQW32YE0IFI9AejWeSVAzBwvIjS+KWq30pw9BHj8k4u2QPRmeOOSmo8g0ZZ0Bjg/Nb75SkmyVL9tI3UeW2hFdtfY49DNKxYlC156Ee10sa43v/ohFg3HmtUyCAv0wuMWWrTb2y23JrBI6xxxdM/+lPGI</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BE0858E1-6814-415B-87CC-BFF3C4D1F47C}"
+      DTS:ObjectName="Microsoft OLE DB Provider for SQL Server 2">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmPoland;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DTS_ODS_Exception-{BE0858E1-6814-415B-87CC-BFF3C4D1F47C}Microsoft OLE DB Provider for SQL Server 2;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\LOGI"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="ODS Logi"
+      DTS:DTSID="{12A7B1E0-8D04-4654-B8BB-0020A5C670B4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOGI"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\LOGI\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_LOGI]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOGI\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOG_CZAS]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="LOG_CZAS"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_CZAS]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_CZAS]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOG_UZYT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="LOG_UZYT"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_UZYT]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_UZYT]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOG_UZYT_A]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="LOG_UZYT_A"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_UZYT_A]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_UZYT_A]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOG_STACJA]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="LOG_STACJA"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_STACJA]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_STACJA]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOG_DATA]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LOG_DATA"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_DATA]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_DATA]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NR_CEN]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_CEN"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_CEN]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_CEN]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CENA_PROM]"
+                      cachedDataType="r8"
+                      cachedName="CENA_PROM"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA_PROM]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_PROM]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CENA2]"
+                      cachedDataType="r8"
+                      cachedName="CENA2"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA2]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA2]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ILOSC]"
+                      cachedDataType="r8"
+                      cachedName="ILOSC"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ILOSC]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[ILOSC]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NR_OPER]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_OPER"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]" />
+                    <inputColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOG_TYP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="LOG_TYP"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_TYP]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_TYP]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA2]"
+                      dataType="r8"
+                      name="CENA2" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ILOSC]"
+                      dataType="r8"
+                      name="ILOSC" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_CEN" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_DATA]"
+                      dataType="dbTimeStamp"
+                      name="LOG_DATA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="LOG_CZAS" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_TYP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="LOG_TYP" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      name="LOG_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="LOG_STACJA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA_PROM]"
+                      dataType="r8"
+                      name="CENA_PROM" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOG_UZYT_A]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      name="LOG_UZYT_A" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA1]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA1]"
+                      name="CENA1" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA2]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA2]"
+                      name="CENA2" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_EW]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_EW]"
+                      name="CENA_EW" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_ZB]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_ZB]"
+                      name="CENA_ZB" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[GOTOWKA]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[GOTOWKA]"
+                      name="GOTOWKA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILOSC]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILOSC]"
+                      name="ILOSC" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KRED]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KRED]"
+                      name="KRED" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KREDYT]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KREDYT]"
+                      name="KREDYT" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KTM]"
+                      name="KTM" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NOTA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NOTA]"
+                      name="NOTA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_CEN]"
+                      name="NR_CEN" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_KAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_KAT]"
+                      name="NR_KAT" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_REC]"
+                      codePage="1250"
+                      dataType="str"
+                      length="7"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_REC]"
+                      name="NR_REC" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_WYC]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_WYC]"
+                      name="NR_WYC" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[OPIS]"
+                      name="OPIS" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[PLAT]"
+                      name="PLAT" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[PLATNOSC]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[PLATNOSC]"
+                      name="PLATNOSC" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[RECEPTA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[RECEPTA]"
+                      name="RECEPTA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[REF]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[REF]"
+                      name="REF" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_DATA]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_DATA]"
+                      name="LOG_DATA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_CZAS]"
+                      name="LOG_CZAS" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_TYP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_TYP]"
+                      name="LOG_TYP" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_UZYT]"
+                      name="LOG_UZYT" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      name="ZMIANA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_ID]"
+                      name="LOG_ID" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_STACJA]"
+                      name="LOG_STACJA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      name="WYSLANE" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_PROM]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_PROM]"
+                      name="CENA_PROM" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_UZYT_A]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_UZYT_A]"
+                      name="LOG_UZYT_A" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOGI\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\LOGI\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select *
+from logi
+where log_data &gt;= convert(smalldatetime,convert(varchar(10),getdate(),101),101)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOGI\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_CZAS]"
+                      length="5"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_CZAS]"
+                      name="LOG_CZAS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_UZYT]"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_UZYT]"
+                      name="LOG_UZYT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_UZYT_A]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_UZYT_A]"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_UZYT_A]"
+                      name="LOG_UZYT_A"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_STACJA]"
+                      length="2"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_STACJA]"
+                      name="LOG_STACJA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_DATA]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_DATA]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_DATA]"
+                      name="LOG_DATA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_CEN]"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_CEN]"
+                      name="NR_CEN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_PROM]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_PROM]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_PROM]"
+                      name="CENA_PROM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA2]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA2]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA2]"
+                      name="CENA2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[ILOSC]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ILOSC]"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[ILOSC]"
+                      name="ILOSC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      name="NR_OPER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_TYP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_TYP]"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].Columns[LOG_TYP]"
+                      name="LOG_TYP"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA1]"
+                      dataType="r8"
+                      name="CENA1" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA2]"
+                      dataType="r8"
+                      name="CENA2" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_EW]"
+                      dataType="r8"
+                      name="CENA_EW" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_ZB]"
+                      dataType="r8"
+                      name="CENA_ZB" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[GOTOWKA]"
+                      dataType="r8"
+                      name="GOTOWKA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ILOSC]"
+                      dataType="r8"
+                      name="ILOSC" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KRED]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="KRED" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KREDYT]"
+                      dataType="r8"
+                      name="KREDYT" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="KTM" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NOTA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="NOTA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_CEN" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_KAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      name="NR_KAT" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_REC]"
+                      codePage="1250"
+                      dataType="str"
+                      length="7"
+                      name="NR_REC" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_WYC]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_WYC" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="30"
+                      name="OPIS" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="PLAT" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PLATNOSC]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      name="PLATNOSC" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RECEPTA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="RECEPTA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[REF]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="REF" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_DATA]"
+                      dataType="dbTimeStamp"
+                      name="LOG_DATA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="LOG_CZAS" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_TYP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      name="LOG_TYP" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      name="LOG_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="ZMIANA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="LOG_ID" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="LOG_STACJA" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="WYSLANE" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_PROM]"
+                      dataType="r8"
+                      name="CENA_PROM" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LOG_UZYT_A]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      name="LOG_UZYT_A" />
+                    <externalMetadataColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_AUTORYZACJI]"
+                      dataType="i4"
+                      name="ID_AUTORYZACJI" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_CZAS]"
+                      name="LOG_CZAS" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_UZYT]"
+                      name="LOG_UZYT" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_UZYT_A]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_UZYT_A]"
+                      name="LOG_UZYT_A" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_STACJA]"
+                      name="LOG_STACJA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_DATA]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_DATA]"
+                      name="LOG_DATA" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_CEN]"
+                      name="NR_CEN" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA_PROM]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA_PROM]"
+                      name="CENA_PROM" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA2]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA2]"
+                      name="CENA2" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ILOSC]"
+                      dataType="r8"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ILOSC]"
+                      name="ILOSC" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_TYP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LOG_TYP]"
+                      name="LOG_TYP" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\LOGI.Paths[OLE DB Source Output]"
+              endId="Package\LOGI\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\LOGI\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LOG_SZUF"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="ODS_LOG_SZUF"
+      DTS:DTSID="{D6E6F16A-500B-4C4F-B472-E5EC98532038}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOG_SZUF"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\LOG_SZUF\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_LOG_SZUF]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOG_SZUF\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CZAS]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="CZAS"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CZAS]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZAS]" />
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DATA_OP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DATA_OP"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATA_OP]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATA_OP]" />
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_UZYT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_UZYT"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_UZYT]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_UZYT]" />
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[KSIEG]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="KSIEG"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KSIEG]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[KSIEG]" />
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NR_OPER]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_OPER"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]" />
+                    <inputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[STACJA]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="STACJA"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STACJA]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[STACJA]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="CZAS" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KSIEG]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="KSIEG" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="STACJA" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CZAS]"
+                      name="CZAS" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_UZYT]"
+                      name="ID_UZYT" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KSIEG]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KSIEG]"
+                      name="KSIEG" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[STACJA]"
+                      name="STACJA" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      name="WYSLANE" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      name="ZMIANA" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOG_SZUF\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\LOG_SZUF\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select *
+from LOG_SZUF
+where ksieg in ('N','C')
+and data_op &gt;=  convert(smalldatetime,convert(varchar(10),getdate(),101),101)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOG_SZUF\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZAS]"
+                      length="5"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZAS]"
+                      name="CZAS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      name="DATA_OP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_UZYT]"
+                      length="3"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_UZYT]"
+                      name="ID_UZYT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[KSIEG]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KSIEG]"
+                      length="1"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[KSIEG]"
+                      name="KSIEG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      length="10"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      name="NR_OPER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STACJA]"
+                      length="2"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].Columns[STACJA]"
+                      name="STACJA"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="CZAS" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KSIEG]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="KSIEG" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="STACJA" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="WYSLANE" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="ZMIANA" />
+                    <externalMetadataColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CZAS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CZAS]"
+                      name="CZAS" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_UZYT]"
+                      name="ID_UZYT" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KSIEG]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KSIEG]"
+                      name="KSIEG" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STACJA]"
+                      name="STACJA" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\LOG_SZUF.Paths[OLE DB Source Output]"
+              endId="Package\LOG_SZUF\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\LOG_SZUF\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PLAN"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="ODS Plan"
+      DTS:DTSID="{06BCB9DA-7C54-4EF7-8E3D-B3DA6201AF7B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PLAN"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\PLAN\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_PLAN]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\PLAN\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CZAS_Z]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="CZAS_Z"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CZAS_Z]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZAS_Z]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_UZYT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_UZYT"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_UZYT]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_UZYT]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DATA_OP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DATA_OP"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATA_OP]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATA_OP]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[STACJA]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="STACJA"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STACJA]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[STACJA]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[STAT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="STAT"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STAT]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[STAT]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ZMIANA]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="ZMIANA"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ZMIANA]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ZMIANA]" />
+                    <inputColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NR_OPER]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_OPER"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CZAS_Z]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="CZAS_Z" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="STACJA" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="STAT" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="ZMIANA" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CZAS_R]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CZAS_R]"
+                      name="CZAS_R" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CZAS_Z]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CZAS_Z]"
+                      name="CZAS_Z" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_UZYT]"
+                      name="ID_UZYT" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KURS]"
+                      dataType="r8"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KURS]"
+                      name="KURS" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER1]"
+                      name="NR_OPER1" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER2]"
+                      name="NR_OPER2" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_REK1]"
+                      dataType="i4"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_REK1]"
+                      name="NR_REK1" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_REK2]"
+                      dataType="i4"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_REK2]"
+                      name="NR_REK2" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[STACJA]"
+                      name="STACJA" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[STAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[STAT]"
+                      name="STAT" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      name="WYSLANE" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      name="ZMIANA" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\PLAN\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\PLAN\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select *
+from [PLAN]
+where data_op &gt;= convert(smalldatetime,convert(varchar(10),getdate(),101),101)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\PLAN\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZAS_Z]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZAS_Z]"
+                      length="5"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[CZAS_Z]"
+                      name="CZAS_Z"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_UZYT]"
+                      length="3"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_UZYT]"
+                      name="ID_UZYT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      name="DATA_OP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STACJA]"
+                      length="2"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[STACJA]"
+                      name="STACJA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[STAT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STAT]"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[STAT]"
+                      name="STAT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZMIANA]"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[ZMIANA]"
+                      name="ZMIANA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      length="10"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      name="NR_OPER"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZAS_R]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="CZAS_R" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CZAS_Z]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      name="CZAS_Z" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_UZYT" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KURS]"
+                      dataType="r8"
+                      name="KURS" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER1]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER1" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER2" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_REK1]"
+                      dataType="i4"
+                      name="NR_REK1" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_REK2]"
+                      dataType="i4"
+                      name="NR_REK2" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="STACJA" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="STAT" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="WYSLANE" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="ZMIANA" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KZ]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="KZ" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CZAS_Z]"
+                      codePage="1250"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CZAS_Z]"
+                      name="CZAS_Z" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_UZYT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_UZYT]"
+                      name="ID_UZYT" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STACJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STACJA]"
+                      name="STACJA" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STAT]"
+                      name="STAT" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ZMIANA]"
+                      name="ZMIANA" />
+                    <outputColumn
+                      refId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\PLAN.Paths[OLE DB Source Output]"
+              endId="Package\PLAN\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\PLAN\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PLAN_P"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="ODS_PLAN_P"
+      DTS:DTSID="{33EF4304-772D-4382-9617-71D95DEA194D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PLAN_P"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\PLAN_P\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_PLAN_P]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\PLAN_P\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server 2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NR_OPER]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_OPER"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]" />
+                    <inputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[KWOTA]"
+                      cachedDataType="r8"
+                      cachedName="KWOTA"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KWOTA]"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[KWOTA]" />
+                    <inputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SPOS_PLAT]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="SPOS_PLAT"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SPOS_PLAT]"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[SPOS_PLAT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KWOTA]"
+                      dataType="r8"
+                      name="KWOTA" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SPOS_PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8"
+                      name="SPOS_PLAT" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILOSC]"
+                      dataType="i4"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILOSC]"
+                      name="ILOSC" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KARTA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KARTA]"
+                      name="KARTA" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KURS]"
+                      dataType="r8"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KURS]"
+                      name="KURS" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KWOTA]"
+                      dataType="r8"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KWOTA]"
+                      name="KWOTA" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KWOTA_UT]"
+                      dataType="r8"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KWOTA_UT]"
+                      name="KWOTA_UT" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[SPOS_PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[SPOS_PLAT]"
+                      name="SPOS_PLAT" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      name="WYSLANE" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ZMIANA]"
+                      name="ZMIANA" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\PLAN_P\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\PLAN_P\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select *
+from PLAN_P
+where data_op &gt;=  convert(smalldatetime,convert(varchar(10),getdate(),101),101)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\PLAN_P\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  connectionManagerRefId="Package.ConnectionManagers[Microsoft OLE DB Provider for SQL Server]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      length="10"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      name="NR_OPER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[KWOTA]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KWOTA]"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[KWOTA]"
+                      name="KWOTA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[SPOS_PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SPOS_PLAT]"
+                      length="8"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].Columns[SPOS_PLAT]"
+                      name="SPOS_PLAT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ILOSC]"
+                      dataType="i4"
+                      name="ILOSC" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KARTA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="KARTA" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KURS]"
+                      dataType="r8"
+                      name="KURS" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KWOTA]"
+                      dataType="r8"
+                      name="KWOTA" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KWOTA_UT]"
+                      dataType="r8"
+                      name="KWOTA_UT" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SPOS_PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8"
+                      name="SPOS_PLAT" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="WYSLANE" />
+                    <externalMetadataColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ZMIANA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="ZMIANA" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KWOTA]"
+                      dataType="r8"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KWOTA]"
+                      name="KWOTA" />
+                    <outputColumn
+                      refId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SPOS_PLAT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SPOS_PLAT]"
+                      name="SPOS_PLAT" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\PLAN_P.Paths[OLE DB Source Output]"
+              endId="Package\PLAN_P\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\PLAN_P\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate ODS Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task  undefined"
+      DTS:DTSID="{C89C13D6-3252-4A79-89E4-2140F8C113A8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate ODS Tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BE0858E1-6814-415B-87CC-BFF3C4D1F47C}"
+          SQLTask:SqlStatementSource="truncate table ODS_LOGI&#xA;truncate table ODS_LOG_SZUF&#xA;truncate table ODS_PLAN&#xA;truncate table ODS_PLAN_P" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{05016DB8-75C0-4BB3-9D92-2451F9ACD371\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{05016DB8-75C0-4BB3-9D92-2451F9ACD371}"
+      DTS:From="Package\Truncate ODS Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{05016DB8-75C0-4BB3-9D92-2451F9ACD371}"
+      DTS:To="Package\LOG_SZUF" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{1D022AC1-8688-4600-A842-937D9B4D215F\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{1D022AC1-8688-4600-A842-937D9B4D215F}"
+      DTS:From="Package\Truncate ODS Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{1D022AC1-8688-4600-A842-937D9B4D215F}"
+      DTS:To="Package\PLAN_P" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{6BF0871D-95C7-454E-9776-4C2C4C7D3772\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{6BF0871D-95C7-454E-9776-4C2C4C7D3772}"
+      DTS:From="Package\Truncate ODS Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{6BF0871D-95C7-454E-9776-4C2C4C7D3772}"
+      DTS:To="Package\PLAN" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{CFD451D3-0D9C-479F-BDBB-BA0EB29718F8\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{CFD451D3-0D9C-479F-BDBB-BA0EB29718F8}"
+      DTS:From="Package\Truncate ODS Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{CFD451D3-0D9C-479F-BDBB-BA0EB29718F8}"
+      DTS:To="Package\LOGI" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\LOG_SZUF"
+          TopLeft="160.141509433962,87.1603773584906" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\LOGI"
+          TopLeft="5.5,87.1603773584906" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\PLAN"
+          TopLeft="314.783018867925,87.1603773584906" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\PLAN_P"
+          TopLeft="469.424528301887,87.1603773584906" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Truncate ODS Tables"
+          TopLeft="237.462264150943,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{05016DB8-75C0-4BB3-9D92-2451F9ACD371\}]"
+          TopLeft="284.594339622641,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-56.566037735849,37.7358490566038"
+              Start="0,0"
+              End="-56.566037735849,30.2358490566038">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.8679245283019" />
+                  <mssgle:LineSegment
+                    End="-56.566037735849,18.8679245283019" />
+                  <mssgle:LineSegment
+                    End="-56.566037735849,30.2358490566038" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{1D022AC1-8688-4600-A842-937D9B4D215F\}]"
+          TopLeft="346.858490566038,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="190.452830188679,37.7358490566038"
+              Start="0,0"
+              End="190.452830188679,30.2358490566038">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5660377358491" />
+                  <mssgle:LineSegment
+                    End="190.452830188679,12.5660377358491" />
+                  <mssgle:LineSegment
+                    End="190.452830188679,30.2358490566038" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{6BF0871D-95C7-454E-9776-4C2C4C7D3772\}]"
+          TopLeft="326.103773584906,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="56.5660377358491,37.7358490566038"
+              Start="0,0"
+              End="56.5660377358491,30.2358490566038">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.8679245283019" />
+                  <mssgle:LineSegment
+                    End="56.5660377358491,18.8679245283019" />
+                  <mssgle:LineSegment
+                    End="56.5660377358491,30.2358490566038" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{CFD451D3-0D9C-479F-BDBB-BA0EB29718F8\}]"
+          TopLeft="263.839622641509,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-190.452830188679,37.7358490566038"
+              Start="0,0"
+              End="-190.452830188679,30.2358490566038">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5660377358491" />
+                  <mssgle:LineSegment
+                    End="-190.452830188679,12.5660377358491" />
+                  <mssgle:LineSegment
+                    End="-190.452830188679,30.2358490566038" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\LOG_SZUF">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\LOG_SZUF\OLE DB Destination"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\LOG_SZUF\OLE DB Source"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\LOG_SZUF.Paths[OLE DB Source Output]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\LOGI">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\LOGI\OLE DB Source"
+          TopLeft="16,5.5" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\LOGI\OLE DB Destination"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\LOGI.Paths[OLE DB Source Output]"
+          TopLeft="91,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\PLAN">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\PLAN\OLE DB Destination"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\PLAN\OLE DB Source"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\PLAN.Paths[OLE DB Source Output]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\PLAN_P">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\PLAN_P\OLE DB Source"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\PLAN_P\OLE DB Destination"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\PLAN_P.Paths[OLE DB Source Output]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,813 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/8/2020 10:22:16 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{D1E02D88-D199-42EC-8DF8-29DC22CB5F93}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="FARMAX_GPL_Search_Data_To_GdziePoLek_Search_Data"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="69"
+  DTS:VersionGUID="{04F84A9F-EF3F-42C8-B767-8CC625EC0B6E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{F3BC4EFF-6B88-4D1A-A653-0E30AB0A16F3}"
+      DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.FARMAX">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;Initial Catalog=FARMAX;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="0h8+sZ9d2gs="
+            IV="ioPGle3hs+1HapVutXzfHQ==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>ioPGle3hs+1HapVutXzfHSYJz4WxRdfxoT/wErSgKpHtGwgDULyEwfJ1VcUv3qxVQoCkwyfNLLkfkN4tGuutrsNhggvI449MgbuB8MNt3rwxXUnqY2GCqTNSfhkCX7KWHYVdEiUGWPcH/Z5OpHu696U+7WevlZ1Nl9NCgtXL3Z0=</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{59BB87A4-0240-4452-86CF-99E4E9FC089A}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="o2qIsJILgOw="
+            IV="4L3EptGRa5DfhXaC6WOoWA==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>4L3EptGRa5DfhXaC6WOoWA5xgqHPkUXCeaHVlzCGOr83Fj+NI64mEDLvInW1BEkujUyrN+S70XWMCeUfpozc8TO7fvMOG3JnO5YGSLMB5sSN/3aR8JJTSnXuh5iZUUVygUlUIQo4oybC7O6oA8n7Qp5ynOCzh4zGaHNb5Jc0C90=</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{4E6A68AA-E31F-4FB1-AA7E-F965152D3F13}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\GdziePoLek_Search_Data"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="GdziePoLek_Search_Data"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[GdziePoLek_Search_Data]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\GdziePoLek_Search_Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[DateFrom]"
+                      cachedDataType="dbDate"
+                      cachedName="DateFrom"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[DateFrom]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[DateFrom]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[DateTo]"
+                      cachedDataType="dbDate"
+                      cachedName="DateTo"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[DateTo]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[DateTo]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[Ean13]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="Ean13"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[Ean13]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[Ean13]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[GPLProductName]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="GPLProductName"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[GPLProductName]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[GPLProductName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[BlozProductName]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="BlozProductName"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[BlozProductName]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[BlozProductName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[SKU]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="SKU"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[SKU]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[SKU]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[OPIS]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="OPIS"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[OPIS]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[OPIS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[ActualStock]"
+                      cachedDataType="r8"
+                      cachedName="ActualStock"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[ActualStock]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[ActualStock]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[City]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[Availability]"
+                      cachedDataType="r8"
+                      cachedName="Availability"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[Availability]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[Availability]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].Columns[NoOfViews]"
+                      cachedDataType="i4"
+                      cachedName="NoOfViews"
+                      externalMetadataColumnId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[NoOfViews]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[NoOfViews]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[DateFrom]"
+                      dataType="dbDate"
+                      name="DateFrom" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[DateTo]"
+                      dataType="dbDate"
+                      name="DateTo" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[Ean13]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      name="Ean13" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[GPLProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="200"
+                      name="GPLProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[BlozProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="BlozProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[SKU]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SKU" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="OPIS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[ActualStock]"
+                      dataType="r8"
+                      name="ActualStock" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[Availability]"
+                      dataType="r8"
+                      name="Availability" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input].ExternalColumns[NoOfViews]"
+                      dataType="i4"
+                      name="NoOfViews" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\GdziePoLek_Search_Data.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\GdziePoLek_Search_Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\GdziePoLek_Search_Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\GdziePoLek_Search_Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\V_GPL_Search_Date"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="V_GPL_Search_Date"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[v_GPL_Search_Data]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [DateFrom]
+      ,[DateTo]
+      ,[Ean13]
+      ,[GPLProductName]
+      ,[BlozProductName]
+      ,[SKU]
+      ,[OPIS]
+      ,[ActualStock]
+      ,[City]
+      ,[Availability]
+      ,[NoOfViews]
+  FROM V_GPL_Search_Data
+  
+  where CAST(DateTo AS DATE)=(SELECT MAX(CAST(DateTo AS DATE)) FROM  V_GPL_Search_Data)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\V_GPL_Search_Date.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[DateFrom]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[DateFrom]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[DateFrom]"
+                      name="DateFrom"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[DateTo]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[DateTo]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[DateTo]"
+                      name="DateTo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[Ean13]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[Ean13]"
+                      length="15"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[Ean13]"
+                      name="Ean13"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[GPLProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[GPLProductName]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[GPLProductName]"
+                      name="GPLProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[BlozProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[BlozProductName]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[BlozProductName]"
+                      name="BlozProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[SKU]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[SKU]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[SKU]"
+                      name="SKU"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[OPIS]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[OPIS]"
+                      name="OPIS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[ActualStock]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[ActualStock]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[ActualStock]"
+                      name="ActualStock"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[City]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      length="50"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[Availability]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[Availability]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[Availability]"
+                      name="Availability"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[NoOfViews]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[NoOfViews]"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].Columns[NoOfViews]"
+                      name="NoOfViews"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[DateFrom]"
+                      dataType="dbDate"
+                      name="DateFrom" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[DateTo]"
+                      dataType="dbDate"
+                      name="DateTo" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[Ean13]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      name="Ean13" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[GPLProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="200"
+                      name="GPLProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[BlozProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="BlozProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[SKU]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SKU" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="OPIS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[ActualStock]"
+                      dataType="r8"
+                      name="ActualStock" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[Availability]"
+                      dataType="r8"
+                      name="Availability" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output].ExternalColumns[NoOfViews]"
+                      dataType="i4"
+                      name="NoOfViews" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[DateFrom]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[DateFrom]"
+                      name="DateFrom" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[DateTo]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[DateTo]"
+                      name="DateTo" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[Ean13]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[Ean13]"
+                      name="Ean13" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[GPLProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[GPLProductName]"
+                      name="GPLProductName" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[BlozProductName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[BlozProductName]"
+                      name="BlozProductName" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[SKU]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[SKU]"
+                      name="SKU" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[OPIS]"
+                      name="OPIS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[ActualStock]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[ActualStock]"
+                      name="ActualStock" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[City]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[Availability]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[Availability]"
+                      name="Availability" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[NoOfViews]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[NoOfViews]"
+                      name="NoOfViews" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\GdziePoLek_Search_Data.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\V_GPL_Search_Date.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\TRUNCATE TABLE  GdziePoLek_Search_Data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DelayValidation="True"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{72FF9CE0-1773-485C-902E-A4E6505AD910}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="TRUNCATE TABLE  GdziePoLek_Search_Data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{59BB87A4-0240-4452-86CF-99E4E9FC089A}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE  GdziePoLek_Search_Data" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{ABB57DE0-142B-48C1-9866-23CAC7E8F0C8}"
+      DTS:From="Package\TRUNCATE TABLE  GdziePoLek_Search_Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Data Flow Task"
+          TopLeft="250,125" />
+        <NodeLayout
+          Size="290,42"
+          Id="Package\TRUNCATE TABLE  GdziePoLek_Search_Data"
+          TopLeft="173,50" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="321.75,92">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Loading incremental data from last week"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="244,60"
+          Id="aabf6f2c-bb11-4c39-9820-74f64dc8a10b"
+          TopLeft="439,113" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Data Flow Task\V_GPL_Search_Date"
+          TopLeft="223,60" />
+        <NodeLayout
+          Size="198,42"
+          Id="Package\Data Flow Task\GdziePoLek_Search_Data"
+          TopLeft="207,144" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="308.25,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\GdziePoLek_Search_Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\V_GPL_Search_Date">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

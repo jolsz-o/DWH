@@ -1,0 +1,1371 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/14/2023 12:07:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{D79D8BA6-FFFF-4CBA-B05A-923DBD95FEA2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="cdp_magento_events"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="436"
+  DTS:VersionGUID="{B1BF15DD-1391-414B-82FD-0722260F0CFB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+      DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{31392C37-EE70-400D-AAEC-3EB91E44DACA}"
+      DTS:ObjectName="MagentoDB_new.promoviewonly">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="qoEY56JMxa8="
+            IV="8eGPArpO9DEevJq56MtJ2g==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>8eGPArpO9DEevJq56MtJ2rM0TN9o6o5bwuDPQF4xy1YWPxshRTJPGkQTZCzwG2pGD2nKxVJ9THP+pRcIaWvtF44gkvTDRbYRb9JOrkv1eVPDYDnysmWBUUz5Xx3gTF85GGhCBxCxg+9wP20A3uNX6V221VIphyij+cnj7+Bpfva0YKJr6cb6KiumL/iMjTz6</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C9FA9E61-3880-4C33-BE9F-FBD2B6D7ACD6}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{5180024B-4F78-4E6F-A423-A987452820BE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET abandoned_carts"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT /*+ MAX_EXECUTION_TIME(100000000) */
+	cast(updated_at as date) as updated_at,
+    `main_table`.entity_id,
+    `main_table`.customer_id, 
+    cast(`main_table`.customer_email as char(200)) as customer_email,
+    cast(`main_table`.customer_firstname as char(200)) as customer_firstname,
+    cast(`main_table`.customer_lastname as char(200)) as customer_lastname,
+    `main_table`.customer_is_guest,
+    `main_table`.customer_gender, 
+    `main_table`.abandoned_cart_email_status,
+    `main_table`.items_count,
+    `main_table`.base_currency_code,
+    `main_table`.grand_total,
+    (main_table.base_subtotal_with_discount * main_table.base_to_global_rate) AS `subtotal`
+FROM
+    `quote` AS `main_table`
+WHERE
+    (`items_count` != '0')
+        AND (main_table.is_active = '1')
+        AND (main_table.customer_id != '')
+        AND (store_id IN (2 , 4, 5)) -- Drugstore PL, Pharmacy PL, Italy
+		
+        and updated_at &gt;= DATE_SUB(cast(CURDATE() as date), INTERVAL 30 DAY)	
+;</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+                  connectionManagerRefId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[updated_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[updated_at]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[updated_at]"
+                      name="updated_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[entity_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[entity_id]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[entity_id]"
+                      name="entity_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_id]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_id]"
+                      name="customer_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_email]"
+                      length="400"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_email]"
+                      name="customer_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_firstname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_firstname]"
+                      length="400"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_firstname]"
+                      name="customer_firstname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_lastname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_lastname]"
+                      length="400"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_lastname]"
+                      name="customer_lastname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_is_guest]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_is_guest]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_is_guest]"
+                      name="customer_is_guest"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_gender]"
+                      length="382"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_gender]"
+                      name="customer_gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[abandoned_cart_email_status]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[abandoned_cart_email_status]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[abandoned_cart_email_status]"
+                      name="abandoned_cart_email_status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[items_count]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[items_count]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[items_count]"
+                      name="items_count"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[base_currency_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[base_currency_code]"
+                      length="382"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[base_currency_code]"
+                      name="base_currency_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[grand_total]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[grand_total]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[grand_total]"
+                      name="grand_total"
+                      precision="20"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[subtotal]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[subtotal]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[subtotal]"
+                      name="subtotal"
+                      precision="38"
+                      scale="8"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[updated_at]"
+                      dataType="dbTimeStamp"
+                      name="updated_at" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[entity_id]"
+                      dataType="i8"
+                      name="entity_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="400"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_firstname]"
+                      dataType="wstr"
+                      length="400"
+                      name="customer_firstname" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_lastname]"
+                      dataType="wstr"
+                      length="400"
+                      name="customer_lastname" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_is_guest]"
+                      dataType="i4"
+                      name="customer_is_guest" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[customer_gender]"
+                      dataType="wstr"
+                      length="382"
+                      name="customer_gender" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[abandoned_cart_email_status]"
+                      dataType="i2"
+                      name="abandoned_cart_email_status" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[items_count]"
+                      dataType="i8"
+                      name="items_count" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[base_currency_code]"
+                      dataType="wstr"
+                      length="382"
+                      name="base_currency_code" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[grand_total]"
+                      dataType="numeric"
+                      name="grand_total"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].ExternalColumns[subtotal]"
+                      dataType="numeric"
+                      name="subtotal"
+                      precision="38"
+                      scale="8" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[updated_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[updated_at]"
+                      name="updated_at" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[entity_id]"
+                      dataType="i8"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[entity_id]"
+                      name="entity_id" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_id]"
+                      dataType="i8"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_id]"
+                      name="customer_id" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_email]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_email]"
+                      name="customer_email" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_firstname]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_firstname]"
+                      name="customer_firstname" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_lastname]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_lastname]"
+                      name="customer_lastname" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_is_guest]"
+                      dataType="i4"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_is_guest]"
+                      name="customer_is_guest" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_gender]"
+                      dataType="wstr"
+                      length="382"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[customer_gender]"
+                      name="customer_gender" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[abandoned_cart_email_status]"
+                      dataType="i2"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[abandoned_cart_email_status]"
+                      name="abandoned_cart_email_status" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[items_count]"
+                      dataType="i8"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[items_count]"
+                      name="items_count" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[base_currency_code]"
+                      dataType="wstr"
+                      length="382"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[base_currency_code]"
+                      name="base_currency_code" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[grand_total]"
+                      dataType="numeric"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[grand_total]"
+                      name="grand_total"
+                      precision="20"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[subtotal]"
+                      dataType="numeric"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[subtotal]"
+                      name="subtotal"
+                      precision="38"
+                      scale="8" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_ODS_abandoned_carts"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[cdp_ODS_abandoned_carts]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[updated_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="updated_at"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[updated_at]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[updated_at]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[entity_id]"
+                      cachedDataType="i8"
+                      cachedName="entity_id"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[entity_id]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      cachedDataType="i8"
+                      cachedName="customer_id"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_id]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[customer_email]"
+                      cachedDataType="wstr"
+                      cachedLength="400"
+                      cachedName="customer_email"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_email]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[customer_firstname]"
+                      cachedDataType="wstr"
+                      cachedLength="400"
+                      cachedName="customer_firstname"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_firstname]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_firstname]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[customer_lastname]"
+                      cachedDataType="wstr"
+                      cachedLength="400"
+                      cachedName="customer_lastname"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_lastname]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_lastname]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[customer_is_guest]"
+                      cachedDataType="i4"
+                      cachedName="customer_is_guest"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_is_guest]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_is_guest]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[customer_gender]"
+                      cachedDataType="wstr"
+                      cachedLength="382"
+                      cachedName="customer_gender"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_gender]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[customer_gender]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[abandoned_cart_email_status]"
+                      cachedDataType="i2"
+                      cachedName="abandoned_cart_email_status"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[abandoned_cart_email_status]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[abandoned_cart_email_status]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[items_count]"
+                      cachedDataType="i8"
+                      cachedName="items_count"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[items_count]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[items_count]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[base_currency_code]"
+                      cachedDataType="wstr"
+                      cachedLength="382"
+                      cachedName="base_currency_code"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[base_currency_code]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[base_currency_code]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[grand_total]"
+                      cachedDataType="numeric"
+                      cachedName="grand_total"
+                      cachedPrecision="20"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[grand_total]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[grand_total]" />
+                    <inputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].Columns[subtotal]"
+                      cachedDataType="numeric"
+                      cachedName="subtotal"
+                      cachedPrecision="38"
+                      cachedScale="8"
+                      externalMetadataColumnId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[subtotal]"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output].Columns[subtotal]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[updated_at]"
+                      dataType="dbTimeStamp"
+                      name="updated_at" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      dataType="i8"
+                      name="entity_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="400"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_firstname]"
+                      dataType="wstr"
+                      length="400"
+                      name="customer_firstname" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_lastname]"
+                      dataType="wstr"
+                      length="400"
+                      name="customer_lastname" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_is_guest]"
+                      dataType="i4"
+                      name="customer_is_guest" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[customer_gender]"
+                      dataType="wstr"
+                      length="382"
+                      name="customer_gender" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[abandoned_cart_email_status]"
+                      dataType="i2"
+                      name="abandoned_cart_email_status" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[items_count]"
+                      dataType="i8"
+                      name="items_count" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[base_currency_code]"
+                      dataType="wstr"
+                      length="382"
+                      name="base_currency_code" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[grand_total]"
+                      dataType="numeric"
+                      name="grand_total"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input].ExternalColumns[subtotal]"
+                      dataType="numeric"
+                      name="subtotal"
+                      precision="38"
+                      scale="8" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts.Paths[ADO NET Source Output]"
+              endId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{55680f98-a723-477f-8f79-c182d0c602fb}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET cdp_ods_wish_list"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT /*+ MAX_EXECUTION_TIME(100000000000000) */
+    `main_table`.`qty` AS `item_qty`,
+    cast(`main_table`.`added_at` as date) as added_at,
+    `main_table`.`product_id`,
+    cast(IFNULL(name, 'Wish List') as char(100)) AS `wishlist_name`,
+    cast((CONCAT(IF(customer.prefix IS NOT NULL
+                    AND customer.prefix != '',
+                CONCAT(LTRIM(RTRIM(customer.prefix)), ' '),
+                ''),
+            LTRIM(RTRIM(customer.firstname)),
+            ' ',
+            IF(customer.middlename IS NOT NULL
+                    AND customer.middlename != '',
+                CONCAT(LTRIM(RTRIM(customer.middlename)), ' '),
+                ''),
+            LTRIM(RTRIM(customer.lastname)),
+            IF(customer.suffix IS NOT NULL
+                    AND customer.suffix != '',
+                CONCAT(' ', LTRIM(RTRIM(customer.suffix))),
+                ''))) as char(100)) AS `customer_name`
+FROM
+    `wishlist_item` AS `main_table`
+        INNER JOIN
+    `wishlist` AS `wishlist_table` ON main_table.wishlist_id = wishlist_table.wishlist_id
+        LEFT JOIN
+    `customer_entity` AS `customer` ON customer.entity_id = wishlist_table.customer_id
+WHERE
+    (`main_table`.`store_id` IN (2 , 4, 5)) -- Drugstore PL, Pharmacy PL, Italy
+    and cast(`main_table`.`added_at` as date) &gt;= DATE_SUB(cast(CURDATE() as date), INTERVAL 1 YEAR)
+;</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+                  connectionManagerRefId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[item_qty]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[item_qty]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[item_qty]"
+                      name="item_qty"
+                      precision="12"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[added_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[added_at]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[added_at]"
+                      name="added_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[product_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[product_id]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[product_id]"
+                      name="product_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[wishlist_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[wishlist_name]"
+                      length="200"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[wishlist_name]"
+                      name="wishlist_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[customer_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[customer_name]"
+                      length="200"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[customer_name]"
+                      name="customer_name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[item_qty]"
+                      dataType="numeric"
+                      name="item_qty"
+                      precision="12"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[added_at]"
+                      dataType="dbTimeStamp"
+                      name="added_at" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[product_id]"
+                      dataType="i8"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[wishlist_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="wishlist_name" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].ExternalColumns[customer_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="customer_name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[item_qty]"
+                      dataType="numeric"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[item_qty]"
+                      name="item_qty"
+                      precision="12"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[added_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[added_at]"
+                      name="added_at" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[product_id]"
+                      dataType="i8"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[product_id]"
+                      name="product_id" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[wishlist_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[wishlist_name]"
+                      name="wishlist_name" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[customer_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[customer_name]"
+                      name="customer_name" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_ods_wish_list"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[cdp_ods_wish_list]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].Columns[item_qty]"
+                      cachedDataType="numeric"
+                      cachedName="item_qty"
+                      cachedPrecision="12"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[item_qty]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[item_qty]" />
+                    <inputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].Columns[added_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="added_at"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[added_at]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[added_at]" />
+                    <inputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].Columns[product_id]"
+                      cachedDataType="i8"
+                      cachedName="product_id"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[product_id]" />
+                    <inputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].Columns[wishlist_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="wishlist_name"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[wishlist_name]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[wishlist_name]" />
+                    <inputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].Columns[customer_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="customer_name"
+                      externalMetadataColumnId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[customer_name]"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output].Columns[customer_name]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[item_qty]"
+                      dataType="numeric"
+                      name="item_qty"
+                      precision="12"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[added_at]"
+                      dataType="dbTimeStamp"
+                      name="added_at" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i8"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[wishlist_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="wishlist_name" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input].ExternalColumns[customer_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="customer_name" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list.Paths[ADO NET Source Output]"
+              endId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table cdp_ODS_abandoned_carts"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A3C90CF2-C9DE-4893-B9F0-5700B6AC572F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table cdp_ODS_abandoned_carts"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C9FA9E61-3880-4C33-BE9F-FBD2B6D7ACD6}"
+          SQLTask:SqlStatementSource="truncate table cdp_ODS_abandoned_carts" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table cdp_ods_wish_list"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{37f1e324-564e-4bda-90ea-b45c49d2775f}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table cdp_ods_wish_list"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C9FA9E61-3880-4C33-BE9F-FBD2B6D7ACD6}"
+          SQLTask:SqlStatementSource="truncate table cdp_ods_wish_list" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{82AEB58D-C5D0-40B0-959C-C5ACDCE9F250}"
+      DTS:From="Package\Truncate table cdp_ods_wish_list"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8 1 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5205F53A-4522-4E96-9766-0511EAD120E8}"
+      DTS:From="Package\Truncate table cdp_ODS_abandoned_carts"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8 1 1"
+      DTS:To="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="409.6,41.6"
+          Id="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts"
+          TopLeft="183.004081942666,394.774781689702" />
+        <NodeLayout
+          Size="280,41.6"
+          Id="Package\Truncate table cdp_ODS_abandoned_carts"
+          TopLeft="242.575511528588,293.957413329" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8 1 1]"
+          TopLeft="385.189796735627,335.557413329">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.217368360702"
+              Start="0,0"
+              End="0,51.717368360702">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.717368360702" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="ODS"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="52.8,40"
+          Id="d5eb0359-3126-4dca-acd4-47dec58afb75"
+          TopLeft="353.983675669373,238.712593785557" />
+        <AnnotationLayout
+          Text="Abandoned Carts"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="120.8,60"
+          Id="8d5040ba-cb3a-4d6d-b50b-a059b35c96eb"
+          TopLeft="320.000005449568,162.729414046924" />
+        <AnnotationLayout
+          Text="Wish List"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="76,60"
+          Id="7297200c-761c-4938-aeeb-5a744b296310"
+          TopLeft="723.214297936887,149.876472613061" />
+        <NodeLayout
+          Size="234.4,41.6"
+          Id="Package\Truncate table cdp_ods_wish_list"
+          TopLeft="714.432662421412,294.492425917202" />
+        <NodeLayout
+          Size="324.8,41.6"
+          Id="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list"
+          TopLeft="676.718376064856,394.82183908899" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="835.375519243134,336.092425917202">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58.729413171788"
+              Start="0,0"
+              End="0,51.229413171788">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.229413171788" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="206.4,41.6"
+          Id="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts"
+          TopLeft="83.8571442852216,111.152942746568" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts"
+          TopLeft="86.4285729004412,192.705885055568" />
+        <EdgeLayout
+          Id="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts.Paths[ADO NET Source Output]"
+          TopLeft="188.742858592831,152.752942746568">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.952942309"
+              Start="0,0"
+              End="0,32.452942309">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.452942309" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\ADO NET abandoned_carts">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Magento  abandoned_carts --&gt; SUPERDW cdp_ODS_abandoned_carts\cdp_ODS_abandoned_carts">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="210.4,41.6"
+          Id="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list"
+          TopLeft="83.8571442852216,111.152942746568" />
+        <NodeLayout
+          Size="163.2,41.6"
+          Id="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list"
+          TopLeft="206.4,181.6" />
+        <EdgeLayout
+          Id="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list.Paths[ADO NET Source Output]"
+          TopLeft="189.057144285222,152.752942746568">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98.9428557147784,28.847057253432"
+              Start="0,0"
+              End="98.9428557147784,21.347057253432">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.423528626716" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.423528626716"
+                    Point2="0,14.423528626716"
+                    Point3="4,14.423528626716" />
+                  <mssgle:LineSegment
+                    End="94.9428557147784,14.423528626716" />
+                  <mssgle:CubicBezierSegment
+                    Point1="94.9428557147784,14.423528626716"
+                    Point2="98.9428557147784,14.423528626716"
+                    Point3="98.9428557147784,18.423528626716" />
+                  <mssgle:LineSegment
+                    End="98.9428557147784,21.347057253432" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\ADO NET cdp_ods_wish_list">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Magento  wish_list --&gt; SUPERDW cdp_ods_wish_list\cdp_ods_wish_list">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

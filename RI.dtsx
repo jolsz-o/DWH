@@ -1,0 +1,1786 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/12/2020 3:04:58 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{CC501AA2-CC74-4245-9FE8-467DA060A031}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="RI"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="47"
+  DTS:VersionGUID="{2890104A-4089-4CD1-A530-2ED8F79F89F0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\RI"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{2FDC8E8B-9B58-41C5-BF98-FD9751907DF7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="RI"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+          SQLTask:SqlStatementSource="---RI for all the dimensions &#xA;&#xA;---Item&#xA;insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA;&#x9;Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;&#x9;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct Item_ID,'UNKNOWN - ' + Item_ID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA;&#x9;'-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Items&#xA;&#x9;&#x9;  where DWH_DIM_Items.Item_ID = STG_Invoice_Fact.Item_ID)&#xA;&#xA;&#xA;---Campains&#xA;insert into DWH_DIM_Campaigns(Campaigns_ID, Campaigns_Desc, Campaigns_Group_ID, Campaigns_Group_Desc,IsLocalCampaign)&#xA;select distinct CAMPAINGNS_ID,'WITHOUT - ' + CAMPAINGNS_ID,'-1','WITHOUT_CAMPAINGN_GROUP','Network Promotion' from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Campaigns&#xA;&#x9;&#x9;   where DWH_DIM_Campaigns.Campaigns_ID = STG_Invoice_Fact.CAMPAINGNS_ID)&#xA;&#xA;/*&#xA;---Customers&#xA;insert into DWH_DIM_Customers(Customer_ID,Customer_Name,Customer_Group_ID,Customer_Group_Desc)&#xA;select distinct Customer_ID,'UNKNOWN - ' + Customer_ID,'-1','UNKNOWN_CUSTOMER_GROUP' from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Customers  &#xA;&#x9;&#x9;  where DWH_DIM_Customers.Customer_ID = STG_Invoice_Fact.Customer_ID)&#xA;*/&#xA;&#xA;---Drugs_Participation_Type&#xA;insert into DWH_DIM_Drugs_Participation_Type(Participation_ID,Participation_Desc)&#xA;select distinct PARTICIPATION_ID,'UNKNOWN - ' + PARTICIPATION_ID from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Drugs_Participation_Type&#xA;&#x9;&#x9;where DWH_DIM_Drugs_Participation_Type.Participation_ID = STG_Invoice_Fact.PARTICIPATION_ID )&#xA;&#xA;---Insurance_Company&#xA;insert into DWH_DIM_Insurance_Company(InsuranceCompany_ID, Insurance_Company_Name, InsuranceCompany_Code, Group_Description)&#xA;select distinct INSURANCE_CMPNY_ID,'UNKNOWN - ' + INSURANCE_CMPNY_ID,'-1','WITHOUT_CMPNY_GROUP' from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Insurance_Company&#xA;&#x9;&#x9;  where DWH_DIM_Insurance_Company.InsuranceCompany_ID = STG_Invoice_Fact.INSURANCE_CMPNY_ID)&#xA;&#xA;---Stores&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )--New 02.04.2020&#xA;select distinct STORE_ID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STORE_ID , 'Unknown', STORE_ID, 'UNKNOWN - ' + STORE_ID, NULL, NULL, NULL,0&#xA;from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Stores&#xA;&#x9;&#x9;&#x9;&#x9;where DWH_DIM_Stores.STORE_ID = STG_Invoice_Fact.STORE_ID)&#xA;&#xA;--CashRegister&#xA;Insert Into DWH_Dim_CashRegister&#xA;Select distinct CASHIER_ID, STORE_ID + '_' + CASHIER_ID, STORE_ID, 'Unknown', 'Unknown'&#xA;From STG_Invoice_Fact &#xA;Where Not Exists(&#xA;&#x9;&#x9;&#x9;Select * &#xA;&#x9;&#x9;&#x9;From DWH_Dim_CashRegister&#xA;&#x9;&#x9;&#x9;Where DWH_Dim_CashRegister.CashRegister_Id = STG_Invoice_Fact.CASHIER_ID&#xA;&#x9;&#x9;&#x9;  AND DWH_Dim_CashRegister.CashReg_Store  = STG_Invoice_Fact.STORE_ID )&#xA;&#x9;&#x9;&#x9;&#xA;---VAT_Percentage&#xA;insert into DWH_DIM_VAT_Percentage&#xA;select distinct VAT_ID,'UNKNOWN - ' + cast(VAT_ID as varchar),0 from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_VAT_Percentage&#xA;&#x9;&#x9;&#x9;where DWH_DIM_VAT_Percentage.VAT_Percentage_ID =  STG_Invoice_Fact.VAT_ID)&#xA;&#xA;---Emloyees&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEE_ID,'UNKNOWN - ' + EMPLOYEE_ID from STG_Invoice_Fact&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID =STG_Invoice_Fact.EMPLOYEE_ID )&#xA;&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct MANAGER_ID,'UNKNOWN - ' + MANAGER_ID from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID = STG_Invoice_Fact.MANAGER_ID )&#xA;&#xA;---Actual Suppliers&#xA;insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(ACT_SUPPLIER_ID,'-1'),'UNKNOWN - ' + isnull(ACT_SUPPLIER_ID,'-1') from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Invoice_Fact.ACT_SUPPLIER_ID)&#xA;&#xA;---LS Customers&#xA;insert into DWH_Dim_LSCustomers&#xA;select distinct -1, LSClientId, 'Unknown - ' + CAST(LSClientId as varchar), 'Unknown', 'Unknown'&#xA;&#x9;&#x9;&#x9;&#x9;,'Unknown','Unknown', '00-000','Unknown','Unknown', '0', '0', '0', '0', '2010-01-01 00:00:00.000'&#xA;&#x9;&#x9;&#x9;&#x9;, Null, 'Unknown', Null,'2010-01-01 00:00:00.000' , '0', '0', '0', '0', Null, '0', '0-18', 'Unknown',Null, null&#xA;from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_Dim_LSCustomers&#xA;&#x9;&#x9;&#x9;where DWH_Dim_LSCustomers.ClientId = STG_Invoice_Fact.LSClientId)&#xA;&#xA;--Invetory RI&#xA;&#xA;&#xA;---Actual Suppliers&#xA;insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIER_ID,'-1'),'UNKNOWN - ' + isnull(SUPPLIER_ID,'-1')&#xA;from STG_Fact_Inventory&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_Inventory.SUPPLIER_ID)&#xA;&#xA;---Item&#xA;insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA;&#x9;Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;&#x9;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct Item_ID,'UNKNOWN - ' + Item_ID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA;&#x9;'-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_Inventory&#xA;where  not exists (select * from DWH_DIM_Items&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Items.Item_ID = STG_Fact_Inventory.Item_ID )&#xA;&#xA;---Stores&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STORE_ID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STORE_ID , 'Unknown', STORE_ID, 'UNKNOWN - ' + STORE_ID, NULL, NULL, NULL,0&#xA;from STG_Fact_Inventory&#xA;where  not exists (select * from DWH_DIM_Stores&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Stores.Store_ID =  STG_Fact_Inventory.STORE_ID)&#xA;&#xA;&#xA;&#xA;--Exceptions RI&#xA;&#xA;--Items&#xA;---Item&#xA;insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA;&#x9;Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;&#x9;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct Item_ID,'UNKNOWN - ' + Item_ID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA;&#x9;'-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_ExceptionEvents&#xA;where not exists (select * from DWH_DIM_Items&#xA;&#x9;&#x9;  where DWH_DIM_Items.Item_ID = STG_Fact_ExceptionEvents.Item_ID)&#xA;&#xA;&#xA;--Stores&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STORE_ID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STORE_ID , 'Unknown', STORE_ID, 'UNKNOWN - ' + STORE_ID, NULL, NULL, NULL,0&#xA;from STG_Fact_ExceptionEvents&#xA;where not exists (select * from DWH_DIM_Stores&#xA;&#x9;&#x9;&#x9;&#x9;where DWH_DIM_Stores.STORE_ID = STG_Fact_ExceptionEvents.STORE_ID)&#xA;&#xA;&#xA;---Emloyees&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEE_ID,'UNKNOWN - ' + EMPLOYEE_ID &#xA;from STG_Fact_ExceptionEvents&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID =STG_Fact_ExceptionEvents.EMPLOYEE_ID )&#xA;&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct Authorizer_ID,'UNKNOWN - ' + Authorizer_ID &#xA;from STG_Fact_ExceptionEvents&#xA;where  not exists (select * from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID = STG_Fact_ExceptionEvents.Authorizer_ID )&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;--CashRegister&#xA;Insert Into DWH_Dim_CashRegister&#xA;Select distinct right('0' + Station_ID,2) Station_ID, STORE_ID + '_' + right('0' + Station_ID,2), STORE_ID, 'Unknown', 'Unknown'&#xA;From STG_Fact_ExceptionEvents &#xA;Where Not Exists(&#xA;&#x9;&#x9;&#x9;Select * &#xA;&#x9;&#x9;&#x9;From DWH_Dim_CashRegister&#xA;&#x9;&#x9;&#x9;Where DWH_Dim_CashRegister.CashRegister_Id = right('0' + Station_ID,2)&#xA;&#x9;&#x9;&#x9;  AND DWH_Dim_CashRegister.CashReg_Store  = STG_Fact_ExceptionEvents.STORE_ID )&#xA;&#xA;&#xA;--Logistics RI&#xA;&#xA;--Items&#xA;---Item&#xA;insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA;&#x9;Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;&#x9;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct ItemID,'UNKNOWN - ' + ItemID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA;&#x9;'-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_Logistic_New&#xA;where not exists (select * from DWH_DIM_Items&#xA;&#x9;&#x9;  where DWH_DIM_Items.Item_ID = STG_Fact_Logistic_New.ItemID)&#xA;&#xA;&#xA;--Stores&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STOREID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STOREID , 'Unknown', STOREID, 'UNKNOWN - ' + STOREID, NULL, NULL, NULL,0&#xA;from STG_Fact_Logistic_New&#xA;where not exists (select * from DWH_DIM_Stores&#xA;&#x9;&#x9;&#x9;&#x9;where DWH_DIM_Stores.STORE_ID = STG_Fact_Logistic_New.STOREID)&#xA;&#xA;&#xA;---Emloyees&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEEID,'UNKNOWN - ' + EMPLOYEEID &#xA;from STG_Fact_Logistic_New&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID =STG_Fact_Logistic_New.EMPLOYEEID )&#xA;&#xA;&#xA;---Actual Suppliers&#xA;insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIERID,'-1'),'UNKNOWN - ' + isnull(SUPPLIERID,'-1') from STG_Fact_Logistic_New&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_Logistic_New.SUPPLIERID)&#xA;&#xA;&#xA;--Inventory Count RI&#xA;&#xA;--Items&#xA;---Item&#xA;insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA;&#x9;Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;&#x9;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct ItemID,'UNKNOWN - ' + ItemID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA;&#x9;'-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_InventoryCount_New&#xA;where not exists (select * from DWH_DIM_Items&#xA;&#x9;&#x9;  where DWH_DIM_Items.Item_ID = STG_Fact_InventoryCount_New.ItemID)&#xA;&#xA;&#xA;--Stores&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STOREID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STOREID , 'Unknown', STOREID, 'UNKNOWN - ' + STOREID, NULL, NULL, NULL,0&#xA;from STG_Fact_InventoryCount_New&#xA;where not exists (select * from DWH_DIM_Stores&#xA;&#x9;&#x9;&#x9;&#x9;where DWH_DIM_Stores.STORE_ID = STG_Fact_InventoryCount_New.STOREID)&#xA;&#xA;&#xA;---Emloyees&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEEID,'UNKNOWN - ' + EMPLOYEEID &#xA;from STG_Fact_InventoryCount_New&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID =STG_Fact_InventoryCount_New.EMPLOYEEID )&#xA;&#xA;&#xA;&#xA;---Actual Suppliers&#xA;insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIERID,'-1'),'UNKNOWN - ' + isnull(SUPPLIERID,'-1') from STG_Fact_InventoryCount_New&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_InventoryCount_New.SUPPLIERID)&#xA;&#xA;--PO RI&#xA;&#xA;--Items&#xA;---Item&#xA;insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA;&#x9;Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;&#x9;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct ItemID,'UNKNOWN - ' + ItemID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA;&#x9;'-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_PO_New&#xA;where not exists (select * from DWH_DIM_Items&#xA;&#x9;&#x9;  where DWH_DIM_Items.Item_ID = STG_Fact_PO_New.ItemID)&#xA;&#xA;&#xA;--Stores&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STOREID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STOREID , 'Unknown', STOREID, 'UNKNOWN - ' + STOREID, NULL,NULL, NULL,0&#xA;from STG_Fact_PO_New&#xA;where not exists (select * from DWH_DIM_Stores&#xA;&#x9;&#x9;&#x9;&#x9;where DWH_DIM_Stores.STORE_ID = STG_Fact_PO_New.STOREID)&#xA;&#xA;&#xA;---Emloyees&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEEID,'UNKNOWN - ' + EMPLOYEEID &#xA;from STG_Fact_PO_New&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Employees.Employee_ID =STG_Fact_PO_New.EMPLOYEEID )&#xA;&#xA;&#xA;---Actual Suppliers&#xA;insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIERID,'-1'),'UNKNOWN - ' + isnull(SUPPLIERID,'-1') from STG_Fact_PO_New&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;&#x9;&#x9;&#x9;where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_PO_New.SUPPLIERID)&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#xA;--Special Points&#xA;---LS Customers&#xA;insert into DWH_Dim_LSCustomers&#xA;select distinct -1, ClientId, 'Unknown - ' + CAST(ClientId as varchar), 'Unknown', 'Unknown'&#xA;&#x9;&#x9;&#x9;&#x9;,'Unknown','Unknown', '00-000','Unknown','Unknown', '0', '0', '0', '0', '2010-01-01 00:00:00.000'&#xA;&#x9;&#x9;&#x9;&#x9;, Null, 'Unknown', Null,'2010-01-01 00:00:00.000' , '0', '0', '0', '0', Null, '0', '0-18', 'Unknown',Null, null&#xA;from STG_Fact_SpecialPoints&#xA;where  not exists (select * from DWH_Dim_LSCustomers&#xA;&#x9;&#x9;&#x9;where DWH_Dim_LSCustomers.ClientId = STG_Fact_SpecialPoints.ClientId)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container 1"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{A51C15DF-162E-49FF-8B7C-984671598B58}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container 1">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\--Special Points"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{1b08a90a-96a5-4ed2-8080-1d54225dc75d}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="--Special Points">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\--Special Points\LS Customers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{8abdfe18-8551-4bf8-81e9-4d0a5fbf5481}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="LS Customers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_Dim_LSCustomers&#xA;select distinct -1, ClientId, 'Unknown - ' + CAST(ClientId as varchar), 'Unknown', 'Unknown'&#xA;    ,'Unknown','Unknown', '00-000','Unknown','Unknown', '0', '0', '0', '0', '2010-01-01 00:00:00.000'&#xA;    , Null, 'Unknown', Null,'2010-01-01 00:00:00.000' , '0', '0', '0', '0', Null, '0', '0-18', 'Unknown',Null, null&#xA;from STG_Fact_SpecialPoints&#xA;where  not exists (select * from DWH_Dim_LSCustomers&#xA;   where DWH_Dim_LSCustomers.ClientId = STG_Fact_SpecialPoints.ClientId)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\Exceptions RI"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{12f2dff2-e76d-4d19-b9a5-aec5468b8414}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Exceptions RI">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Exceptions RI\CashRegister"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{cc2cef9c-998e-4456-be80-960bd3c3e2dd}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="CashRegister"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="Insert Into DWH_Dim_CashRegister&#xA;Select distinct right('0' + Station_ID,2) Station_ID, STORE_ID + '_' + right('0' + Station_ID,2), STORE_ID, 'Unknown', 'Unknown'&#xA;From STG_Fact_ExceptionEvents &#xA;Where Not Exists(&#xA;   Select * &#xA;   From DWH_Dim_CashRegister&#xA;   Where DWH_Dim_CashRegister.CashRegister_Id = right('0' + Station_ID,2)&#xA;     AND DWH_Dim_CashRegister.CashReg_Store  = STG_Fact_ExceptionEvents.STORE_ID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Exceptions RI\Employees"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{56b5b96d-7044-434c-b38c-42b11b253364}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Employees"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEE_ID,'UNKNOWN - ' + EMPLOYEE_ID &#xA;from STG_Fact_ExceptionEvents&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID =STG_Fact_ExceptionEvents.EMPLOYEE_ID )&#xA;&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct Authorizer_ID,'UNKNOWN - ' + Authorizer_ID &#xA;from STG_Fact_ExceptionEvents&#xA;where  not exists (select * from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID = STG_Fact_ExceptionEvents.Authorizer_ID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Exceptions RI\Item"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{e2aa6d1d-1ab5-4844-816c-b4799a66bc8f}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Item"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA; Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA;Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct Item_ID,'UNKNOWN - ' + Item_ID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA; '-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_ExceptionEvents&#xA;where not exists (select * from DWH_DIM_Items&#xA;    where DWH_DIM_Items.Item_ID = STG_Fact_ExceptionEvents.Item_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Exceptions RI\Stores"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{0e11d888-5772-4a19-9b32-d1561c69ce34}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Stores"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STORE_ID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STORE_ID , 'Unknown', STORE_ID, 'UNKNOWN - ' + STORE_ID, NULL, NULL, NULL,0&#xA;from STG_Fact_ExceptionEvents&#xA;where not exists (select * from DWH_DIM_Stores&#xA;    where DWH_DIM_Stores.STORE_ID = STG_Fact_ExceptionEvents.STORE_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Exceptions RI.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{8b7d3031-237f-4a64-9251-75a3d0ea7744}"
+              DTS:From="Package\Sequence Container 1\Exceptions RI\Item"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\Sequence Container 1\Exceptions RI\Stores" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Exceptions RI.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{32ba905f-99fc-4294-aa7b-224bf222d32e}"
+              DTS:From="Package\Sequence Container 1\Exceptions RI\Stores"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\Sequence Container 1\Exceptions RI\Employees" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Exceptions RI.PrecedenceConstraints[Constraint 2]"
+              DTS:CreationName=""
+              DTS:DTSID="{2f8520eb-5548-4f77-abdb-22dc4a4dfdc5}"
+              DTS:From="Package\Sequence Container 1\Exceptions RI\Employees"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 2"
+              DTS:To="Package\Sequence Container 1\Exceptions RI\CashRegister" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\Inventory Count RI"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{e65bdd8e-0fdf-4ca1-a4fb-fb3f8e2cc3c0}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Inventory Count RI">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI\Actual Suppliers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5f706890-1d21-4266-95a5-54c055741dfe}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Actual Suppliers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIERID,'-1'),'UNKNOWN - ' + isnull(SUPPLIERID,'-1') from STG_Fact_InventoryCount_New&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;   where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_InventoryCount_New.SUPPLIERID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI\Employees"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{6d7ecc3d-646d-4599-99f8-424f4d007729}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Employees"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEEID,'UNKNOWN - ' + EMPLOYEEID &#xA;from STG_Fact_InventoryCount_New&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID =STG_Fact_InventoryCount_New.EMPLOYEEID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI\Item"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{bde833f7-3570-40da-af88-0c2d134690b4}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Item"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA; Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA; Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct ItemID,'UNKNOWN - ' + ItemID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA; '-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_InventoryCount_New&#xA;where not exists (select * from DWH_DIM_Items&#xA;    where DWH_DIM_Items.Item_ID = STG_Fact_InventoryCount_New.ItemID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI\Stores"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{8a5de186-8c0f-4fd6-9f31-68f15b18cd28}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Stores"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STOREID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STOREID , 'Unknown', STOREID, 'UNKNOWN - ' + STOREID, NULL, NULL, NULL,0&#xA;from STG_Fact_InventoryCount_New&#xA;where not exists (select * from DWH_DIM_Stores&#xA;    where DWH_DIM_Stores.STORE_ID = STG_Fact_InventoryCount_New.STOREID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{24ed56d5-3735-4bd8-b9cf-7376489bae38}"
+              DTS:From="Package\Sequence Container 1\Inventory Count RI\Item"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\Sequence Container 1\Inventory Count RI\Stores" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{6064252e-3b9d-408d-a430-9edba8ad609e}"
+              DTS:From="Package\Sequence Container 1\Inventory Count RI\Stores"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\Sequence Container 1\Inventory Count RI\Employees" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Inventory Count RI.PrecedenceConstraints[Constraint 2]"
+              DTS:CreationName=""
+              DTS:DTSID="{9eec06c9-b43c-4144-9baa-ea32eee0fe63}"
+              DTS:From="Package\Sequence Container 1\Inventory Count RI\Employees"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 2"
+              DTS:To="Package\Sequence Container 1\Inventory Count RI\Actual Suppliers" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\Invetory RI"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{284fc79e-3999-4d76-98e0-87d33b90a0e8}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Invetory RI">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Invetory RI\Actual Suppliers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{9ee7e8b0-ee84-4f8c-8ed9-496b1ef73b2d}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Actual Suppliers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIER_ID,'-1'),'UNKNOWN - ' + isnull(SUPPLIER_ID,'-1')&#xA;from STG_Fact_Inventory&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;&#xA;   where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_Inventory.SUPPLIER_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Invetory RI\Item"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{04d8b38d-7c44-452e-a09b-9aa624418672}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Item"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA; Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA; Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct Item_ID,'UNKNOWN - ' + Item_ID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA; '-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_Inventory&#xA;where  not exists (select * from DWH_DIM_Items&#xA;   where DWH_DIM_Items.Item_ID = STG_Fact_Inventory.Item_ID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Invetory RI\Stores"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{00e6a5a0-a735-4eaf-a708-ee290af551fe}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Stores"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STORE_ID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STORE_ID , 'Unknown', STORE_ID, 'UNKNOWN - ' + STORE_ID, NULL, NULL, NULL,0&#xA;from STG_Fact_Inventory&#xA;where  not exists (select * from DWH_DIM_Stores&#xA;   where DWH_DIM_Stores.Store_ID =  STG_Fact_Inventory.STORE_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Invetory RI.PrecedenceConstraints[Constraint 10]"
+              DTS:CreationName=""
+              DTS:DTSID="{3df50d9c-c921-4630-a2df-659f5cc59cbb}"
+              DTS:From="Package\Sequence Container 1\Invetory RI\Actual Suppliers"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 10"
+              DTS:To="Package\Sequence Container 1\Invetory RI\Item" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Invetory RI.PrecedenceConstraints[Constraint 11]"
+              DTS:CreationName=""
+              DTS:DTSID="{3eadffec-18f6-4ff7-9ad7-0ab725d84758}"
+              DTS:From="Package\Sequence Container 1\Invetory RI\Item"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 11"
+              DTS:To="Package\Sequence Container 1\Invetory RI\Stores" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\Logistics RI"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{d776130b-08a9-400e-88ba-0d07ffdf45e9}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Logistics RI">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Logistics RI\Actual Suppliers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{b1f7a71e-be00-4b51-a142-ea7581f8bf97}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Actual Suppliers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIERID,'-1'),'UNKNOWN - ' + isnull(SUPPLIERID,'-1') from STG_Fact_Logistic_New&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;   where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_Logistic_New.SUPPLIERID)&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Logistics RI\Employees"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{d59d7fbd-cbdb-45bb-8c77-f1809a9fd9c1}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Employees"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEEID,'UNKNOWN - ' + EMPLOYEEID &#xA;from STG_Fact_Logistic_New&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID =STG_Fact_Logistic_New.EMPLOYEEID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Logistics RI\Item"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{3d629d62-4456-4581-80a6-32891bfe53fe}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Item"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA; Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA; Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct ItemID,'UNKNOWN - ' + ItemID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA; '-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_Logistic_New&#xA;where not exists (select * from DWH_DIM_Items&#xA;    where DWH_DIM_Items.Item_ID = STG_Fact_Logistic_New.ItemID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\Logistics RI\Stores"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{923a2e1c-ede1-4d32-b05e-836733ee4001}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Stores"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="&#xA;insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STOREID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STOREID , 'Unknown', STOREID, 'UNKNOWN - ' + STOREID, NULL, NULL, NULL,0&#xA;from STG_Fact_Logistic_New&#xA;where not exists (select * from DWH_DIM_Stores&#xA;    where DWH_DIM_Stores.STORE_ID = STG_Fact_Logistic_New.STOREID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Logistics RI.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{3120bd86-327b-4b82-88d5-5c50839fbd49}"
+              DTS:From="Package\Sequence Container 1\Logistics RI\Item"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\Sequence Container 1\Logistics RI\Stores" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Logistics RI.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{5b79e3a0-6d7e-411f-9ef5-566dbb2aca7d}"
+              DTS:From="Package\Sequence Container 1\Logistics RI\Stores"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\Sequence Container 1\Logistics RI\Employees" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\Logistics RI.PrecedenceConstraints[Constraint 2]"
+              DTS:CreationName=""
+              DTS:DTSID="{9a6ca6e2-3850-4b9e-8931-b097a8da8286}"
+              DTS:From="Package\Sequence Container 1\Logistics RI\Employees"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 2"
+              DTS:To="Package\Sequence Container 1\Logistics RI\Actual Suppliers" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\PO RI"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{781e89dc-8ee2-44b4-a186-63f805a0b92c}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PO RI">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\PO RI\Actual Suppliers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{57ed360d-0a7b-4ea1-b179-90fae6c00182}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Actual Suppliers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Actual_Supplier (Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(SUPPLIERID,'-1'),'UNKNOWN - ' + isnull(SUPPLIERID,'-1') from STG_Fact_PO_New&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;   where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Fact_PO_New.SUPPLIERID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\PO RI\Employees"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5331619c-1fae-4da3-8a41-d1fcbaa43591}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Employees"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Employees (Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEEID,'UNKNOWN - ' + EMPLOYEEID &#xA;from STG_Fact_PO_New&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID =STG_Fact_PO_New.EMPLOYEEID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\PO RI\Item"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{08ff6a38-998e-4764-b2e6-cd11db435154}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Item"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA; Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA; Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct ItemID,'UNKNOWN - ' + ItemID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA; '-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Fact_PO_New&#xA;where not exists (select * from DWH_DIM_Items&#xA;    where DWH_DIM_Items.Item_ID = STG_Fact_PO_New.ItemID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\PO RI\Stores"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{a1449989-8fc8-487c-962f-25c9ebfa413e}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Stores"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )&#xA;select distinct STOREID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STOREID , 'Unknown', STOREID, 'UNKNOWN - ' + STOREID, NULL,NULL, NULL,0&#xA;from STG_Fact_PO_New&#xA;where not exists (select * from DWH_DIM_Stores&#xA;    where DWH_DIM_Stores.STORE_ID = STG_Fact_PO_New.STOREID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\PO RI.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{1806ecc1-a5af-4048-ae42-417d512342ac}"
+              DTS:From="Package\Sequence Container 1\PO RI\Item"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\Sequence Container 1\PO RI\Stores" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\PO RI.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{6ced2142-3627-4902-818b-25003dcf64ba}"
+              DTS:From="Package\Sequence Container 1\PO RI\Stores"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\Sequence Container 1\PO RI\Employees" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\PO RI.PrecedenceConstraints[Constraint 2]"
+              DTS:CreationName=""
+              DTS:DTSID="{ebfc735c-a202-4d83-b007-bde50fa21f2d}"
+              DTS:From="Package\Sequence Container 1\PO RI\Employees"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 2"
+              DTS:To="Package\Sequence Container 1\PO RI\Actual Suppliers" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\RI for all the dimensions"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{520adfe9-e6ed-4d5f-ba60-1e7d5f27c8af}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="RI for all the dimensions">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Actual Suppliers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{1ed30aac-3d87-4e4f-a46c-c392aba2f338}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Actual Suppliers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Actual_Supplier(Actual_Supplier_ID, Actual_Supplier_Desc)&#xA;select distinct isnull(ACT_SUPPLIER_ID,'-1'),'UNKNOWN - ' + isnull(ACT_SUPPLIER_ID,'-1') from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Actual_Supplier&#xA;   where DWH_DIM_Actual_Supplier.Actual_Supplier_ID = STG_Invoice_Fact.ACT_SUPPLIER_ID)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Campains"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{8c4b3c02-3f3e-459d-8377-efe43977018c}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Campains"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="Insert into DWH_DIM_Campaigns(Campaigns_ID, Campaigns_Desc, Campaigns_Group_ID, Campaigns_Group_Desc,IsLocalCampaign)&#xA;select distinct CAMPAINGNS_ID,'WITHOUT - ' + CAMPAINGNS_ID,'-1','WITHOUT_CAMPAINGN_GROUP','Network Promotion' from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Campaigns&#xA;     where DWH_DIM_Campaigns.Campaigns_ID = STG_Invoice_Fact.CAMPAINGNS_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\CashRegister"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{a1472912-fd77-4b4a-a394-2f840e26a9d7}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="CashRegister"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="Insert Into DWH_Dim_CashRegister&#xA;Select distinct CASHIER_ID, STORE_ID + '_' + CASHIER_ID, STORE_ID, 'Unknown', 'Unknown'&#xA;From STG_Invoice_Fact &#xA;Where Not Exists(&#xA;   Select * &#xA;   From DWH_Dim_CashRegister&#xA;   Where DWH_Dim_CashRegister.CashRegister_Id = STG_Invoice_Fact.CASHIER_ID&#xA;     AND DWH_Dim_CashRegister.CashReg_Store  = STG_Invoice_Fact.STORE_ID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Drugs_Participation_Type"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{9f95b7b7-f623-47a1-8521-c684ce5a6a75}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Drugs_Participation_Type"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Drugs_Participation_Type(Participation_ID,Participation_Desc)&#xA;select distinct PARTICIPATION_ID,'UNKNOWN - ' + PARTICIPATION_ID from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Drugs_Participation_Type&#xA;  where DWH_DIM_Drugs_Participation_Type.Participation_ID = STG_Invoice_Fact.PARTICIPATION_ID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Employees"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{26e26e4b-ca28-4479-bc7e-4b341007a7e8}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Employees"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct EMPLOYEE_ID,'UNKNOWN - ' + EMPLOYEE_ID from STG_Invoice_Fact&#xA;where  not exists (select *  from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID =STG_Invoice_Fact.EMPLOYEE_ID )&#xA;&#xA;insert into DWH_DIM_Employees(Employee_ID, Employee_Name)&#xA;select distinct MANAGER_ID,'UNKNOWN - ' + MANAGER_ID from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Employees&#xA;   where DWH_DIM_Employees.Employee_ID = STG_Invoice_Fact.MANAGER_ID )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Insurance_Company"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{70add2fe-1df5-4fed-ae41-487ef3fdbe6a}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Insurance_Company"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Insurance_Company(InsuranceCompany_ID, Insurance_Company_Name, InsuranceCompany_Code, Group_Description)&#xA;select distinct INSURANCE_CMPNY_ID,'UNKNOWN - ' + INSURANCE_CMPNY_ID,'-1','WITHOUT_CMPNY_GROUP' from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_DIM_Insurance_Company&#xA;    where DWH_DIM_Insurance_Company.InsuranceCompany_ID = STG_Invoice_Fact.INSURANCE_CMPNY_ID)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Item"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{21f27a8f-af50-486a-bad2-0757d7eae6e6}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Item"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Items(Item_ID, Item_Desc, Department_ID, Department_Desc, SubDepartment_ID, SubDepartment_Desc, Category_ID, &#xA; Category_Desc, SubCategory_ID, SubCategory_Desc,Brand_ID,Brand_Desc,MainSupplier_ID,MainSupplier_Desc,Producer_ID,Producer_Desc,&#xA; Manufacturer_ID,Manufacturer_Desc,Present_IND,Prescription_IND,Gov_price_IND,LineOfProductId,LineOfProductDesc)&#xA;select distinct Item_ID,'UNKNOWN - ' + Item_ID,'0','0 - UNKNOWN_DEP','-1','0.0 - UNKNOWN_SUBDEP','-1','0.0.0 -  UNKNOWN_CAT','-1','0.0.0.0 - UNKNOWN_SUBCAT',&#xA; '-1', 'UNKNOWN', '-1', 'UNKNOWN','-1','-1', 'UNKNOWN', 'UNKNOWN','-1','-1','-1','-1-','No Product Line'&#xA;from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Items&#xA;    where DWH_DIM_Items.Item_ID = STG_Invoice_Fact.Item_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\LS Customers"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{45934be6-ab74-41c5-b037-2e5218eb3e31}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="LS Customers"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_Dim_LSCustomers&#xA;select distinct -1, LSClientId, 'Unknown - ' + CAST(LSClientId as varchar), 'Unknown', 'Unknown'&#xA;    ,'Unknown','Unknown', '00-000','Unknown','Unknown', '0', '0', '0', '0', '2010-01-01 00:00:00.000'&#xA;    , Null, 'Unknown', Null,'2010-01-01 00:00:00.000' , '0', '0', '0', '0', Null, '0', '0-18', 'Unknown',Null, null&#xA;from STG_Invoice_Fact&#xA;where  not exists (select * from DWH_Dim_LSCustomers&#xA;   where DWH_Dim_LSCustomers.ClientId = STG_Invoice_Fact.LSClientId)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\Stores"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{12e85411-1c08-4f0c-bcfe-29541fdbc3b4}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Stores"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_Stores(Store_ID, Province, City, Store_Desc,DistrictManager,StoreParentId,StoreParentDesc,CompanyId,CompanyDesc, CompanyFullName,AI_eCommerce )--New 02.04.2020&#xA;select distinct STORE_ID,'UNKNOWN_PROVINCE','UNKNOWN_CITY','UNKNOWN - ' + STORE_ID , 'Unknown', STORE_ID, 'UNKNOWN - ' + STORE_ID, NULL, NULL, NULL,0&#xA;from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_Stores&#xA;    where DWH_DIM_Stores.STORE_ID = STG_Invoice_Fact.STORE_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions\VAT_Percentage"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{fbae5e28-66c8-4b05-b388-4b48183a1abc}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="VAT_Percentage"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9E5290E0-2F86-45E2-AE6C-C1F27C845B82}"
+                  SQLTask:SqlStatementSource="insert into DWH_DIM_VAT_Percentage&#xA;select distinct VAT_ID,'UNKNOWN - ' + cast(VAT_ID as varchar),0 from STG_Invoice_Fact&#xA;where not exists (select * from DWH_DIM_VAT_Percentage&#xA;   where DWH_DIM_VAT_Percentage.VAT_Percentage_ID =  STG_Invoice_Fact.VAT_ID)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{695754bf-6970-41f4-8d96-4dbf5ee6004b}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Item"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\Campains" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{92367fbd-1da2-41f8-9eb1-37b84665dadf}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Campains"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\Drugs_Participation_Type" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 2]"
+              DTS:CreationName=""
+              DTS:DTSID="{166453cf-3f25-4ce6-aa9e-af9662a0e65f}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Drugs_Participation_Type"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 2"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\Insurance_Company" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 3]"
+              DTS:CreationName=""
+              DTS:DTSID="{b52b6198-4c86-4613-84da-d6afc30b3128}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Insurance_Company"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 3"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\Stores" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 4]"
+              DTS:CreationName=""
+              DTS:DTSID="{5aa60025-9035-4ab8-895b-678ca1997982}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Stores"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 4"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\CashRegister" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 5]"
+              DTS:CreationName=""
+              DTS:DTSID="{00958f90-c558-4299-9fb7-c5473e25bbde}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\CashRegister"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 5"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\VAT_Percentage" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 6]"
+              DTS:CreationName=""
+              DTS:DTSID="{bcf3430f-9589-4920-9cd2-e22ea73358ca}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\VAT_Percentage"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 6"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\Employees" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 7]"
+              DTS:CreationName=""
+              DTS:DTSID="{17f80a4f-c7ce-4fa0-a3cf-a0f3c942ec07}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Employees"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 7"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\Actual Suppliers" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 8]"
+              DTS:CreationName=""
+              DTS:DTSID="{b4513147-4360-454f-a732-33bef13bf0cc}"
+              DTS:From="Package\Sequence Container 1\RI for all the dimensions\Actual Suppliers"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 8"
+              DTS:To="Package\Sequence Container 1\RI for all the dimensions\LS Customers" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{EF4238B4-2526-497E-93AC-24D7E867EE46}"
+          DTS:From="Package\Sequence Container 1\RI for all the dimensions"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container 1\Invetory RI" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{0499B34A-5D95-49DD-9442-957B8F1225BB}"
+          DTS:From="Package\Sequence Container 1\Invetory RI"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container 1\Exceptions RI" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{EC1E767F-7D96-4D8C-84F1-12D0E07D5E6E}"
+          DTS:From="Package\Sequence Container 1\Exceptions RI"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container 1\Logistics RI" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{B10A91A1-4DD6-4C75-89EF-887A5614DE19}"
+          DTS:From="Package\Sequence Container 1\Logistics RI"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence Container 1\Inventory Count RI" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{123C0F93-FBD2-4DEA-8C7F-774183F3914E}"
+          DTS:From="Package\Sequence Container 1\Inventory Count RI"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Sequence Container 1\PO RI" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{5579AF1B-2D06-4726-BC3C-13BE3874B790}"
+          DTS:From="Package\Sequence Container 1\PO RI"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\Sequence Container 1\--Special Points" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="128" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="89.6,41.6"
+          Id="Package\RI"
+          TopLeft="426.5,19.833333333333" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container 1\Exceptions RI\CashRegister"
+          TopLeft="578,26" />
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Sequence Container 1\Exceptions RI\Employees"
+          TopLeft="417,24" />
+        <NodeLayout
+          Size="100.8,41.6"
+          Id="Package\Sequence Container 1\Exceptions RI\Item"
+          TopLeft="31,25.5" />
+        <NodeLayout
+          Size="163.2,41.6"
+          Id="Package\Sequence Container 1\Exceptions RI\Stores"
+          TopLeft="231,24" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Exceptions RI.PrecedenceConstraints[Constraint]"
+          TopLeft="132,45.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="99,0"
+              Start="0,0"
+              End="91.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="91.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Exceptions RI.PrecedenceConstraints[Constraint 1]"
+          TopLeft="394,45">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,0"
+              Start="0,0"
+              End="15.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="15.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Exceptions RI.PrecedenceConstraints[Constraint 2]"
+          TopLeft="546,46">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32,0"
+              Start="0,0"
+              End="24.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="24.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="788,123.2"
+          Size="788,166.4"
+          Id="Package\Sequence Container 1\Exceptions RI"
+          TopLeft="144,668" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Sequence Container 1\Inventory Count RI\Actual Suppliers"
+          TopLeft="568,38" />
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Sequence Container 1\Inventory Count RI\Employees"
+          TopLeft="382,35" />
+        <NodeLayout
+          Size="100.8,41.6"
+          Id="Package\Sequence Container 1\Inventory Count RI\Item"
+          TopLeft="20,38" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container 1\Inventory Count RI\Stores"
+          TopLeft="174,37" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Inventory Count RI.PrecedenceConstraints[Constraint]"
+          TopLeft="121,58.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="53,0"
+              Start="0,0"
+              End="45.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="45.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Inventory Count RI.PrecedenceConstraints[Constraint 1]"
+          TopLeft="346,57">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36,0"
+              Start="0,0"
+              End="28.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="28.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Inventory Count RI.PrecedenceConstraints[Constraint 2]"
+          TopLeft="511,57.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57,0"
+              Start="0,0"
+              End="49.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="783.2,135.2"
+          Size="783.2,177.6"
+          Id="Package\Sequence Container 1\Inventory Count RI"
+          TopLeft="156,1073" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Sequence Container 1\Invetory RI\Actual Suppliers"
+          TopLeft="5.5,8.5" />
+        <NodeLayout
+          Size="100.8,41.6"
+          Id="Package\Sequence Container 1\Invetory RI\Item"
+          TopLeft="217.5,7.5" />
+        <NodeLayout
+          Size="108.8,41.6"
+          Id="Package\Sequence Container 1\Invetory RI\Stores"
+          TopLeft="419.5,5.5" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Invetory RI.PrecedenceConstraints[Constraint 10]"
+          TopLeft="159.5,29">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="58,0"
+              Start="0,0"
+              End="50.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="50.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Invetory RI.PrecedenceConstraints[Constraint 11]"
+          TopLeft="318.5,27.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="101,0"
+              Start="0,0"
+              End="93.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="93.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="542.4,104.8"
+          Size="542.4,148"
+          Id="Package\Sequence Container 1\Invetory RI"
+          TopLeft="241,478" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Sequence Container 1\Logistics RI\Actual Suppliers"
+          TopLeft="573,31" />
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Sequence Container 1\Logistics RI\Employees"
+          TopLeft="395,33" />
+        <NodeLayout
+          Size="100.8,41.6"
+          Id="Package\Sequence Container 1\Logistics RI\Item"
+          TopLeft="24,28" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container 1\Logistics RI\Stores"
+          TopLeft="176,32" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Logistics RI.PrecedenceConstraints[Constraint]"
+          TopLeft="125,51">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="51,0"
+              Start="0,0"
+              End="43.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="43.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Logistics RI.PrecedenceConstraints[Constraint 1]"
+          TopLeft="348,53.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Logistics RI.PrecedenceConstraints[Constraint 2]"
+          TopLeft="524,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49,0"
+              Start="0,0"
+              End="41.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="41.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="783.2,131.2"
+          Size="783.2,174.4"
+          Id="Package\Sequence Container 1\Logistics RI"
+          TopLeft="155,860" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Sequence Container 1\PO RI\Actual Suppliers"
+          TopLeft="568,38" />
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Sequence Container 1\PO RI\Employees"
+          TopLeft="382,35" />
+        <NodeLayout
+          Size="100.8,41.6"
+          Id="Package\Sequence Container 1\PO RI\Item"
+          TopLeft="12,42" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container 1\PO RI\Stores"
+          TopLeft="174,37" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\PO RI.PrecedenceConstraints[Constraint]"
+          TopLeft="113,60.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="61,0"
+              Start="0,0"
+              End="53.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="53.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\PO RI.PrecedenceConstraints[Constraint 1]"
+          TopLeft="346,57">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36,0"
+              Start="0,0"
+              End="28.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="28.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\PO RI.PrecedenceConstraints[Constraint 2]"
+          TopLeft="511,57.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57,0"
+              Start="0,0"
+              End="49.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="783.2,139.2"
+          Size="783.2,182.4"
+          Id="Package\Sequence Container 1\PO RI"
+          TopLeft="149,1314" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Actual Suppliers"
+          TopLeft="48,251" />
+        <NodeLayout
+          Size="124.8,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Campains"
+          TopLeft="201,81" />
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\CashRegister"
+          TopLeft="475,159" />
+        <NodeLayout
+          Size="199.2,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Drugs_Participation_Type"
+          TopLeft="356,84" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Employees"
+          TopLeft="41,159" />
+        <NodeLayout
+          Size="175.2,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Insurance_Company"
+          TopLeft="600,83" />
+        <NodeLayout
+          Size="100.8,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Item"
+          TopLeft="54,79" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\LS Customers"
+          TopLeft="244,256" />
+        <NodeLayout
+          Size="108.8,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\Stores"
+          TopLeft="641,158" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Sequence Container 1\RI for all the dimensions\VAT_Percentage"
+          TopLeft="287,164" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint]"
+          TopLeft="155,101">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 1]"
+          TopLeft="326,103.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30,0"
+              Start="0,0"
+              End="22.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="22.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 2]"
+          TopLeft="555,104.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45,0"
+              Start="0,0"
+              End="37.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="37.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 3]"
+          TopLeft="687.5,125">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8,33"
+              Start="0,0"
+              End="8,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="4,16.5" />
+                  <mssgle:LineSegment
+                    End="4,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4,16.5"
+                    Point2="8,16.5"
+                    Point3="8,20.5" />
+                  <mssgle:LineSegment
+                    End="8,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 4]"
+          TopLeft="641,179.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-26,0"
+              Start="0,0"
+              End="-18.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 5]"
+          TopLeft="475,182.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-32,0"
+              Start="0,0"
+              End="-24.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-24.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 6]"
+          TopLeft="287,182.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-74,0"
+              Start="0,0"
+              End="-66.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-66.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 7]"
+          TopLeft="126,201">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\RI for all the dimensions.PrecedenceConstraints[Constraint 8]"
+          TopLeft="202,274.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42,0"
+              Start="0,0"
+              End="34.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="34.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="780,352.8"
+          Size="780,396"
+          Id="Package\Sequence Container 1\RI for all the dimensions"
+          TopLeft="100.952380628002,35.9803921425631" />
+        <NodeLayout
+          Size="143.2,41.6"
+          Id="Package\Sequence Container 1\--Special Points\LS Customers"
+          TopLeft="34,21" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="227.2,118.4"
+          Size="227.2,160.8"
+          Id="Package\Sequence Container 1\--Special Points"
+          TopLeft="429,1537" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint]"
+          TopLeft="490.952380628002,431.980392142563">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="21.2476193719982,46.0196078574369"
+              Start="0,0"
+              End="21.2476193719982,38.5196078574369">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.0098039287184" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.0098039287184"
+                    Point2="0,23.0098039287184"
+                    Point3="4,23.0098039287184" />
+                  <mssgle:LineSegment
+                    End="17.2476193719982,23.0098039287184" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.2476193719982,23.0098039287184"
+                    Point2="21.2476193719982,23.0098039287184"
+                    Point3="21.2476193719982,27.0098039287184" />
+                  <mssgle:LineSegment
+                    End="21.2476193719982,38.5196078574369" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint 1]"
+          TopLeft="512,626">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26,42"
+              Start="0,0"
+              End="26,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17"
+                    Point2="0,21"
+                    Point3="4,21" />
+                  <mssgle:LineSegment
+                    End="22,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22,21"
+                    Point2="26,21"
+                    Point3="26,25" />
+                  <mssgle:LineSegment
+                    End="26,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint 2]"
+          TopLeft="538,834">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.5,26"
+              Start="0,0"
+              End="8.5,18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9"
+                    Point2="0,13"
+                    Point3="4,13" />
+                  <mssgle:LineSegment
+                    End="4.5,13" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.5,13"
+                    Point2="8.5,13"
+                    Point3="8.5,17" />
+                  <mssgle:LineSegment
+                    End="8.5,18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint 3]"
+          TopLeft="547,1034">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint 4]"
+          TopLeft="544,1251">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63"
+              Start="0,0"
+              End="0,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint 5]"
+          TopLeft="541.5,1496">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="944,1752.8"
+          Size="944,1796"
+          Id="Package\Sequence Container 1"
+          TopLeft="31,79" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

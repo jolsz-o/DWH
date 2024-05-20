@@ -1,0 +1,1703 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/11/2024 10:50:08 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{E3998941-4D5A-41CC-B940-25687217841E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="DWH_dim_campaign_new_Full"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{A42D97DA-63EF-4C31-BA89-1234057364F5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F218A071-4431-472A-8DED-FB4DCC6CA92D}"
+      DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.FARMAX">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;Initial Catalog=FARMAX;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{263B0A8F-B385-4026-94EB-B50D7D46358B}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{1223E6C0-220E-42CC-AF8A-66778B64F672}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="FARMAX - PROMOCJE"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+	   [ID_PROM] as promotion_id
+      ,[OPIS] as promotion_desc
+      ,[DATA_P] as promotion_start_date
+      ,[DATA_K] as promotion_end_date
+      ,[WARUNEK] as promotion_type
+FROM [FARMAX].[dbo].[PROMOCJE]
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_id]"
+                      length="10"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_id]"
+                      name="promotion_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_desc]"
+                      length="130"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_desc]"
+                      name="promotion_desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_start_date]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_start_date]"
+                      name="promotion_start_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_end_date]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_end_date]"
+                      name="promotion_end_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_type]"
+                      length="250"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_type]"
+                      name="promotion_type"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="promotion_id" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="130"
+                      name="promotion_desc" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_start_date" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_end_date" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].ExternalColumns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="promotion_type" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_id]"
+                      name="promotion_id" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="130"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_desc]"
+                      name="promotion_desc" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_start_date]"
+                      name="promotion_start_date" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_end_date]"
+                      name="promotion_end_date" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[promotion_type]"
+                      name="promotion_type" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SPDW - ODS_PROMOCJE"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_PROMOCJE_new]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].Columns[promotion_id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="promotion_id"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_id]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_id]" />
+                    <inputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].Columns[promotion_desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="130"
+                      cachedName="promotion_desc"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_desc]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_desc]" />
+                    <inputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].Columns[promotion_start_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="promotion_start_date"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_start_date]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_start_date]" />
+                    <inputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].Columns[promotion_end_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="promotion_end_date"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_end_date]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_end_date]" />
+                    <inputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].Columns[promotion_type]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="promotion_type"
+                      externalMetadataColumnId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_type]"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output].Columns[promotion_type]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="promotion_id" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      name="promotion_desc" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_start_date" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_end_date" />
+                    <externalMetadataColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input].ExternalColumns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="promotion_type" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new.Paths[OLE DB Source Output]"
+              endId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D427E345-ED5A-4EB2-B552-DD92986D255A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ODS_PROMOCJE_new --&gt; STG_dim_campaign_new"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ODS_PROMOCJE_new"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ODS_PROMOCJE_new]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_id]"
+                      length="10"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_id]"
+                      name="promotion_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_desc]"
+                      length="80"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_desc]"
+                      name="promotion_desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_start_date]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_start_date]"
+                      name="promotion_start_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_end_date]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_end_date]"
+                      name="promotion_end_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_type]"
+                      length="250"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_type]"
+                      name="promotion_type"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="promotion_id" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      name="promotion_desc" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_start_date" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_end_date" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="promotion_type" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_id]"
+                      name="promotion_id" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_desc]"
+                      name="promotion_desc" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_start_date]"
+                      name="promotion_start_date" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_end_date]"
+                      name="promotion_end_date" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[promotion_type]"
+                      name="promotion_type" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="STG_dim_campaign_new"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[STG_dim_campaign_new]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="promotion_id"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_id]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_id]" />
+                    <inputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="promotion_desc"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_desc]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_desc]" />
+                    <inputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_start_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="promotion_start_date"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_start_date]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_start_date]" />
+                    <inputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_end_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="promotion_end_date"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_end_date]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_end_date]" />
+                    <inputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_type]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="promotion_type"
+                      externalMetadataColumnId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_type]"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output].Columns[promotion_type]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="promotion_id" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      name="promotion_desc" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_start_date" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_end_date" />
+                    <externalMetadataColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="promotion_type" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new.Paths[OLE DB Source Output]"
+              endId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{4FBD605D-FC25-4050-858F-C4A43719B80C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="STG_dim_campaign_new  --&gt; DWH_dim_campaign_new"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DWH_dim_campaign_new"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[DWH_dim_campaign_new]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="promotion_id"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_id]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_id]" />
+                    <inputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="promotion_desc"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_desc]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_desc]" />
+                    <inputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_start_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="promotion_start_date"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_start_date]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_start_date]" />
+                    <inputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_end_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="promotion_end_date"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_end_date]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_end_date]" />
+                    <inputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].Columns[promotion_type]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="promotion_type"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_type]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_type]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="promotion_id" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      name="promotion_desc" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_start_date" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_end_date" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input].ExternalColumns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="promotion_type" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STG_dim_campaign_new"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_dim_campaign_new]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_id]"
+                      length="10"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_id]"
+                      name="promotion_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_desc]"
+                      length="80"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_desc]"
+                      name="promotion_desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_start_date]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_start_date]"
+                      name="promotion_start_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_end_date]"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_end_date]"
+                      name="promotion_end_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_type]"
+                      length="250"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].Columns[promotion_type]"
+                      name="promotion_type"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="promotion_id" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      name="promotion_desc" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_start_date" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      name="promotion_end_date" />
+                    <externalMetadataColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output].ExternalColumns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="promotion_type" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_id]"
+                      name="promotion_id" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_desc]"
+                      name="promotion_desc" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_start_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_start_date]"
+                      name="promotion_start_date" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_end_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_end_date]"
+                      name="promotion_end_date" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[promotion_type]"
+                      name="promotion_type" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new.Paths[OLE DB Source Output]"
+              endId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate DWH_dim_campaign_new"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5E2AC00A-A1B5-48A4-88CE-BC93CB8DAEF9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate DWH_dim_campaign_new"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{263B0A8F-B385-4026-94EB-B50D7D46358B}"
+          SQLTask:SqlStatementSource="truncate table DWH_dim_campaign_new" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate ODS_PROMOCJE_new"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5AC1D1CD-547B-4169-8C9A-D932069F8E9E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate ODS_PROMOCJE_new"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{263B0A8F-B385-4026-94EB-B50D7D46358B}"
+          SQLTask:SqlStatementSource="truncate table ODS_PROMOCJE_new" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate STG_dim_campaign_new"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F7CD829F-BEEA-47F7-A1C8-AE698918E14C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate STG_dim_campaign_new"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{263B0A8F-B385-4026-94EB-B50D7D46358B}"
+          SQLTask:SqlStatementSource="truncate table STG_dim_campaign_new" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6AE9F5FC-B584-46A3-8C83-00C4875A2765}"
+      DTS:From="Package\truncate ODS_PROMOCJE_new"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{6C8D3116-491C-4A93-8A8E-C5E5B3BC0A09}"
+      DTS:From="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\truncate STG_dim_campaign_new" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3D4D2054-0F9B-4961-9697-5B977F47FF67}"
+      DTS:From="Package\truncate STG_dim_campaign_new"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{96D7EFEE-B02F-4AF6-A21A-7C446421802A}"
+      DTS:From="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\truncate DWH_dim_campaign_new" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{EC9F1CFE-F7B1-43B5-A15A-9303FDD9E4F6}"
+      DTS:From="Package\truncate DWH_dim_campaign_new"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="347.2,41.6"
+          Id="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new"
+          TopLeft="116,209" />
+        <NodeLayout
+          Size="324,41.6"
+          Id="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new"
+          TopLeft="509,208" />
+        <NodeLayout
+          Size="347.2,41.6"
+          Id="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new"
+          TopLeft="858,206" />
+        <NodeLayout
+          Size="244.8,41.6"
+          Id="Package\truncate DWH_dim_campaign_new"
+          TopLeft="900,125" />
+        <NodeLayout
+          Size="225.6,41.6"
+          Id="Package\truncate ODS_PROMOCJE_new"
+          TopLeft="169,120" />
+        <NodeLayout
+          Size="240,41.6"
+          Id="Package\truncate STG_dim_campaign_new"
+          TopLeft="525,122" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="282,162">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-49,47"
+              Start="0,0"
+              End="-49,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.0705679862306" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.0705679862306"
+                    Point2="0,28.0705679862306"
+                    Point3="-4,28.0705679862306" />
+                  <mssgle:LineSegment
+                    End="-45,28.0705679862306" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-45,28.0705679862306"
+                    Point2="-49,28.0705679862306"
+                    Point3="-49,32.0705679862306" />
+                  <mssgle:LineSegment
+                    End="-49,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="346,209">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="260.333333333333,-45"
+              Start="0,0"
+              End="260.333333333333,-37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-18.4429867146612" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-18.4429867146612"
+                    Point2="0,-22.4429867146612"
+                    Point3="4,-22.4429867146612" />
+                  <mssgle:LineSegment
+                    End="256.333333333333,-22.4429867146612" />
+                  <mssgle:CubicBezierSegment
+                    Point1="256.333333333333,-22.4429867146612"
+                    Point2="260.333333333333,-22.4429867146612"
+                    Point3="260.333333333333,-26.4429867146612" />
+                  <mssgle:LineSegment
+                    End="260.333333333333,-37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="683.666666666667,164">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-65.3333333333333,44"
+              Start="0,0"
+              End="-65.3333333333333,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.0468512321266" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.0468512321266"
+                    Point2="0,22.0468512321266"
+                    Point3="-4,22.0468512321266" />
+                  <mssgle:LineSegment
+                    End="-61.3333333333333,22.0468512321266" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-61.3333333333333,22.0468512321266"
+                    Point2="-65.3333333333333,22.0468512321266"
+                    Point3="-65.3333333333333,26.0468512321266" />
+                  <mssgle:LineSegment
+                    End="-65.3333333333333,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="723.666666666667,208">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="259.333333333333,-41"
+              Start="0,0"
+              End="259.333333333333,-33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-16.4597729700191" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-16.4597729700191"
+                    Point2="0,-20.4597729700191"
+                    Point3="4,-20.4597729700191" />
+                  <mssgle:LineSegment
+                    End="255.333333333333,-20.4597729700191" />
+                  <mssgle:CubicBezierSegment
+                    Point1="255.333333333333,-20.4597729700191"
+                    Point2="259.333333333333,-20.4597729700191"
+                    Point3="259.333333333333,-24.4597729700191" />
+                  <mssgle:LineSegment
+                    End="259.333333333333,-33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="1062,167">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-30.5,39"
+              Start="0,0"
+              End="-30.5,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.7518248175182" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.7518248175182"
+                    Point2="0,15.7518248175182"
+                    Point3="-4,15.7518248175182" />
+                  <mssgle:LineSegment
+                    End="-26.5,15.7518248175182" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-26.5,15.7518248175182"
+                    Point2="-30.5,15.7518248175182"
+                    Point3="-30.5,19.7518248175182" />
+                  <mssgle:LineSegment
+                    End="-30.5,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196.8,41.6"
+          Id="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE"
+          TopLeft="105,230" />
+        <NodeLayout
+          Size="180.8,41.6"
+          Id="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE"
+          TopLeft="113,148" />
+        <EdgeLayout
+          Id="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new.Paths[OLE DB Source Output]"
+          TopLeft="203.4,189.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.4"
+              Start="0,0"
+              End="0,32.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\FARMAX - PROMOCJE">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\FARMAX - PROMOCJE --&gt; SPDW - ODS_PROMOCJE_new\SPDW - ODS_PROMOCJE">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new"
+          TopLeft="369,125" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new"
+          TopLeft="102,124" />
+        <EdgeLayout
+          Id="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new.Paths[OLE DB Source Output]"
+          TopLeft="285,145.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="84,0"
+              Start="0,0"
+              End="76.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="76.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\ODS_PROMOCJE_new">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ODS_PROMOCJE_new --&gt; STG_dim_campaign_new\STG_dim_campaign_new">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="203,42"
+          Id="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new"
+          TopLeft="484,117" />
+        <NodeLayout
+          Size="198,42"
+          Id="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new"
+          TopLeft="174,114" />
+        <EdgeLayout
+          Id="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new.Paths[OLE DB Source Output]"
+          TopLeft="372,136.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="112,0"
+              Start="0,0"
+              End="104.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="104.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\DWH_dim_campaign_new">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STG_dim_campaign_new  --&gt; DWH_dim_campaign_new\STG_dim_campaign_new">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

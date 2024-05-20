@@ -1,0 +1,605 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/11/2020 12:16:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{E77790E6-AE1B-4092-8D5F-3B389EFAE023}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="sp_LKP_PredictDate"
+  DTS:PackageType="5"
+  DTS:VersionBuild="32"
+  DTS:VersionGUID="{F1BBB481-280A-4ED3-81F2-12D10BE7C5EF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CD51378E-84BA-42B5-A3D0-C83D270C2C1B}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete from LKP_PredictDate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F1BC9999-1D60-45A8-BB61-23D62047EFAB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete from LKP_PredictDate"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CD51378E-84BA-42B5-A3D0-C83D270C2C1B}"
+          SQLTask:SqlStatementSource="Delete from LKP_PredictDate&#xA;&#x9;where exists (select * from dbo.ODS_PredictDays&#xA;&#x9;&#x9;&#x9;&#x9;  Where ODS_PredictDays.date = LKP_PredictDate.dtDate)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\INSERT INTO Delete from LKP_PredictDate"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F5FE46FE-6A66-4B87-A08D-B16D98487D02}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="INSERT INTO Delete from LKP_PredictDate"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Inputs[Derived Column Input].Columns[Comparativeday]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Comparativeday"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Comparativeday]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Output].Columns[PrdictDate]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Output].Columns[PrdictDate]"
+                      name="PrdictDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,10,1250)[LEFT]([LTRIM]([RTRIM](#{Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Comparativeday]})),10)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,10,1250)LEFT(LTRIM(RTRIM(Comparativeday)),10)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert Into LKP_PredictDate"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[LKP_PredictDate]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input].Columns[PrdictDate]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="PrdictDate"
+                      externalMetadataColumnId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input].ExternalColumns[PrdictDate]"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Output].Columns[PrdictDate]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input].Columns[Date]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Date"
+                      externalMetadataColumnId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input].ExternalColumns[PrdictDate]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="PrdictDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ODS_Planogram_Planogram"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ODS_PredictDays]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select PLN_ID PlanogramId, DEPARTMENT PlnDepartment, CATEGORY PlnCategory, 
+	SUBCATEGORY PlnSubCategory,	PLANOGRAM PlanogramName, Status PlnStatus,
+	convert(smalldatetime,Replace(StartDate,'.','-'),103) [StartDate], convert(smalldatetime,[EndDate],103)[EndDate]
+From dbo.ODS_Planogram_Planogram
+Where RIGHT(isnull(StartDate,'1900'),4) &gt;= 2015
+And  Not Exists (Select * From DW_Dim_Planograms
+				  Where ODS_Planogram_Planogram.PLN_ID = DW_Dim_Planograms.PlanogramId)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Date]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[Date]"
+                      length="20"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Date]"
+                      name="Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Comparativeday]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[Comparativeday]"
+                      length="20"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[Comparativeday]"
+                      name="Comparativeday"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[Date]"
+                      codePage="1250"
+                      dataType="str"
+                      length="20"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[Comparativeday]"
+                      codePage="1250"
+                      dataType="str"
+                      length="20"
+                      name="Comparativeday" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[Date]"
+                      codePage="1250"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[Date]"
+                      name="Date" />
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[Comparativeday]"
+                      codePage="1250"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[Comparativeday]"
+                      name="Comparativeday" />
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\INSERT INTO Delete from LKP_PredictDate.Paths[Derived Column Output]"
+              endId="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\INSERT INTO Delete from LKP_PredictDate.Paths[OLE DB Source Output]"
+              endId="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{63C35408-C96C-4520-BC73-DBA7CA6C170A}"
+      DTS:From="Package\Delete from LKP_PredictDate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\INSERT INTO Delete from LKP_PredictDate" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="283,42"
+          Id="Package\INSERT INTO Delete from LKP_PredictDate"
+          TopLeft="8,97" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\Delete from LKP_PredictDate"
+          TopLeft="62,25" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="169.5,67">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-20,30"
+              Start="0,0"
+              End="-20,22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11"
+                    Point2="0,15"
+                    Point3="-4,15" />
+                  <mssgle:LineSegment
+                    End="-16,15" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-16,15"
+                    Point2="-20,15"
+                    Point3="-20,19" />
+                  <mssgle:LineSegment
+                    End="-20,22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\INSERT INTO Delete from LKP_PredictDate">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="211,42"
+          Id="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram"
+          TopLeft="16,12" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\INSERT INTO Delete from LKP_PredictDate\Derived Column"
+          TopLeft="47,83" />
+        <EdgeLayout
+          Id="Package\INSERT INTO Delete from LKP_PredictDate.Paths[OLE DB Source Output]"
+          TopLeft="122.75,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29"
+              Start="0,0"
+              End="0,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="210,42"
+          Id="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate"
+          TopLeft="37,161" />
+        <EdgeLayout
+          Id="Package\INSERT INTO Delete from LKP_PredictDate.Paths[Derived Column Output]"
+          TopLeft="124,125">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18,36"
+              Start="0,0"
+              End="18,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="14,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14,18"
+                    Point2="18,18"
+                    Point3="18,22" />
+                  <mssgle:LineSegment
+                    End="18,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO Delete from LKP_PredictDate\ODS_Planogram_Planogram">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO Delete from LKP_PredictDate\Insert Into LKP_PredictDate">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

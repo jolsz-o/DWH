@@ -1,0 +1,2924 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/4/2020 7:08:03 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERPANORAMA"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{C27BDE03-FCE3-4013-9265-01E3334C9D5F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="Sales_Previous_Month"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="128"
+  DTS:VersionGUID="{D52E2281-1635-446C-92B5-EA80B4F37068}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager LastMonth]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{EBAB2607-DF9D-4DE5-A780-A274FB0E2C8F}"
+      DTS:ObjectName="Flat File Connection Manager LastMonth">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">"\\\\TM1-PROD\\TM1Data\\TM1Serv\\Processes_MM\\TM1\\External Data\\Panorama\\Sales Data from Panorama to TM1 for_"  +RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , DATEADD("day", -1, ( DT_DATE) ( (DT_WSTR, 4) DATEPART("year", GetDate() ) +"-" +  (DT_WSTR, 2)DATEPART("month", GetDate() ) +"-1"))),2)  + "."+
+(DT_STR, 4, 1252) DATEPART("yy" , DATEADD("day", -1, ( DT_DATE) ( (DT_WSTR, 4) DATEPART("year", GetDate() ) +"-" +  (DT_WSTR, 2)DATEPART("month", GetDate() ) +"-1"))) +
+".csv"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1045"
+          DTS:HeaderRowDelimiter="_x007C_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1250"
+          DTS:ConnectionString="\\TM1-PROD\TM1Data\TM1Serv\Processes_MM\TM1\External Data\Panorama\Sales Data from Panorama to TM1 for_06.2020.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Year"
+              DTS:DTSID="{33A87CB5-E801-4096-A02A-190E0A6391DD}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="13"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="QuarterDesc"
+              DTS:DTSID="{BCABFF96-4CA3-4E5C-BA5F-1F9D47463574}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="13"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MonthDesc"
+              DTS:DTSID="{C82AB769-00BE-4E53-ACB2-B32236DE789D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Brand_ID"
+              DTS:DTSID="{5B2BBA07-8AD9-4041-8A8D-EB5BB894BFB3}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Brand_Desc"
+              DTS:DTSID="{35F18980-0B27-4C56-8687-C17CED432B50}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Producer_ID"
+              DTS:DTSID="{64EFE561-2959-4197-982B-844AE7F7E4BA}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="250"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Producer_Desc"
+              DTS:DTSID="{BD037428-1E4B-47D3-B8D7-A1134AFEADA0}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="40"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Department_Desc"
+              DTS:DTSID="{7B3DB0D7-6B4E-4718-9844-AC42538C9C38}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MainSupplier_ID"
+              DTS:DTSID="{1EC1CFA6-4FAA-4E04-9276-4EC19AE51281}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MainSupplier_Desc"
+              DTS:DTSID="{63B10F25-04DD-4588-8F14-705879F3763B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="5"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Net_Revenue"
+              DTS:DTSID="{3FD66EC2-5272-416B-836B-DEF7B580D52C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="5"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Quantity"
+              DTS:DTSID="{3F57FCC3-8E94-4775-9016-E966109B851B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="5"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Purchase_Price_No_Vat"
+              DTS:DTSID="{E25FD2B8-87AC-44E8-A73C-3A4F074C4C5C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="5"
+              DTS:TextQualified="True"
+              DTS:ObjectName="InventoryQty"
+              DTS:DTSID="{51A216C2-2FA4-4483-A462-CFAB12160147}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="5"
+              DTS:TextQualified="True"
+              DTS:ObjectName="InventoryNetCost"
+              DTS:DTSID="{F8EDB639-B1DF-4362-97E0-E26F8ABF8A47}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="5"
+              DTS:TextQualified="True"
+              DTS:ObjectName="TotalCost"
+              DTS:DTSID="{640C0BA8-52B0-4499-978A-4E1307C164E0}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[superpanorama.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{33565A1F-370D-4895-B6BC-D9533D250D68}"
+      DTS:ObjectName="superpanorama.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Extended Properties=FORMAT=TABULAR;Auto Translate=False;Application Name=SSIS-Sales Last Month-{33565A1F-370D-4895-B6BC-D9533D250D68}superpanorama.SuperPharmPoland;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task Last Month"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{922F641F-1E1C-4ACE-AA44-EDD0C747573E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task Last Month"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task Last Month\Data Conversion 1"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              localeId="1045"
+              name="Data Conversion 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input].Columns[Net_Revenue]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]"
+                      name="Net_Revenue" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input].Columns[InventoryQty]"
+                      cachedDataType="r8"
+                      cachedName="InventoryQty"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]"
+                      name="InventoryQty" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input].Columns[InventoryNetCost]"
+                      cachedDataType="r8"
+                      cachedName="InventoryNetCost"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]"
+                      name="InventoryNetCost" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input].Columns[TotalCost]"
+                      cachedDataType="r8"
+                      cachedName="TotalCost"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      name="TotalCost" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input].Columns[Quantity]"
+                      cachedDataType="r8"
+                      cachedName="Quantity"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      name="Quantity" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input].Columns[Purchase_Price_No_Vat]"
+                      cachedDataType="r8"
+                      cachedName="Purchase_Price_No_Vat"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]"
+                      name="Purchase_Price_No_Vat" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]"
+                      name="Copy of Net_Revenue"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]"
+                      name="Copy of InventoryQty"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]"
+                      name="Copy of InventoryNetCost"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]"
+                      name="Copy of TotalCost"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]"
+                      name="Copy of Quantity"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]"
+                      name="Copy of Purchase_Price_No_Vat"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task Last Month\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Updates column values using expressions"
+              localeId="1045"
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of Net_Revenue]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Net_Revenue"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]"
+                      name="Copy of Net_Revenue"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of Net_Revenue],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of InventoryQty]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of InventoryQty"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]"
+                      name="Copy of InventoryQty"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of InventoryQty],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of InventoryNetCost]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of InventoryNetCost"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]"
+                      name="Copy of InventoryNetCost"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of InventoryNetCost],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of TotalCost]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of TotalCost"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]"
+                      name="Copy of TotalCost"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of TotalCost],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of Quantity]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Quantity"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]"
+                      name="Copy of Quantity"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of Quantity],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of Purchase_Price_No_Vat]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Purchase_Price_No_Vat"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]"
+                      name="Copy of Purchase_Price_No_Vat"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of Purchase_Price_No_Vat],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task Last Month\Flat File Destination 012020"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Flat File Destination"
+              localeId="1045"
+              name="Flat File Destination 012020"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager LastMonth]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager LastMonth]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[QuarterDesc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="13"
+                      cachedName="QuarterDesc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[QuarterDesc]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterDesc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[MonthDesc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="13"
+                      cachedName="MonthDesc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[MonthDesc]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthDesc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Brand_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Brand_ID"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Brand_ID]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Brand_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Brand_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Brand_Desc]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Producer_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Producer_ID"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Producer_ID]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Producer_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="Producer_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Producer_Desc]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Department_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="40"
+                      cachedName="Department_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Department_Desc]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Department_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[MainSupplier_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="MainSupplier_ID"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_ID]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[MainSupplier_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="MainSupplier_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_Desc]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Copy of Purchase_Price_No_Vat]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Purchase_Price_No_Vat"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Purchase_Price_No_Vat]"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Copy of Quantity]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Quantity"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Quantity]"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Copy of TotalCost]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of TotalCost"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[TotalCost]"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Copy of InventoryNetCost]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of InventoryNetCost"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[InventoryNetCost]"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Copy of InventoryQty]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of InventoryQty"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[InventoryQty]"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].Columns[Copy of Net_Revenue]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Net_Revenue"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Net_Revenue]"
+                      lineageId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="QuarterDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="MonthDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="Brand_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Brand_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Producer_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="Producer_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      name="Department_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="MainSupplier_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="MainSupplier_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Net_Revenue]"
+                      dataType="r8"
+                      name="Net_Revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[InventoryQty]"
+                      dataType="r8"
+                      name="InventoryQty" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[InventoryNetCost]"
+                      dataType="r8"
+                      name="InventoryNetCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[TotalCost]"
+                      dataType="r8"
+                      name="TotalCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Quantity]"
+                      dataType="r8"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input].ExternalColumns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      name="Purchase_Price_No_Vat" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task Last Month\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">DECLARE @Today datetime, 
+
+@MonthStartDate1  datetime , 
+
+@MonthEndDate1 datetime ,
+
+@currentmonth datetime
+
+--@LastMonthFirstday varchar(9), 
+
+--@LastMonthLastDay varchar(9)
+
+
+
+SET @Today = CAST(CONVERT(nvarchar(10), GETDATE(), 120) AS datetime) -- strips time off
+
+SET @MonthEndDate1 = DATEADD(day, - DAY(@Today), @Today) -- last day of previous month
+
+SET @MonthStartDate1  = DATEADD(month, -1, DATEADD(day, 1, @MonthEndDate1)) -- first day of previous month
+
+SET @currentmonth=DATEADD(month, 0, DATEADD(day, 1, @MonthEndDate1)) --current month
+
+--set @LastMonthFirstday = Cast(Replace(Convert(varchar(9), @FirstDay, 6), ' ', '-') As varchar(9))--@FirstDay 
+
+--set @LastMonthLastDay = Cast(Replace(Convert(varchar(9), @LastDay, 6), ' ', '-') As varchar(9))--@LastDay
+
+
+--select @MonthStartDate1 AS MonthStartDate ,@MonthEndDate1 AS MonthEndDate,@currentmonth AS currentmonth --,@LastMonthFirstday, @LastMonthLastDay 
+
+
+-------------------
+;WITH GROUP1 
+
+
+AS(
+SELECT DISTINCT  
+ Item_Id
+,I.Item_Desc
+,I.Brand_ID
+,i.Brand_Desc
+,i.Producer_ID
+,i.Producer_Desc
+,i.Department_Desc
+,i.MainSupplier_ID
+,i.MainSupplier_Desc
+FROM dbo.DWH_DIM_Items I),
+
+
+ GROUP2 
+ 
+ AS (
+SELECT 
+ T.Item_ID 
+,YEAR(INVOICE_DATE) AS [Year]
+,'Q'+CAST(DATEPART(QUARTER,INVOICE_DATE) AS VARCHAR(1)) +'/'+CAST(YEAR(INVOICE_DATE) AS VARCHAR(10)) AS [QuarterDesc]
+,CAST(DATEPART(MONTH,INVOICE_DATE) AS VARCHAR(2)) +'/'+CAST(YEAR(INVOICE_DATE) AS VARCHAR(10)) AS [MonthDesc]
+,SUM([PURCHASE_PRICE_NO_VAT]) AS [Purchase_Price_No_Vat] 
+,SUM([QUANTITY]) AS [Quantity]
+,SUM([Net_Revenue]) AS  [Net_Revenue]
+
+FROM [SuperPharmPoland].[dbo].[Vw_Fact_Invoice] N
+JOIN dbo.DWH_DIM_Items T
+ON 
+N.Item_ID= T.Item_ID
+
+AND N.Store_Id &lt;&gt; '94'
+AND CAST(N.INVOICE_DATE AS DATETIME) &gt;=@MonthStartDate1--- '2020-01-01 00:00:00.000'
+AND CAST(N.INVOICE_DATE AS DATETIME) &lt; @currentmonth-- '2020-02-01 00:00:00.000' 
+
+
+GROUP BY 
+T.Item_ID
+,YEAR(INVOICE_DATE)
+,CAST(DATEPART(QUARTER,INVOICE_DATE) AS VARCHAR(1))
+,CAST(DATEPART(MONTH,INVOICE_DATE) AS VARCHAR(2))
+),
+
+
+GROUP3 AS (           
+SELECT  
+ItemId
+,YEAR(P.dtDate) AS [Year]
+,'Q'+CAST(DATEPART(QUARTER,P.dtDate) AS VARCHAR(1)) +'/'+CAST(YEAR(P.dtDate) AS VARCHAR(10)) AS [QuarterDesc]
+,CAST(DATEPART(MONTH,P.dtDate) AS VARCHAR(2)) +'/'+CAST(YEAR(P.dtDate) AS VARCHAR(10)) AS [MonthDesc]
+,SUM(P.TotalCost) AS TotalCost
+FROM [SuperPharmPoland].dbo.Vw_Fact_PO P 
+JOIN dbo.DWH_DIM_Items I
+ON P.ItemId= I.Item_ID
+WHERE  
+CAST(P.dtDate AS DATETIME) &gt;= @MonthStartDate1 --'2020-01-01 00:00:00.000' 
+AND CAST(P.dtDate AS DATETIME) &lt;@currentmonth  -- '2020-02-01 00:00:00.000'
+AND P.StoreId&lt;&gt;'94'
+
+GROUP BY  
+ItemId
+,YEAR(P.dtDate)
+,CAST(DATEPART(QUARTER,P.dtDate) AS VARCHAR(1))
+,CAST(DATEPART(MONTH,P.dtDate) AS VARCHAR(2))
+),
+
+---------------------------
+GROUP4 AS (           
+
+SELECT  
+N.Item_ID 
+,YEAR(N.Dt_Key) AS [Year]
+,'Q'+CAST(DATEPART(QUARTER,N.Dt_Key) AS VARCHAR(1)) +'/'+CAST(YEAR(N.Dt_Key) AS VARCHAR(10)) AS [QuarterDesc]
+,CAST(DATEPART(MONTH,N.Dt_Key) AS VARCHAR(2)) +'/'+CAST(YEAR(N.Dt_Key) AS VARCHAR(10)) AS [MonthDesc]
+,SUM(N.[Qunatity]) AS [InventoryQty]
+,SUM(N.[InventoryNetCost]) AS InventoryNetCost
+FROM [SuperPharmPoland].[dbo].[DWH_Fact_Inventory] N
+JOIN dbo.DWH_DIM_Items i
+ON N.Item_Id=i.Item_ID
+AND CAST(N.Dt_Key AS DATETIME)=DATEADD("dd", -1 ,@currentmonth)--'2020-02-01 00:00:00.000' )
+AND N.Store_ID&lt;&gt;'94'
+
+GROUP BY 
+N.Item_Id
+,YEAR(N.Dt_Key)
+,CAST(DATEPART(QUARTER,N.Dt_Key) AS VARCHAR(1))
+,CAST(DATEPART(MONTH,N.Dt_Key) AS VARCHAR(2)) ) 
+  
+      
+SELECT 
+ COALESCE(GROUP2.[Year],GROUP3.[Year],GROUP4.[Year]) AS [Year]
+,COALESCE(GROUP2.[QuarterDesc],GROUP3.[QuarterDesc],GROUP4.[QuarterDesc]) AS QuarterDesc
+,COALESCE(GROUP2.[MonthDesc],GROUP3.[MonthDesc],GROUP4.[MonthDesc]) AS MonthDesc
+,GROUP1.Brand_ID
+,GROUP1.Brand_Desc
+,GROUP1.Producer_ID
+,GROUP1.Producer_Desc
+,GROUP1.Department_Desc
+,GROUP1.MainSupplier_ID
+,GROUP1.MainSupplier_Desc
+--,GROUP1.Item_ID
+--,GROUP1.Item_Desc 
+,SUM(GROUP2.[Net_Revenue]) AS Net_Revenue
+,SUM(GROUP2.[Quantity]) AS Quantity
+,SUM(GROUP2.[Purchase_Price_No_Vat]) as Purchase_Price_No_Vat
+,SUM(GROUP4.[InventoryQty]) AS InventoryQty
+,SUM(GROUP4.InventoryNetCost) AS InventoryNetCost
+,SUM(GROUP3.TotalCost) AS TotalCost
+
+ FROM GROUP1 
+ LEFT JOIN GROUP2 ON GROUP2.Item_ID= GROUP1.Item_ID
+ LEFT JOIN GROUP3 ON GROUP3.ItemID = GROUP1.Item_ID
+ LEFT JOIN GROUP4 ON GROUP4.Item_ID =GROUP1.Item_ID
+ 
+ WHERE 
+ GROUP2.[Purchase_Price_No_Vat] IS NOT NULL 
+OR GROUP2.[Quantity] IS NOT NULL 
+OR GROUP2.[Net_Revenue] IS NOT NULL 
+OR GROUP3.[TotalCost] IS NOT NULL 
+OR GROUP4.[InventoryQty] IS NOT NULL 
+OR GROUP4.InventoryNetCost IS NOT NULL 
+ 
+ GROUP BY 
+ COALESCE(GROUP2.[Year],GROUP3.[Year],GROUP4.[Year])
+,COALESCE(GROUP2.[QuarterDesc],GROUP3.[QuarterDesc],GROUP4.[QuarterDesc])
+,COALESCE(GROUP2.[MonthDesc],GROUP3.[MonthDesc],GROUP4.[MonthDesc])
+,GROUP1.Brand_ID
+,GROUP1.Brand_Desc
+,GROUP1.Producer_ID
+,GROUP1.Producer_Desc
+,GROUP1.Department_Desc
+,GROUP1.MainSupplier_ID
+,GROUP1.MainSupplier_Desc
+
+
+ORDER BY 
+ GROUP1.Brand_Desc
+,GROUP1.Producer_Desc
+,GROUP1.Department_Desc
+,GROUP1.MainSupplier_Desc</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task Last Month\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[superpanorama.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[superpanorama.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuarterDesc]"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterDesc]"
+                      name="QuarterDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthDesc]"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthDesc]"
+                      name="MonthDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_ID]"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_ID]"
+                      name="Brand_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_Desc]"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_Desc]"
+                      name="Brand_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_ID]"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_ID]"
+                      name="Producer_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_Desc]"
+                      length="250"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_Desc]"
+                      name="Producer_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Department_Desc]"
+                      length="40"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Department_Desc]"
+                      name="Department_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_ID]"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_ID]"
+                      name="MainSupplier_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_Desc]"
+                      length="100"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_Desc]"
+                      name="MainSupplier_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]"
+                      name="Net_Revenue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryQty]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]"
+                      name="InventoryQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryNetCost]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]"
+                      name="InventoryNetCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalCost]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      name="TotalCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      name="Quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Purchase_Price_No_Vat]"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]"
+                      name="Purchase_Price_No_Vat"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="QuarterDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="MonthDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="Brand_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Brand_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Producer_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="Producer_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      name="Department_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="MainSupplier_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="MainSupplier_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue]"
+                      dataType="r8"
+                      name="Net_Revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryQty]"
+                      dataType="r8"
+                      name="InventoryQty" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryNetCost]"
+                      dataType="r8"
+                      name="InventoryNetCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalCost]"
+                      dataType="r8"
+                      name="TotalCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
+                      dataType="r8"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      name="Purchase_Price_No_Vat" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuarterDesc]"
+                      name="QuarterDesc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthDesc]"
+                      name="MonthDesc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_ID]"
+                      name="Brand_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_Desc]"
+                      name="Brand_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_ID]"
+                      name="Producer_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_Desc]"
+                      name="Producer_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Department_Desc]"
+                      name="Department_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_ID]"
+                      name="MainSupplier_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_Desc]"
+                      name="MainSupplier_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Net_Revenue]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Net_Revenue]"
+                      name="Net_Revenue" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quantity]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quantity]"
+                      name="Quantity" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Purchase_Price_No_Vat]"
+                      name="Purchase_Price_No_Vat" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryQty]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryQty]"
+                      name="InventoryQty" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryNetCost]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryNetCost]"
+                      name="InventoryNetCost" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalCost]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalCost]"
+                      name="TotalCost" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task Last Month.Paths[Data Conversion Output]"
+              endId="Package\Data Flow Task Last Month\Derived Column 1.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\Data Flow Task Last Month\Data Conversion 1.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Data Flow Task Last Month.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task Last Month\Flat File Destination 012020.Inputs[Flat File Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task Last Month\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task Last Month.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task Last Month\Data Conversion 1.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task Last Month\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task Last Month_old"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{285B488C-2214-4948-A7A3-7D52DCEC060A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task Last Month_old"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              localeId="1045"
+              name="Data Conversion 1 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input].Columns[Net_Revenue]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]"
+                      name="Net_Revenue" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input].Columns[InventoryQty]"
+                      cachedDataType="r8"
+                      cachedName="InventoryQty"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]"
+                      name="InventoryQty" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input].Columns[InventoryNetCost]"
+                      cachedDataType="r8"
+                      cachedName="InventoryNetCost"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]"
+                      name="InventoryNetCost" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input].Columns[TotalCost]"
+                      cachedDataType="r8"
+                      cachedName="TotalCost"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      name="TotalCost" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input].Columns[Quantity]"
+                      cachedDataType="r8"
+                      cachedName="Quantity"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      name="Quantity" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input].Columns[Purchase_Price_No_Vat]"
+                      cachedDataType="r8"
+                      cachedName="Purchase_Price_No_Vat"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]"
+                      name="Purchase_Price_No_Vat" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]"
+                      name="Copy of Net_Revenue"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]"
+                      name="Copy of InventoryQty"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]"
+                      name="Copy of InventoryNetCost"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]"
+                      name="Copy of TotalCost"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]"
+                      name="Copy of Quantity"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]"
+                      name="Copy of Purchase_Price_No_Vat"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task Last Month_old\Derived Column 1 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Updates column values using expressions"
+              localeId="1045"
+              name="Derived Column 1 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input].Columns[Copy of Net_Revenue]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Net_Revenue"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]"
+                      name="Copy of Net_Revenue"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Net_Revenue]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of Net_Revenue],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input].Columns[Copy of InventoryQty]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of InventoryQty"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]"
+                      name="Copy of InventoryQty"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryQty]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of InventoryQty],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input].Columns[Copy of InventoryNetCost]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of InventoryNetCost"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]"
+                      name="Copy of InventoryNetCost"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of InventoryNetCost]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of InventoryNetCost],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input].Columns[Copy of TotalCost]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of TotalCost"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]"
+                      name="Copy of TotalCost"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of TotalCost]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of TotalCost],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input].Columns[Copy of Quantity]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Quantity"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]"
+                      name="Copy of Quantity"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Quantity]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of Quantity],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input].Columns[Copy of Purchase_Price_No_Vat]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Purchase_Price_No_Vat"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]"
+                      name="Copy of Purchase_Price_No_Vat"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output].Columns[Copy of Purchase_Price_No_Vat]},",",".")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE([Copy of Purchase_Price_No_Vat],",",".")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task Last Month_old\Flat File Destination csv"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Flat File Destination"
+              localeId="1045"
+              name="Flat File Destination csv"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager LastMonth]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager LastMonth]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[QuarterDesc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="13"
+                      cachedName="QuarterDesc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[QuarterDesc]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterDesc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[MonthDesc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="13"
+                      cachedName="MonthDesc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[MonthDesc]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthDesc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Brand_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Brand_ID"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Brand_ID]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Brand_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Brand_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Brand_Desc]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Producer_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Producer_ID"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Producer_ID]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Producer_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="Producer_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Producer_Desc]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Department_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="40"
+                      cachedName="Department_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Department_Desc]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Department_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[MainSupplier_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="MainSupplier_ID"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_ID]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[MainSupplier_Desc]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="MainSupplier_Desc"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_Desc]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_Desc]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Net_Revenue]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Net_Revenue]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[InventoryQty]"
+                      cachedDataType="r8"
+                      cachedName="InventoryQty"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[InventoryQty]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[InventoryNetCost]"
+                      cachedDataType="r8"
+                      cachedName="InventoryNetCost"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[InventoryNetCost]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[TotalCost]"
+                      cachedDataType="r8"
+                      cachedName="TotalCost"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[TotalCost]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Quantity]"
+                      cachedDataType="r8"
+                      cachedName="Quantity"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Quantity]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].Columns[Purchase_Price_No_Vat]"
+                      cachedDataType="r8"
+                      cachedName="Purchase_Price_No_Vat"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Purchase_Price_No_Vat]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="QuarterDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="MonthDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="Brand_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Brand_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Producer_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="Producer_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      name="Department_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="MainSupplier_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="MainSupplier_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Net_Revenue]"
+                      dataType="r8"
+                      name="Net_Revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[InventoryQty]"
+                      dataType="r8"
+                      name="InventoryQty" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[InventoryNetCost]"
+                      dataType="r8"
+                      name="InventoryNetCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[TotalCost]"
+                      dataType="r8"
+                      name="TotalCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Quantity]"
+                      dataType="r8"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input].ExternalColumns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      name="Purchase_Price_No_Vat" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task Last Month_old\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">DECLARE @Today datetime, 
+
+@MonthStartDate1  datetime , 
+
+@MonthEndDate1 datetime ,
+
+@currentmonth datetime
+
+--@LastMonthFirstday varchar(9), 
+
+--@LastMonthLastDay varchar(9)
+
+
+
+SET @Today = CAST(CONVERT(nvarchar(10), GETDATE(), 120) AS datetime) -- strips time off
+
+SET @MonthEndDate1 = DATEADD(day, - DAY(@Today), @Today) -- last day of previous month
+
+SET @MonthStartDate1  = DATEADD(month, -1, DATEADD(day, 1, @MonthEndDate1)) -- first day of previous month
+
+SET @currentmonth=DATEADD(month, 0, DATEADD(day, 1, @MonthEndDate1)) --current month
+
+--set @LastMonthFirstday = Cast(Replace(Convert(varchar(9), @FirstDay, 6), ' ', '-') As varchar(9))--@FirstDay 
+
+--set @LastMonthLastDay = Cast(Replace(Convert(varchar(9), @LastDay, 6), ' ', '-') As varchar(9))--@LastDay
+
+
+--select @MonthStartDate1 AS MonthStartDate ,@MonthEndDate1 AS MonthEndDate,@currentmonth AS currentmonth --,@LastMonthFirstday, @LastMonthLastDay 
+
+
+-------------------
+;WITH GROUP1 
+
+
+AS(
+SELECT DISTINCT  
+ Item_Id
+,I.Item_Desc
+,I.Brand_ID
+,i.Brand_Desc
+,i.Producer_ID
+,i.Producer_Desc
+,i.Department_Desc
+,i.MainSupplier_ID
+,i.MainSupplier_Desc
+FROM dbo.DWH_DIM_Items I),
+
+
+ GROUP2 
+ 
+ AS (
+SELECT 
+ T.Item_ID 
+,YEAR(INVOICE_DATE) AS [Year]
+,'Q'+CAST(DATEPART(QUARTER,INVOICE_DATE) AS VARCHAR(1)) +'/'+CAST(YEAR(INVOICE_DATE) AS VARCHAR(10)) AS [QuarterDesc]
+,CAST(DATEPART(MONTH,INVOICE_DATE) AS VARCHAR(2)) +'/'+CAST(YEAR(INVOICE_DATE) AS VARCHAR(10)) AS [MonthDesc]
+,SUM([PURCHASE_PRICE_NO_VAT]) AS [Purchase_Price_No_Vat] 
+,SUM([QUANTITY]) AS [Quantity]
+,SUM([Net_Revenue]) AS  [Net_Revenue]
+
+FROM [SuperPharmPoland].[dbo].[Vw_Fact_Invoice] N
+JOIN dbo.DWH_DIM_Items T
+ON 
+N.Item_ID= T.Item_ID
+
+AND N.Store_Id &lt;&gt; '94'
+AND CAST(N.INVOICE_DATE AS DATETIME) &gt;=@MonthStartDate1--- '2020-01-01 00:00:00.000'
+AND CAST(N.INVOICE_DATE AS DATETIME) &lt; @currentmonth-- '2020-02-01 00:00:00.000' 
+
+
+GROUP BY 
+T.Item_ID
+,YEAR(INVOICE_DATE)
+,CAST(DATEPART(QUARTER,INVOICE_DATE) AS VARCHAR(1))
+,CAST(DATEPART(MONTH,INVOICE_DATE) AS VARCHAR(2))
+),
+
+
+GROUP3 AS (           
+SELECT  
+ItemId
+,YEAR(P.dtDate) AS [Year]
+,'Q'+CAST(DATEPART(QUARTER,P.dtDate) AS VARCHAR(1)) +'/'+CAST(YEAR(P.dtDate) AS VARCHAR(10)) AS [QuarterDesc]
+,CAST(DATEPART(MONTH,P.dtDate) AS VARCHAR(2)) +'/'+CAST(YEAR(P.dtDate) AS VARCHAR(10)) AS [MonthDesc]
+,SUM(P.TotalCost) AS TotalCost
+FROM [SuperPharmPoland].dbo.Vw_Fact_PO P 
+JOIN dbo.DWH_DIM_Items I
+ON P.ItemId= I.Item_ID
+WHERE  
+CAST(P.dtDate AS DATETIME) &gt;= @MonthStartDate1 --'2020-01-01 00:00:00.000' 
+AND CAST(P.dtDate AS DATETIME) &lt;@currentmonth  -- '2020-02-01 00:00:00.000'
+AND P.StoreId&lt;&gt;'94'
+
+GROUP BY  
+ItemId
+,YEAR(P.dtDate)
+,CAST(DATEPART(QUARTER,P.dtDate) AS VARCHAR(1))
+,CAST(DATEPART(MONTH,P.dtDate) AS VARCHAR(2))
+),
+
+---------------------------
+GROUP4 AS (           
+
+SELECT  
+N.Item_ID 
+,YEAR(N.Dt_Key) AS [Year]
+,'Q'+CAST(DATEPART(QUARTER,N.Dt_Key) AS VARCHAR(1)) +'/'+CAST(YEAR(N.Dt_Key) AS VARCHAR(10)) AS [QuarterDesc]
+,CAST(DATEPART(MONTH,N.Dt_Key) AS VARCHAR(2)) +'/'+CAST(YEAR(N.Dt_Key) AS VARCHAR(10)) AS [MonthDesc]
+,SUM(N.[Qunatity]) AS [InventoryQty]
+,SUM(N.[InventoryNetCost]) AS InventoryNetCost
+FROM [SuperPharmPoland].[dbo].[DWH_Fact_Inventory] N
+JOIN dbo.DWH_DIM_Items i
+ON N.Item_Id=i.Item_ID
+AND CAST(N.Dt_Key AS DATETIME)=DATEADD("dd", -1 ,@currentmonth)--'2020-02-01 00:00:00.000' )
+AND N.Store_ID&lt;&gt;'94'
+
+GROUP BY 
+N.Item_Id
+,YEAR(N.Dt_Key)
+,CAST(DATEPART(QUARTER,N.Dt_Key) AS VARCHAR(1))
+,CAST(DATEPART(MONTH,N.Dt_Key) AS VARCHAR(2)) ) 
+  
+      
+SELECT 
+ COALESCE(GROUP2.[Year],GROUP3.[Year],GROUP4.[Year]) AS [Year]
+,COALESCE(GROUP2.[QuarterDesc],GROUP3.[QuarterDesc],GROUP4.[QuarterDesc]) AS QuarterDesc
+,COALESCE(GROUP2.[MonthDesc],GROUP3.[MonthDesc],GROUP4.[MonthDesc]) AS MonthDesc
+,GROUP1.Brand_ID
+,GROUP1.Brand_Desc
+,GROUP1.Producer_ID
+,GROUP1.Producer_Desc
+,GROUP1.Department_Desc
+,GROUP1.MainSupplier_ID
+,GROUP1.MainSupplier_Desc
+--,GROUP1.Item_ID
+--,GROUP1.Item_Desc 
+,SUM(GROUP2.[Net_Revenue]) AS Net_Revenue
+,SUM(GROUP2.[Quantity]) AS Quantity
+,SUM(GROUP2.[Purchase_Price_No_Vat]) as Purchase_Price_No_Vat
+,SUM(GROUP4.[InventoryQty]) AS InventoryQty
+,SUM(GROUP4.InventoryNetCost) AS InventoryNetCost
+,SUM(GROUP3.TotalCost) AS TotalCost
+
+ FROM GROUP1 
+ LEFT JOIN GROUP2 ON GROUP2.Item_ID= GROUP1.Item_ID
+ LEFT JOIN GROUP3 ON GROUP3.ItemID = GROUP1.Item_ID
+ LEFT JOIN GROUP4 ON GROUP4.Item_ID =GROUP1.Item_ID
+ 
+ WHERE 
+ GROUP2.[Purchase_Price_No_Vat] IS NOT NULL 
+OR GROUP2.[Quantity] IS NOT NULL 
+OR GROUP2.[Net_Revenue] IS NOT NULL 
+OR GROUP3.[TotalCost] IS NOT NULL 
+OR GROUP4.[InventoryQty] IS NOT NULL 
+OR GROUP4.InventoryNetCost IS NOT NULL 
+ 
+ GROUP BY 
+ COALESCE(GROUP2.[Year],GROUP3.[Year],GROUP4.[Year])
+,COALESCE(GROUP2.[QuarterDesc],GROUP3.[QuarterDesc],GROUP4.[QuarterDesc])
+,COALESCE(GROUP2.[MonthDesc],GROUP3.[MonthDesc],GROUP4.[MonthDesc])
+,GROUP1.Brand_ID
+,GROUP1.Brand_Desc
+,GROUP1.Producer_ID
+,GROUP1.Producer_Desc
+,GROUP1.Department_Desc
+,GROUP1.MainSupplier_ID
+,GROUP1.MainSupplier_Desc
+
+
+ORDER BY 
+ GROUP1.Brand_Desc
+,GROUP1.Producer_Desc
+,GROUP1.Department_Desc
+,GROUP1.MainSupplier_Desc</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task Last Month_old\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[superpanorama.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[superpanorama.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuarterDesc]"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterDesc]"
+                      name="QuarterDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthDesc]"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthDesc]"
+                      name="MonthDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_ID]"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_ID]"
+                      name="Brand_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_Desc]"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Brand_Desc]"
+                      name="Brand_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_ID]"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_ID]"
+                      name="Producer_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_Desc]"
+                      length="250"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Producer_Desc]"
+                      name="Producer_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Department_Desc]"
+                      length="40"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Department_Desc]"
+                      name="Department_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_ID]"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_ID]"
+                      name="MainSupplier_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_Desc]"
+                      length="100"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[MainSupplier_Desc]"
+                      name="MainSupplier_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Net_Revenue]"
+                      name="Net_Revenue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryQty]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryQty]"
+                      name="InventoryQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryNetCost]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[InventoryNetCost]"
+                      name="InventoryNetCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalCost]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      name="TotalCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      name="Quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Purchase_Price_No_Vat]"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].Columns[Purchase_Price_No_Vat]"
+                      name="Purchase_Price_No_Vat"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="QuarterDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="MonthDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="Brand_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Brand_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="Producer_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      name="Producer_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      name="Department_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="MainSupplier_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="MainSupplier_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue]"
+                      dataType="r8"
+                      name="Net_Revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryQty]"
+                      dataType="r8"
+                      name="InventoryQty" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[InventoryNetCost]"
+                      dataType="r8"
+                      name="InventoryNetCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalCost]"
+                      dataType="r8"
+                      name="TotalCost" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
+                      dataType="r8"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      name="Purchase_Price_No_Vat" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuarterDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuarterDesc]"
+                      name="QuarterDesc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthDesc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthDesc]"
+                      name="MonthDesc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_ID]"
+                      name="Brand_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Brand_Desc]"
+                      name="Brand_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_ID]"
+                      name="Producer_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Producer_Desc]"
+                      name="Producer_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Department_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Department_Desc]"
+                      name="Department_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_ID]"
+                      name="MainSupplier_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_Desc]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MainSupplier_Desc]"
+                      name="MainSupplier_Desc" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Net_Revenue]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Net_Revenue]"
+                      name="Net_Revenue" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quantity]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quantity]"
+                      name="Quantity" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Purchase_Price_No_Vat]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Purchase_Price_No_Vat]"
+                      name="Purchase_Price_No_Vat" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryQty]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryQty]"
+                      name="InventoryQty" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryNetCost]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[InventoryNetCost]"
+                      name="InventoryNetCost" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalCost]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TotalCost]"
+                      name="TotalCost" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task Last Month_old.Paths[Data Conversion Output]"
+              endId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Data Flow Task Last Month_old.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task Last Month_old\Flat File Destination csv.Inputs[Flat File Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task Last Month_old\Derived Column 1 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task Last Month_old.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task Last Month_old\Data Conversion 1 1.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task Last Month_old\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task Last Month"
+          TopLeft="62.1037735849057,99.9150943396226" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task Last Month_old"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task Last Month">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task Last Month\Derived Column 1"
+          TopLeft="17.4245283018868,151.990566037736" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task Last Month\OLE DB Source"
+          TopLeft="19.311320754717,5.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Data Flow Task Last Month\Data Conversion 1"
+          TopLeft="21.0094339622642,80.2924528301887" />
+        <NodeLayout
+          Size="164,44"
+          Id="Package\Data Flow Task Last Month\Flat File Destination 012020"
+          TopLeft="5.5,235.235849056604" />
+        <EdgeLayout
+          Id="Package\Data Flow Task Last Month.Paths[OLE DB Source Output]"
+          TopLeft="87.1981132075472,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="1.69811320754717,30.8679245283019"
+              Start="0,0"
+              End="1.69811320754717,23.3679245283019">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.4339622641509" />
+                  <mssgle:LineSegment
+                    End="1.69811320754717,15.4339622641509" />
+                  <mssgle:LineSegment
+                    End="1.69811320754717,23.3679245283019" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task Last Month.Paths[Derived Column Output]"
+          TopLeft="85.311320754717,195.915094339623">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="2.0377358490566,39.3207547169811"
+              Start="0,0"
+              End="2.0377358490566,31.8207547169811">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.6603773584906" />
+                  <mssgle:LineSegment
+                    End="2.0377358490566,19.6603773584906" />
+                  <mssgle:LineSegment
+                    End="2.0377358490566,31.8207547169811" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task Last Month.Paths[Data Conversion Output]"
+          TopLeft="88.8962264150943,124.216981132075">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-3.58490566037734,27.7735849056604"
+              Start="0,0"
+              End="-3.58490566037734,20.2735849056604">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.8867924528302" />
+                  <mssgle:LineSegment
+                    End="-3.58490566037734,13.8867924528302" />
+                  <mssgle:LineSegment
+                    End="-3.58490566037734,20.2735849056604" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task Last Month\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

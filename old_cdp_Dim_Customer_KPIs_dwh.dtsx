@@ -1,0 +1,1818 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/14/2023 12:07:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{34BFACD0-BC1D-4669-B3D3-2512C5F65606}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="old_cdp_Dim_Customer_KPIs_dwh"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="401"
+  DTS:VersionGUID="{265B312D-132D-4174-9AE2-69F5B0C2421B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[172.27.160.70.CDP]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8F268301-FA53-4E19-9539-C70B6259E778}"
+      DTS:ObjectName="172.27.160.70.CDP">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.27.160.70;Initial Catalog=CDP;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EA28E04B-4896-4F04-9C02-7FA8326B6BD3}"
+      DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.FARMAX">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;Initial Catalog=FARMAX;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+      DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{38FB5A1B-B786-467B-B539-E0147BA09E26}"
+      DTS:ObjectName="MagentoDB_new.promoviewonly">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="APSvHJsx94g="
+            IV="yYqwyVNSMvNE3qadAoyS3g==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>yYqwyVNSMvNE3qadAoyS3pTCYVBV+kNe+pRDtAbn9FCNZJ8PNyIJraVAuhvgSE1Zvd5WykEjvADSG2n44U5mzrUMBA+TPtzkuzT6b2LXs4pWDC4qq+DUHbxDvoBFivi8ETiGAuLXSpFxOimcaaRrtoijxW20cl8PYAYXOXxHYn6I7KM0H7iRhcXCDDPanFrq</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{029B2274-744E-4E48-A1CA-ABBB4CF6B772}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7D20484E-9BF9-4DDC-8646-814C5DC029E4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_DWH_DIM_customer_KPIs"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_dwh_DIM_customer_KPIs]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[source]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="42"
+                      cachedName="source"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[source]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[main_email]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="main_email"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[main_email]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[main_email]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[ls_id]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ls_id"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[ls_id]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[ls_id]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[magento_id]"
+                      cachedDataType="i8"
+                      cachedName="magento_id"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[magento_id]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[magento_id]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[current_level_of_points_ls]"
+                      cachedDataType="ui1"
+                      cachedName="current_level_of_points_ls"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[current_level_of_points_ls]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[current_level_of_points_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[last_level_of_points_ls]"
+                      cachedDataType="ui1"
+                      cachedName="last_level_of_points_ls"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_level_of_points_ls]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_level_of_points_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[level_of_points_ls_change_date]"
+                      cachedDataType="dbDate"
+                      cachedName="level_of_points_ls_change_date"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[level_of_points_ls_change_date]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[level_of_points_ls_change_date]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_complaints_current_year]"
+                      cachedDataType="i4"
+                      cachedName="#_complaints_current_year"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_current_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_current_year]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_complaints_last_year]"
+                      cachedDataType="i4"
+                      cachedName="#_complaints_last_year"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_last_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_last_year]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_open_complaints]"
+                      cachedDataType="i4"
+                      cachedName="#_open_complaints"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_open_complaints]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_complaints]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_open_complaints_more_then_7D]"
+                      cachedDataType="i4"
+                      cachedName="#_open_complaints_more_then_7D"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_open_complaints_more_then_7D]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_complaints_more_then_7D]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_open_escalated_complaints]"
+                      cachedDataType="i4"
+                      cachedName="#_open_escalated_complaints"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_open_escalated_complaints]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_escalated_complaints]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_complaints_last_year_ytd]"
+                      cachedDataType="i4"
+                      cachedName="#_complaints_last_year_ytd"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_last_year_ytd]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_last_year_ytd]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_redemed_cupons_current_year]"
+                      cachedDataType="i4"
+                      cachedName="#_redemed_cupons_current_year"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_current_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_current_year]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_redemed_cupons_last_year]"
+                      cachedDataType="i4"
+                      cachedName="#_redemed_cupons_last_year"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_last_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_year]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_redemed_cupons_last_6m]"
+                      cachedDataType="i4"
+                      cachedName="#_redemed_cupons_last_6m"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_last_6m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_6m]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_redemed_cupons_last_3m]"
+                      cachedDataType="i4"
+                      cachedName="#_redemed_cupons_last_3m"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_last_3m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_3m]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[last_transaction_date_offline]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="last_transaction_date_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_transaction_date_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Current_Year_offline]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Current_Year_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Current_Year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Current_Year_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Last_3M_offline]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Last_3M_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_3M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_3M_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Last_6M_offline]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Last_6M_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_6M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_6M_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[inv_count_current_year_offline]"
+                      cachedDataType="i4"
+                      cachedName="inv_count_current_year_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_current_year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_current_year_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[inv_count_last_6M_offline]"
+                      cachedDataType="i4"
+                      cachedName="inv_count_last_6M_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_last_6M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_6M_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[inv_count_last_3M_offline]"
+                      cachedDataType="i4"
+                      cachedName="inv_count_last_3M_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_last_3M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_3M_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[fav_store_1_last_365d_offline]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="fav_store_1_last_365d_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[fav_store_1_last_365d_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[fav_store_1_last_365d_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[inv_count_last_year_offline]"
+                      cachedDataType="i4"
+                      cachedName="inv_count_last_year_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_last_year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_year_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Last_Year_offline]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Last_Year_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_Year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_Year_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Life_Time_offline]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Life_Time_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Life_Time_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Life_Time_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Current_Year_online]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Current_Year_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Current_Year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Current_Year_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Last_3M_online]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Last_3M_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_3M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_3M_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Last_6M_online]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Last_6M_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_6M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_6M_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Last_Year_online]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Last_Year_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_Year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_Year_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[Net_Revenue_Life_Time_online]"
+                      cachedDataType="r8"
+                      cachedName="Net_Revenue_Life_Time_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Life_Time_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Life_Time_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_complaints_life_time]"
+                      cachedDataType="i4"
+                      cachedName="#_complaints_life_time"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_life_time]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_life_time]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_sent_cupons_life_time]"
+                      cachedDataType="i4"
+                      cachedName="#_sent_cupons_life_time"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_life_time]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_life_time]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_sent_cupons_current_year]"
+                      cachedDataType="i4"
+                      cachedName="#_sent_cupons_current_year"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_current_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_current_year]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_sent_cupons_last_year]"
+                      cachedDataType="i4"
+                      cachedName="#_sent_cupons_last_year"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_last_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_year]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_sent_cupons_last_6m]"
+                      cachedDataType="i4"
+                      cachedName="#_sent_cupons_last_6m"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_last_6m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_6m]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_sent_cupons_last_3m]"
+                      cachedDataType="i4"
+                      cachedName="#_sent_cupons_last_3m"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_last_3m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_3m]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[#_redemed_cuponss_life_time]"
+                      cachedDataType="i4"
+                      cachedName="#_redemed_cuponss_life_time"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cuponss_life_time]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cuponss_life_time]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[inv_count_life_time_offline]"
+                      cachedDataType="i4"
+                      cachedName="inv_count_life_time_offline"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_life_time_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_life_time_offline]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[last_order_date_online]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="last_order_date_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_order_date_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_order_date_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[orders_count_current_year_online]"
+                      cachedDataType="i4"
+                      cachedName="orders_count_current_year_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_current_year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_current_year_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[orders_count_last_6M_online]"
+                      cachedDataType="i4"
+                      cachedName="orders_count_last_6M_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_last_6M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_6M_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[orders_count_last_3M_online]"
+                      cachedDataType="i4"
+                      cachedName="orders_count_last_3M_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_last_3M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_3M_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[orders_count_last_year_online]"
+                      cachedDataType="i4"
+                      cachedName="orders_count_last_year_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_last_year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_year_online]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[orders_count_life_time_online]"
+                      cachedDataType="i4"
+                      cachedName="orders_count_life_time_online"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_life_time_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_life_time_online]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="42"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[main_email]"
+                      dataType="wstr"
+                      length="100"
+                      name="main_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[ls_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="ls_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[magento_id]"
+                      dataType="i8"
+                      name="magento_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[current_level_of_points_ls]"
+                      dataType="ui1"
+                      name="current_level_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_level_of_points_ls]"
+                      dataType="ui1"
+                      name="last_level_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[level_of_points_ls_change_date]"
+                      dataType="dbDate"
+                      name="level_of_points_ls_change_date" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_life_time]"
+                      dataType="i4"
+                      name="#_complaints_life_time" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_current_year]"
+                      dataType="i4"
+                      name="#_complaints_current_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_last_year]"
+                      dataType="i4"
+                      name="#_complaints_last_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_open_complaints]"
+                      dataType="i4"
+                      name="#_open_complaints" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_open_complaints_more_then_7D]"
+                      dataType="i4"
+                      name="#_open_complaints_more_then_7D" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_open_escalated_complaints]"
+                      dataType="i4"
+                      name="#_open_escalated_complaints" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_complaints_last_year_ytd]"
+                      dataType="i4"
+                      name="#_complaints_last_year_ytd" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_life_time]"
+                      dataType="i4"
+                      name="#_sent_cupons_life_time" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_current_year]"
+                      dataType="i4"
+                      name="#_sent_cupons_current_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_last_year]"
+                      dataType="i4"
+                      name="#_sent_cupons_last_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_last_6m]"
+                      dataType="i4"
+                      name="#_sent_cupons_last_6m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_cupons_last_3m]"
+                      dataType="i4"
+                      name="#_sent_cupons_last_3m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cuponss_life_time]"
+                      dataType="i4"
+                      name="#_redemed_cuponss_life_time" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_current_year]"
+                      dataType="i4"
+                      name="#_redemed_cupons_current_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_last_year]"
+                      dataType="i4"
+                      name="#_redemed_cupons_last_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_last_6m]"
+                      dataType="i4"
+                      name="#_redemed_cupons_last_6m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[#_redemed_cupons_last_3m]"
+                      dataType="i4"
+                      name="#_redemed_cupons_last_3m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[fav_store_1_last_365d_offline]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="fav_store_1_last_365d_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_transaction_date_offline]"
+                      dataType="dbTimeStamp"
+                      name="last_transaction_date_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Current_Year_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Current_Year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_3M_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_3M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_6M_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_6M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_Year_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_Year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Life_Time_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Life_Time_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_current_year_offline]"
+                      dataType="i4"
+                      name="inv_count_current_year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_last_6M_offline]"
+                      dataType="i4"
+                      name="inv_count_last_6M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_last_3M_offline]"
+                      dataType="i4"
+                      name="inv_count_last_3M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_last_year_offline]"
+                      dataType="i4"
+                      name="inv_count_last_year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[inv_count_life_time_offline]"
+                      dataType="i4"
+                      name="inv_count_life_time_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_order_date_online]"
+                      dataType="dbTimeStamp"
+                      name="last_order_date_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Current_Year_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Current_Year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_3M_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_3M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_6M_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_6M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Last_Year_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_Year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[Net_Revenue_Life_Time_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Life_Time_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_current_year_online]"
+                      dataType="i4"
+                      name="orders_count_current_year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_last_6M_online]"
+                      dataType="i4"
+                      name="orders_count_last_6M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_last_3M_online]"
+                      dataType="i4"
+                      name="orders_count_last_3M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_last_year_online]"
+                      dataType="i4"
+                      name="orders_count_last_year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[orders_count_life_time_online]"
+                      dataType="i4"
+                      name="orders_count_life_time_online" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="cdp_STG_DIM_customer_KPIs"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_STG_DIM_customer_KPIs]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      length="42"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[source]"
+                      name="source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[main_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[main_email]"
+                      length="100"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[main_email]"
+                      name="main_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[ls_id]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[ls_id]"
+                      length="50"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[ls_id]"
+                      name="ls_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[magento_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[magento_id]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[magento_id]"
+                      name="magento_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[current_level_of_points_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[current_level_of_points_ls]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[current_level_of_points_ls]"
+                      name="current_level_of_points_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_level_of_points_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_level_of_points_ls]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_level_of_points_ls]"
+                      name="last_level_of_points_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[level_of_points_ls_change_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[level_of_points_ls_change_date]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[level_of_points_ls_change_date]"
+                      name="level_of_points_ls_change_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_current_year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_current_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_current_year]"
+                      name="#_complaints_current_year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_last_year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_last_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_last_year]"
+                      name="#_complaints_last_year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_complaints]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_open_complaints]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_complaints]"
+                      name="#_open_complaints"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_complaints_more_then_7D]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_open_complaints_more_then_7D]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_complaints_more_then_7D]"
+                      name="#_open_complaints_more_then_7D"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_escalated_complaints]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_open_escalated_complaints]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_open_escalated_complaints]"
+                      name="#_open_escalated_complaints"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_last_year_ytd]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_last_year_ytd]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_last_year_ytd]"
+                      name="#_complaints_last_year_ytd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_current_year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_current_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_current_year]"
+                      name="#_redemed_cupons_current_year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_last_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_year]"
+                      name="#_redemed_cupons_last_year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_6m]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_last_6m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_6m]"
+                      name="#_redemed_cupons_last_6m"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_3m]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_last_3m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cupons_last_3m]"
+                      name="#_redemed_cupons_last_3m"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_offline]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_transaction_date_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_offline]"
+                      name="last_transaction_date_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Current_Year_offline]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Current_Year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Current_Year_offline]"
+                      name="Net_Revenue_Current_Year_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_3M_offline]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_3M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_3M_offline]"
+                      name="Net_Revenue_Last_3M_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_6M_offline]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_6M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_6M_offline]"
+                      name="Net_Revenue_Last_6M_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_current_year_offline]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_current_year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_current_year_offline]"
+                      name="inv_count_current_year_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_6M_offline]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_last_6M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_6M_offline]"
+                      name="inv_count_last_6M_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_3M_offline]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_last_3M_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_3M_offline]"
+                      name="inv_count_last_3M_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[fav_store_1_last_365d_offline]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[fav_store_1_last_365d_offline]"
+                      length="3"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[fav_store_1_last_365d_offline]"
+                      name="fav_store_1_last_365d_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_year_offline]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_last_year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_last_year_offline]"
+                      name="inv_count_last_year_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_Year_offline]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_Year_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_Year_offline]"
+                      name="Net_Revenue_Last_Year_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Life_Time_offline]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Life_Time_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Life_Time_offline]"
+                      name="Net_Revenue_Life_Time_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Current_Year_online]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Current_Year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Current_Year_online]"
+                      name="Net_Revenue_Current_Year_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_3M_online]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_3M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_3M_online]"
+                      name="Net_Revenue_Last_3M_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_6M_online]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_6M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_6M_online]"
+                      name="Net_Revenue_Last_6M_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_Year_online]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_Year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Last_Year_online]"
+                      name="Net_Revenue_Last_Year_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Life_Time_online]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Life_Time_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[Net_Revenue_Life_Time_online]"
+                      name="Net_Revenue_Life_Time_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_life_time]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_life_time]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_complaints_life_time]"
+                      name="#_complaints_life_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_life_time]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_life_time]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_life_time]"
+                      name="#_sent_cupons_life_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_current_year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_current_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_current_year]"
+                      name="#_sent_cupons_current_year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_last_year]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_year]"
+                      name="#_sent_cupons_last_year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_6m]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_last_6m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_6m]"
+                      name="#_sent_cupons_last_6m"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_3m]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_last_3m]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_sent_cupons_last_3m]"
+                      name="#_sent_cupons_last_3m"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cuponss_life_time]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cuponss_life_time]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[#_redemed_cuponss_life_time]"
+                      name="#_redemed_cuponss_life_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_life_time_offline]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_life_time_offline]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[inv_count_life_time_offline]"
+                      name="inv_count_life_time_offline"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_order_date_online]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_order_date_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_order_date_online]"
+                      name="last_order_date_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_current_year_online]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_current_year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_current_year_online]"
+                      name="orders_count_current_year_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_6M_online]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_last_6M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_6M_online]"
+                      name="orders_count_last_6M_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_3M_online]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_last_3M_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_3M_online]"
+                      name="orders_count_last_3M_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_year_online]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_last_year_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_last_year_online]"
+                      name="orders_count_last_year_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_life_time_online]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_life_time_online]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[orders_count_life_time_online]"
+                      name="orders_count_life_time_online"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_offline_DWH]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_transaction_date_offline_DWH]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_offline_DWH]"
+                      name="last_transaction_date_offline_DWH"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_order_date_online_DWH]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_order_date_online_DWH]"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_order_date_online_DWH]"
+                      name="last_order_date_online_DWH"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="42"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[main_email]"
+                      dataType="wstr"
+                      length="100"
+                      name="main_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[ls_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="ls_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[magento_id]"
+                      dataType="i8"
+                      name="magento_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[current_level_of_points_ls]"
+                      dataType="ui1"
+                      name="current_level_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_level_of_points_ls]"
+                      dataType="ui1"
+                      name="last_level_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[level_of_points_ls_change_date]"
+                      dataType="dbDate"
+                      name="level_of_points_ls_change_date" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_current_year]"
+                      dataType="i4"
+                      name="#_complaints_current_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_last_year]"
+                      dataType="i4"
+                      name="#_complaints_last_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_open_complaints]"
+                      dataType="i4"
+                      name="#_open_complaints" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_open_complaints_more_then_7D]"
+                      dataType="i4"
+                      name="#_open_complaints_more_then_7D" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_open_escalated_complaints]"
+                      dataType="i4"
+                      name="#_open_escalated_complaints" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_last_year_ytd]"
+                      dataType="i4"
+                      name="#_complaints_last_year_ytd" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_current_year]"
+                      dataType="i4"
+                      name="#_redemed_cupons_current_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_last_year]"
+                      dataType="i4"
+                      name="#_redemed_cupons_last_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_last_6m]"
+                      dataType="i4"
+                      name="#_redemed_cupons_last_6m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cupons_last_3m]"
+                      dataType="i4"
+                      name="#_redemed_cupons_last_3m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_transaction_date_offline]"
+                      dataType="dbTimeStamp"
+                      name="last_transaction_date_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Current_Year_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Current_Year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_3M_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_3M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_6M_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_6M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_current_year_offline]"
+                      dataType="i4"
+                      name="inv_count_current_year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_last_6M_offline]"
+                      dataType="i4"
+                      name="inv_count_last_6M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_last_3M_offline]"
+                      dataType="i4"
+                      name="inv_count_last_3M_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[fav_store_1_last_365d_offline]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="fav_store_1_last_365d_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_last_year_offline]"
+                      dataType="i4"
+                      name="inv_count_last_year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_Year_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_Year_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Life_Time_offline]"
+                      dataType="r8"
+                      name="Net_Revenue_Life_Time_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Current_Year_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Current_Year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_3M_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_3M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_6M_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_6M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Last_Year_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Last_Year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[Net_Revenue_Life_Time_online]"
+                      dataType="r8"
+                      name="Net_Revenue_Life_Time_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_complaints_life_time]"
+                      dataType="i4"
+                      name="#_complaints_life_time" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_life_time]"
+                      dataType="i4"
+                      name="#_sent_cupons_life_time" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_current_year]"
+                      dataType="i4"
+                      name="#_sent_cupons_current_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_last_year]"
+                      dataType="i4"
+                      name="#_sent_cupons_last_year" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_last_6m]"
+                      dataType="i4"
+                      name="#_sent_cupons_last_6m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_sent_cupons_last_3m]"
+                      dataType="i4"
+                      name="#_sent_cupons_last_3m" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[#_redemed_cuponss_life_time]"
+                      dataType="i4"
+                      name="#_redemed_cuponss_life_time" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[inv_count_life_time_offline]"
+                      dataType="i4"
+                      name="inv_count_life_time_offline" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_order_date_online]"
+                      dataType="dbTimeStamp"
+                      name="last_order_date_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_current_year_online]"
+                      dataType="i4"
+                      name="orders_count_current_year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_last_6M_online]"
+                      dataType="i4"
+                      name="orders_count_last_6M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_last_3M_online]"
+                      dataType="i4"
+                      name="orders_count_last_3M_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_last_year_online]"
+                      dataType="i4"
+                      name="orders_count_last_year_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[orders_count_life_time_online]"
+                      dataType="i4"
+                      name="orders_count_life_time_online" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_transaction_date_offline_DWH]"
+                      dataType="dbDate"
+                      name="last_transaction_date_offline_DWH" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_order_date_online_DWH]"
+                      dataType="dbDate"
+                      name="last_order_date_online_DWH" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="42"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[source]"
+                      name="source" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[main_email]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[main_email]"
+                      name="main_email" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ls_id]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ls_id]"
+                      name="ls_id" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[magento_id]"
+                      dataType="i8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[magento_id]"
+                      name="magento_id" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[current_level_of_points_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[current_level_of_points_ls]"
+                      name="current_level_of_points_ls" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_level_of_points_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_level_of_points_ls]"
+                      name="last_level_of_points_ls" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[level_of_points_ls_change_date]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[level_of_points_ls_change_date]"
+                      name="level_of_points_ls_change_date" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_life_time]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_life_time]"
+                      name="#_complaints_life_time" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_current_year]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_current_year]"
+                      name="#_complaints_current_year" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_last_year]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_last_year]"
+                      name="#_complaints_last_year" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_open_complaints]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_open_complaints]"
+                      name="#_open_complaints" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_open_complaints_more_then_7D]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_open_complaints_more_then_7D]"
+                      name="#_open_complaints_more_then_7D" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_open_escalated_complaints]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_open_escalated_complaints]"
+                      name="#_open_escalated_complaints" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_last_year_ytd]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_complaints_last_year_ytd]"
+                      name="#_complaints_last_year_ytd" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_life_time]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_life_time]"
+                      name="#_sent_cupons_life_time" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_current_year]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_current_year]"
+                      name="#_sent_cupons_current_year" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_last_year]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_last_year]"
+                      name="#_sent_cupons_last_year" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_last_6m]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_last_6m]"
+                      name="#_sent_cupons_last_6m" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_last_3m]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_sent_cupons_last_3m]"
+                      name="#_sent_cupons_last_3m" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cuponss_life_time]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cuponss_life_time]"
+                      name="#_redemed_cuponss_life_time" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_current_year]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_current_year]"
+                      name="#_redemed_cupons_current_year" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_last_year]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_last_year]"
+                      name="#_redemed_cupons_last_year" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_last_6m]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_last_6m]"
+                      name="#_redemed_cupons_last_6m" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_last_3m]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[#_redemed_cupons_last_3m]"
+                      name="#_redemed_cupons_last_3m" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_transaction_date_offline]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_transaction_date_offline]"
+                      name="last_transaction_date_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Current_Year_offline]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Current_Year_offline]"
+                      name="Net_Revenue_Current_Year_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_3M_offline]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_3M_offline]"
+                      name="Net_Revenue_Last_3M_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_6M_offline]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_6M_offline]"
+                      name="Net_Revenue_Last_6M_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_current_year_offline]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_current_year_offline]"
+                      name="inv_count_current_year_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_last_6M_offline]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_last_6M_offline]"
+                      name="inv_count_last_6M_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_last_3M_offline]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_last_3M_offline]"
+                      name="inv_count_last_3M_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[fav_store_1_last_365d_offline]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[fav_store_1_last_365d_offline]"
+                      name="fav_store_1_last_365d_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_last_year_offline]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_last_year_offline]"
+                      name="inv_count_last_year_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_Year_offline]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_Year_offline]"
+                      name="Net_Revenue_Last_Year_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Life_Time_offline]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Life_Time_offline]"
+                      name="Net_Revenue_Life_Time_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_life_time_offline]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[inv_count_life_time_offline]"
+                      name="inv_count_life_time_offline" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_order_date_online]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_order_date_online]"
+                      name="last_order_date_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Current_Year_online]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Current_Year_online]"
+                      name="Net_Revenue_Current_Year_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_3M_online]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_3M_online]"
+                      name="Net_Revenue_Last_3M_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_6M_online]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_6M_online]"
+                      name="Net_Revenue_Last_6M_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_Year_online]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Last_Year_online]"
+                      name="Net_Revenue_Last_Year_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Life_Time_online]"
+                      dataType="r8"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[Net_Revenue_Life_Time_online]"
+                      name="Net_Revenue_Life_Time_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_current_year_online]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_current_year_online]"
+                      name="orders_count_current_year_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_last_6M_online]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_last_6M_online]"
+                      name="orders_count_last_6M_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_last_3M_online]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_last_3M_online]"
+                      name="orders_count_last_3M_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_last_year_online]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_last_year_online]"
+                      name="orders_count_last_year_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_life_time_online]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[orders_count_life_time_online]"
+                      name="orders_count_life_time_online" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_transaction_date_offline_DWH]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_transaction_date_offline_DWH]"
+                      name="last_transaction_date_offline_DWH" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_order_date_online_DWH]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_order_date_online_DWH]"
+                      name="last_order_date_online_DWH" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs.Paths[OLE DB Source Output]"
+              endId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate cdp_DWH_DIM_customer_KPIs"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F0E3D5B8-B29E-4587-9B81-5CA9EFC5EA5F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate cdp_DWH_DIM_customer_KPIs"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{029B2274-744E-4E48-A1CA-ABBB4CF6B772}"
+          SQLTask:SqlStatementSource="truncate table [SuperPharmPoland].[dbo].cdp_DWH_DIM_customer_KPIs" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{4C82A8FF-5561-415C-8AD6-E34852E76AC0}"
+      DTS:From="Package\Truncate cdp_DWH_DIM_customer_KPIs"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="398.4,41.6"
+          Id="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs"
+          TopLeft="203.92924855235,235.040880177512" />
+        <NodeLayout
+          Size="271.2,41.6"
+          Id="Package\Truncate cdp_DWH_DIM_customer_KPIs"
+          TopLeft="281.93197759039,150.482912246416" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="417.53197759039,192.082912246416">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.4027290380409,42.9579679310961"
+              Start="0,0"
+              End="-14.4027290380409,35.4579679310961">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.478983965548" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.478983965548"
+                    Point2="0,21.478983965548"
+                    Point3="-4,21.478983965548" />
+                  <mssgle:LineSegment
+                    End="-10.4027290380409,21.478983965548" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.4027290380409,21.478983965548"
+                    Point2="-14.4027290380409,21.478983965548"
+                    Point3="-14.4027290380409,25.478983965548" />
+                  <mssgle:LineSegment
+                    End="-14.4027290380409,35.4579679310961" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="DWH"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="56.8,40"
+          Id="759c097f-3c3b-4bf8-ae56-06ccba94028c"
+          TopLeft="392.299326408707,100.143415742102" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="226.4,41.6"
+          Id="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs"
+          TopLeft="260,93.6" />
+        <NodeLayout
+          Size="221.6,41.6"
+          Id="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs"
+          TopLeft="53.6,34.4" />
+        <EdgeLayout
+          Id="Package\cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs.Paths[OLE DB Source Output]"
+          TopLeft="275.2,55.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98,38.4"
+              Start="0,0"
+              End="98,30.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="94,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="94,0"
+                    Point2="98,0"
+                    Point3="98,4" />
+                  <mssgle:LineSegment
+                    End="98,30.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

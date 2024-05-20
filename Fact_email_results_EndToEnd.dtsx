@@ -1,0 +1,1955 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/15/2023 10:34:38 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{7A6D3D68-FF65-4120-88D7-D7E4E1B491A6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="Package5"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{BA4371E3-2E19-4B56-A527-A588D938A933}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[172.27.160.70.CDP]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{19DA6DBC-802A-404C-9CEB-96DE811A4954}"
+      DTS:ObjectName="172.27.160.70.CDP">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.27.160.70;Initial Catalog=CDP;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{185CD915-2990-4955-8F76-C3DA8C746C66}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ABAB7854-8C7E-4F6A-8B9F-92FA02AC0415}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="campaign">
+      <DTS:VariableValue
+        DTS:DataType="3">111</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4A666DA9-ED7C-4206-B20D-ECC43B406724}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="email">
+      <DTS:VariableValue
+        DTS:DataType="8">aaa</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{49431362-0c72-4d02-8c8b-1ac94813eacc}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="172,27,160,70_email_clicks"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select [FileName],[adres_email],[campaign_id],[campaign_name],[campaign_ship_date],[click_date],[link],[#_clicked_emails]
+from
+(select
+       [FileName] 
+      ,[adres_email] 
+      ,[ID_kampanii] as [campaign_id]
+      ,[nazwa_kampanii] as [campaign_name]
+      ,[data_wysyłki_kampanii] as [campaign_ship_date]
+      ,[data_kliknięcia] as [click_date] 
+      ,[link]
+	  ,count(1)over(partition by [adres_email],[id_kampanii]) as [#_clicked_emails]
+	  ,row_number()over(partition by [adres_email],[id_kampanii] order by [data_wysyłki_kampanii]) as [row_number]
+FROM [CDP].[dbo].[Redlink_email_clicks]) a
+where [row_number] = 1</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[172.27.160.70.CDP]"
+                  connectionManagerRefId="Package.ConnectionManagers[172.27.160.70.CDP]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[FileName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[FileName]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[FileName]"
+                      name="FileName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[adres_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[adres_email]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[adres_email]"
+                      name="adres_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[campaign_id]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_id]"
+                      name="campaign_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[campaign_name]"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_name]"
+                      name="campaign_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[campaign_ship_date]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_ship_date]"
+                      name="campaign_ship_date"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[click_date]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[click_date]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[click_date]"
+                      name="click_date"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[link]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[link]"
+                      length="400"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[link]"
+                      name="link"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[#_clicked_emails]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[#_clicked_emails]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[#_clicked_emails]"
+                      name="#_clicked_emails"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[FileName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FileName" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      name="adres_email" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[campaign_id]"
+                      dataType="i4"
+                      name="campaign_id" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_name" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      name="campaign_ship_date"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[click_date]"
+                      dataType="dbTimeStamp2"
+                      name="click_date"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[link]"
+                      dataType="wstr"
+                      length="400"
+                      name="link" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].ExternalColumns[#_clicked_emails]"
+                      dataType="i4"
+                      name="#_clicked_emails" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[FileName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[FileName]"
+                      name="FileName" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[adres_email]"
+                      name="adres_email" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[campaign_id]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[campaign_id]"
+                      name="campaign_id" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[campaign_name]"
+                      name="campaign_name" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[campaign_ship_date]"
+                      name="campaign_ship_date"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[click_date]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[click_date]"
+                      name="click_date"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[link]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[link]"
+                      name="link" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[#_clicked_emails]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[#_clicked_emails]"
+                      name="#_clicked_emails" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SUPERDW_email_clicks"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_email_clicks]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[FileName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FileName"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[FileName]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[FileName]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[adres_email]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="adres_email"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[adres_email]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[adres_email]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[campaign_id]"
+                      cachedDataType="i4"
+                      cachedName="campaign_id"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[campaign_id]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_id]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[campaign_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="campaign_name"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[campaign_name]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_name]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[campaign_ship_date]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="campaign_ship_date"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[campaign_ship_date]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[campaign_ship_date]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[click_date]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="click_date"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[click_date]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[click_date]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[link]"
+                      cachedDataType="wstr"
+                      cachedLength="400"
+                      cachedName="link"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[link]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[link]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].Columns[#_clicked_emails]"
+                      cachedDataType="i4"
+                      cachedName="#_clicked_emails"
+                      externalMetadataColumnId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[#_clicked_emails]"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output].Columns[#_clicked_emails]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[FileName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FileName" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      name="adres_email" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[campaign_id]"
+                      dataType="i4"
+                      name="campaign_id" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_name" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      name="campaign_ship_date"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[click_date]"
+                      dataType="dbTimeStamp2"
+                      name="click_date"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[link]"
+                      dataType="wstr"
+                      length="400"
+                      name="link" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input].ExternalColumns[#_clicked_emails]"
+                      dataType="i4"
+                      name="#_clicked_emails" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks.Paths[OLE DB Source Output]"
+              endId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{16F411DF-ED0B-4465-95C1-4A9BB847D047}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="172,27,160,70_email_opens --&gt; SUPERDW_email_opens"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="172,27,160,70_email_opens"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select [FileName],[adres_email],[campaign_id],[campaign_name],[campaign_ship_date],[date_of_opening_message],[#_opened_emails]
+from
+(select
+       [FileName]
+      ,[adres_email]
+      ,[ID_kampanii] as [campaign_id]
+      ,[nazwa_kampanii] as [campaign_name]
+      ,[data_wysyłki_kampanii] as [campaign_ship_date]
+      ,[data_otwarcia_wiadomości] as [date_of_opening_message]
+	  ,count(1)over(partition by [adres_email],[id_kampanii]) as [#_opened_emails]
+	  ,row_number()over(partition by [adres_email],[id_kampanii] order by [data_wysyłki_kampanii]) as [row_number]
+from [CDP].[dbo].[Redlink_email_opens]
+) a
+where [row_number] = 1
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[172.27.160.70.CDP]"
+                  connectionManagerRefId="Package.ConnectionManagers[172.27.160.70.CDP]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[FileName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[FileName]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[FileName]"
+                      name="FileName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[adres_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[adres_email]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[adres_email]"
+                      name="adres_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[campaign_id]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_id]"
+                      name="campaign_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[campaign_name]"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_name]"
+                      name="campaign_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[campaign_ship_date]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_ship_date]"
+                      name="campaign_ship_date"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[date_of_opening_message]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[date_of_opening_message]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[date_of_opening_message]"
+                      name="date_of_opening_message"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[#_opened_emails]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[#_opened_emails]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[#_opened_emails]"
+                      name="#_opened_emails"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[FileName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FileName" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      name="adres_email" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[campaign_id]"
+                      dataType="i4"
+                      name="campaign_id" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_name" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      name="campaign_ship_date"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[date_of_opening_message]"
+                      dataType="dbTimeStamp2"
+                      name="date_of_opening_message"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].ExternalColumns[#_opened_emails]"
+                      dataType="i4"
+                      name="#_opened_emails" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[FileName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[FileName]"
+                      name="FileName" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[adres_email]"
+                      name="adres_email" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[campaign_id]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[campaign_id]"
+                      name="campaign_id" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[campaign_name]"
+                      name="campaign_name" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[campaign_ship_date]"
+                      name="campaign_ship_date"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[date_of_opening_message]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[date_of_opening_message]"
+                      name="date_of_opening_message"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[#_opened_emails]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[#_opened_emails]"
+                      name="#_opened_emails" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SUPERDW_email_opens"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_email_opens]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[FileName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FileName"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[FileName]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[FileName]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[adres_email]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="adres_email"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[adres_email]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[adres_email]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[campaign_id]"
+                      cachedDataType="i4"
+                      cachedName="campaign_id"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[campaign_id]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_id]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[campaign_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="campaign_name"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[campaign_name]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_name]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[campaign_ship_date]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="campaign_ship_date"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[campaign_ship_date]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[campaign_ship_date]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[date_of_opening_message]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="date_of_opening_message"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[date_of_opening_message]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[date_of_opening_message]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].Columns[#_opened_emails]"
+                      cachedDataType="i4"
+                      cachedName="#_opened_emails"
+                      externalMetadataColumnId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[#_opened_emails]"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output].Columns[#_opened_emails]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[FileName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FileName" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      name="adres_email" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[campaign_id]"
+                      dataType="i4"
+                      name="campaign_id" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_name" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[campaign_ship_date]"
+                      dataType="dbTimeStamp2"
+                      name="campaign_ship_date"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[date_of_opening_message]"
+                      dataType="dbTimeStamp2"
+                      name="date_of_opening_message"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input].ExternalColumns[#_opened_emails]"
+                      dataType="i4"
+                      name="#_opened_emails" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens.Paths[OLE DB Source Output]"
+              endId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{43D49631-F571-4635-AC99-894AA424A6C8}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="172,27,160,70_email_results --&gt; SUPERDW_email_results"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="172,27,160,70_email_results"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Redlink_email_results]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select [filename],[adres_email],[campaign_id],[campaign_name],[campaign_ship_date],[message delivery status],[#_sent_emails]
+from
+(select 
+       [filename]
+      ,[adres_email]
+      ,[id_kampanii] as [campaign_id]
+      ,[nazwa_kampanii] as [campaign_name]
+      ,[data_wysyłki_kampanii] as [campaign_ship_date]
+      ,[status_doręczenia_wiadomości] as [message delivery status]
+	  ,count(1)over(partition by [adres_email],[id_kampanii]) as [#_sent_emails]
+	  ,row_number()over(partition by [adres_email],[id_kampanii] order by [data_wysyłki_kampanii]) as [row_number]
+from [cdp].[dbo].[redlink_email_results]) a
+where [row_number] = 1
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[172.27.160.70.CDP]"
+                  connectionManagerRefId="Package.ConnectionManagers[172.27.160.70.CDP]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[adres_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[adres_email]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[adres_email]"
+                      name="adres_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[filename]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[filename]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[filename]"
+                      name="filename"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[campaign_id]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_id]"
+                      name="campaign_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[campaign_name]"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_name]"
+                      name="campaign_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_ship_date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[campaign_ship_date]"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_ship_date]"
+                      name="campaign_ship_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[message delivery status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[message delivery status]"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[message delivery status]"
+                      name="message delivery status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[#_sent_emails]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[#_sent_emails]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[#_sent_emails]"
+                      name="#_sent_emails"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      name="adres_email" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[filename]"
+                      dataType="wstr"
+                      length="50"
+                      name="filename" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[campaign_id]"
+                      dataType="i4"
+                      name="campaign_id" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_name" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[campaign_ship_date]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_ship_date" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[message delivery status]"
+                      dataType="wstr"
+                      length="50"
+                      name="message delivery status" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].ExternalColumns[#_sent_emails]"
+                      dataType="i4"
+                      name="#_sent_emails" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[filename]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[filename]"
+                      name="filename" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[adres_email]"
+                      name="adres_email" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[campaign_id]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[campaign_id]"
+                      name="campaign_id" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[campaign_name]"
+                      name="campaign_name" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[campaign_ship_date]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[campaign_ship_date]"
+                      name="campaign_ship_date" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[message delivery status]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[message delivery status]"
+                      name="message delivery status" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[#_sent_emails]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[#_sent_emails]"
+                      name="#_sent_emails" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SUPERDW_email_results"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ODS_email_results]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[adres_email]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="adres_email"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[adres_email]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[adres_email]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[filename]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="filename"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[filename]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[filename]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[campaign_id]"
+                      cachedDataType="i4"
+                      cachedName="campaign_id"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[campaign_id]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_id]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[campaign_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="campaign_name"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[campaign_name]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_name]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[campaign_ship_date]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="campaign_ship_date"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[campaign_ship_date]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[campaign_ship_date]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[message delivery status]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="message delivery status"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[message delivery status]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[message delivery status]" />
+                    <inputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].Columns[#_sent_emails]"
+                      cachedDataType="i4"
+                      cachedName="#_sent_emails"
+                      externalMetadataColumnId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_emails]"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output].Columns[#_sent_emails]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[adres_email]"
+                      dataType="wstr"
+                      length="50"
+                      name="adres_email" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[filename]"
+                      dataType="wstr"
+                      length="50"
+                      name="filename" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[campaign_id]"
+                      dataType="i4"
+                      name="campaign_id" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[campaign_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_name" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[campaign_ship_date]"
+                      dataType="wstr"
+                      length="200"
+                      name="campaign_ship_date" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[message delivery status]"
+                      dataType="wstr"
+                      length="50"
+                      name="message delivery status" />
+                    <externalMetadataColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input].ExternalColumns[#_sent_emails]"
+                      dataType="i4"
+                      name="#_sent_emails" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results.Paths[OLE DB Source Output]"
+              endId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Find unique list of campign and emails from last 10 days"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9AD20CD9-33D6-46FD-AE88-28F6B75E1F2E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Find unique list of campign and emails from last 10 days"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{19DA6DBC-802A-404C-9CEB-96DE811A4954}"
+          SQLTask:SqlStatementSource="select [adres_email],[campaign_id]&#xA;from&#xA;&#x9;(select distinct&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  [adres_email]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9; ,[id_kampanii] as [campaign_id]&#xA;&#x9; from [cdp].[dbo].[redlink_email_results]&#xA;     where CAST(left([data_wysyłki_kampanii],10) AS date) &gt;= CAST(GETDATE()-10 AS date)) a&#xA;union &#xA;&#x9;(select distinct&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  [adres_email]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9; ,[id_kampanii] as [campaign_id]&#xA;&#x9; from [cdp].[dbo].[redlink_email_opens]&#xA;     where CAST(left([data_wysyłki_kampanii],10) AS date) &gt;= CAST(GETDATE()-10 AS date))&#xA;union &#xA;&#x9;(select distinct&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  [adres_email]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9; ,[id_kampanii] as [campaign_id]&#xA;&#x9; from [cdp].[dbo].[redlink_email_clicks]&#xA;     where CAST(left([data_wysyłki_kampanii],10) AS date) &gt;= CAST(GETDATE()-10 AS date))&#xA;;"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::email" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="1"
+            SQLTask:DtsVariableName="User::campaign" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::email"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::campaign"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table SUPERDW_email_clicks"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{d742953a-499f-4649-9986-f20875c306e8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table SUPERDW_email_clicks"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{185CD915-2990-4955-8F76-C3DA8C746C66}"
+          SQLTask:SqlStatementSource="truncate table [dbo].[ODS_email_clicks]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table SUPERDW_email_opens"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{C74E9D63-19DA-41C8-9685-61A269D5FBB0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table SUPERDW_email_opens"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{185CD915-2990-4955-8F76-C3DA8C746C66}"
+          SQLTask:SqlStatementSource="truncate table [dbo].[ODS_email_opens]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table SUPERDW_email_results"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{c6d43e29-6895-43e3-85aa-2d41c49e62ba}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table SUPERDW_email_results"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{185CD915-2990-4955-8F76-C3DA8C746C66}"
+          SQLTask:SqlStatementSource="truncate table [dbo].[ODS_email_results]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B27A5DD1-FF7D-4330-8DEB-1C46534DE95F}"
+      DTS:From="Package\Truncate table SUPERDW_email_results"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{40BA9487-CC5B-4005-B7F8-5F7B049BCC74}"
+      DTS:From="Package\Truncate table SUPERDW_email_opens"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{CEE97107-8158-4CA7-A88D-7181EA52F880}"
+      DTS:From="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Truncate table SUPERDW_email_opens" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{7131D6BE-5E1E-482C-842D-7FD6B9E4EFAF}"
+      DTS:From="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Truncate table SUPERDW_email_clicks" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{430B5071-A2EC-438E-87AF-37A3D16FA3F1}"
+      DTS:From="Package\Truncate table SUPERDW_email_clicks"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="352,41.6"
+          Id="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results"
+          TopLeft="706.648538111251,345.909248548726" />
+        <NodeLayout
+          Size="346.4,41.6"
+          Id="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens"
+          TopLeft="705.306134460272,441.839782107" />
+        <NodeLayout
+          Size="263.2,41.6"
+          Id="Package\Truncate table SUPERDW_email_opens"
+          TopLeft="418.630392616762,441.752387147791" />
+        <NodeLayout
+          Size="265.6,41.6"
+          Id="Package\Truncate table SUPERDW_email_results"
+          TopLeft="422.539689735491,343.450983784026" />
+        <NodeLayout
+          Size="260,41.6"
+          Id="Package\Truncate table SUPERDW_email_clicks"
+          TopLeft="422.222229412624,540.720827820502" />
+        <NodeLayout
+          Size="340,41.6"
+          Id="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks"
+          TopLeft="709.188220694184,536.330163402183" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="555.339689735491,343.450983784026">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="327.30884837576,2.4582647647"
+              Start="0,0"
+              End="327.30884837576,-5.0417352353">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-18.5"
+                    Point2="0,-22.5"
+                    Point3="4,-22.5" />
+                  <mssgle:LineSegment
+                    End="323.30884837576,-22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="323.30884837576,-22.5"
+                    Point2="327.30884837576,-22.5"
+                    Point3="327.30884837576,-18.5" />
+                  <mssgle:LineSegment
+                    End="327.30884837576,-5.0417352353" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="681.830392616762,459.796084627396">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23.4757418435099,0"
+              Start="0,0"
+              End="15.9757418435099,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="15.9757418435099,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="882.648538111251,387.509248548726">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-332.418145494489,54.2431385990658"
+              Start="0,0"
+              End="-332.418145494489,46.7431385990658">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.1215692995329" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.1215692995329"
+                    Point2="0,27.1215692995329"
+                    Point3="-4,27.1215692995329" />
+                  <mssgle:LineSegment
+                    End="-328.418145494489,27.1215692995329" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-328.418145494489,27.1215692995329"
+                    Point2="-332.418145494489,27.1215692995329"
+                    Point3="-332.418145494489,31.1215692995329" />
+                  <mssgle:LineSegment
+                    End="-332.418145494489,46.7431385990658" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="878.506134460271,483.439782107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-326.283905047648,57.2810457135014"
+              Start="0,0"
+              End="-326.283905047648,49.7810457135014">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.6405228567506" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.6405228567506"
+                    Point2="0,28.6405228567506"
+                    Point3="-4,28.6405228567506" />
+                  <mssgle:LineSegment
+                    End="-322.283905047648,28.6405228567506" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-322.283905047648,28.6405228567506"
+                    Point2="-326.283905047648,28.6405228567506"
+                    Point3="-326.283905047648,32.6405228567506" />
+                  <mssgle:LineSegment
+                    End="-326.283905047648,49.7810457135014" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="682.222229412624,559.325495611343">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26.96599128156,0"
+              Start="0,0"
+              End="19.46599128156,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="19.46599128156,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="344,41.6"
+          Id="Package\Find unique list of campign and emails from last 10 days"
+          TopLeft="95.2380968599904,69.000000668507" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="213.6,41.6"
+          Id="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results"
+          TopLeft="193.396828690354,59.6130727314757" />
+        <NodeLayout
+          Size="194.4,41.6"
+          Id="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results"
+          TopLeft="198.09524146878,171.294120049394" />
+        <EdgeLayout
+          Id="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results.Paths[OLE DB Source Output]"
+          TopLeft="297.746035079567,101.213072731476">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70.0810473179185"
+              Start="0,0"
+              End="0,62.5810473179185">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.5810473179185" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\172,27,160,70_email_results">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="211.2,41.6"
+          Id="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens"
+          TopLeft="271.333333333333,70" />
+        <NodeLayout
+          Size="191.2,41.6"
+          Id="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens"
+          TopLeft="282.666666666667,158.933333333333" />
+        <EdgeLayout
+          Id="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens.Paths[OLE DB Source Output]"
+          TopLeft="377.6,111.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.3333333333334"
+              Start="0,0"
+              End="0,39.8333333333334">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.8333333333334" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks"
+          TopLeft="209.538461538462,63.0769230769231" />
+        <NodeLayout
+          Size="188,41.6"
+          Id="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks"
+          TopLeft="217.538461538461,162.215384615385" />
+        <EdgeLayout
+          Id="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks.Paths[OLE DB Source Output]"
+          TopLeft="312.538461538462,104.676923076923">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57.5384615384615"
+              Start="0,0"
+              End="0,50.0384615384615">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.0384615384615" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\172,27,160,70_email_opens">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\172,27,160,70_email_opens --&gt; SUPERDW_email_opens\SUPERDW_email_opens">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\172,27,160,70_email_clicks">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\172,27,160,70_email_clicks --&gt; SUPERDW_email_clicks\SUPERDW_email_clicks">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\172,27,160,70_email_results --&gt; SUPERDW_email_results\SUPERDW_email_results">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,376 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/16/2020 12:10:46 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{0C5311C2-2146-4960-A2CF-5FD3FCFDDEAB}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="Exp_DailyEstBonus"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{6BBEC283-4771-4B8C-AB47-E88E75D73B8B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW SSAS MDX]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3A3A0D9F-DBD3-410F-9DCD-4C6EEF5CE2A8}"
+      DTS:ObjectName="SUPERDW SSAS MDX">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmSSAS;Provider=MSOLAP.8;Integrated Security=SSPI;Extended Properties=FORMAT=TABULAR;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{13BEC3F9-6A84-4DE6-A75E-0208462F3936}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{88D977A9-6723-4AC2-B7FF-291CF3980A67}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete from DW_Exp_DailyEstBonus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{F93A12E7-44AF-4D7E-8E99-8BB456FCB133}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete from DW_Exp_DailyEstBonus"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{13BEC3F9-6A84-4DE6-A75E-0208462F3936}"
+          SQLTask:SqlStatementSource="Delete from DW_Exp_DailyEstBonus&#xA;Where month(getdate()-1) = MONTH(dtDate)&#xA;and year(getdate()-1) = year(dtDate)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{244756C5-7C0F-4612-B756-A490600C3468}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3A3A0D9F-DBD3-410F-9DCD-4C6EEF5CE2A8}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="With &#xA;Member [Measures].[Estimated Bonus] As ''IIf ([Measures].[DailyPoints]&gt;0, [Measures].[DailyPoints]/[Measures].[WorkTimeHrs]*.3, 0)''&#xA;, SolveOrder = 6&#xA;, Format = ''0.0%''&#xA;Member [MEASURES].[storekey] as ''[Stores].[Stores].currentmember.member_key''&#xA;Member [MEASURES].[EmployeeKey] as ''[Employees].[Employees].currentmember.member_key''&#xA;Set [ReorderChildren Measures 0] As ''{[Measures].[Estimated Bonus],[Measures].[Quantity],[Measures].[Net Revenue],[Measures].[No Of Customer],[Measures].[DailyTargets],[Measures].[PctNetRevOfDailyTargets],[Measures].[DailyPoints],[Measures].[GP],[Measures].[WorkTimeHrs],[Measures].[QtyPerWorkHour],[Measures].[SalesPerWorkHour],[Measures].[CustomersPerWorkHour]}''&#xA;Set [ReorderParents Measures] As ''{}''&#xA;Set [Expand Measures] As ''{}''&#xA;Set [Expand ActualEmpDep.Department Id] As ''{}''&#xA;Set [Expand Employees.Employees] As ''{}''&#xA;Set [Filter Employees.Employees] As ''{ [Employees].[Employees].[All Employees], [Employees].[Employees].[Employees].AllMembers }''&#xA;Set [SetAxisX] As ''{Order(Unique({[MEASURES].[storekey],[MEASURES].[EmployeeKey],[Measures].[DailyPoints],[Measures].[WorkTimeHrs],[Measures].[Estimated Bonus]}) ,iif([Measures].CurrentMember.Level.Ordinal &gt; 0 And ( (Count([ReorderParents Measures])&gt;0 And Rank([Measures].CurrentMember.Parent,[ReorderParents Measures])=0) OR (Count([ReorderParents Measures])=0)),0,-Rank([Measures].CurrentMember,StrToSet(&quot;[ReorderChildren Measures &quot; + iif([Measures].CurrentMember.Level.Ordinal=0,&quot;0&quot;,Cstr(Rank([Measures].CurrentMember.Parent,[ReorderParents Measures]))) + &quot;]&quot;))),desc)}''&#xA;Set [NewSetX] As ''{NonEmpty([SetAxisX],[NewSetY])}''&#xA;Set [MainAxisX] As ''{[NewSetX]}''&#xA;Set [SetAxisY] As ''{Generate({{HIERARCHIZE ( [Stores].[Stores].[Store Desc].AllMembers )} AS [AxDim11]}  ,&#xA;&#xA;{[AxDim11].Current}*{Generate({{HIERARCHIZE ( [ActualEmpDep].[Department Id].[Department Id].AllMembers )} AS [AxDim12]}  ,&#xA;&#xA;{[AxDim12].Current}*{{Filter ([Filter Employees.Employees],([Measures].[WorkTimeHrs]) &gt;  0)}&#xA;&#xA;})&#xA;&#xA;})&#xA;&#xA;}''&#xA;Set [NewSetY] As ''{NonEmpty([SetAxisY],[SetAxisX])}''&#xA;Set [MainAxisY] As ''{head([NewSetY],100000)}''&#xA;&#xA;Select &#xA;Non Empty  [MainAxisX] On Columns ,&#xA;&#xA;Non Empty [MainAxisY] On Rows &#xA;From [Productivity]&#xA;WHERE ( [Date].[Date].[10/2014]  )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{50842735-52C9-41DF-986B-E00575B0DBB3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3A3A0D9F-DBD3-410F-9DCD-4C6EEF5CE2A8}"
+          SQLTask:SqlStatementSource="select CONVERT(smalldatetime,getdate()-1,112) dtDate,&#xA;&#x9;&quot;[MEASURES].[storekey]&quot;  as StoreId,&#xA;&#x9;&quot;[ActualEmpDep].[Department Id].[Department Id].[MEMBER_CAPTION]&quot; as ActualDep,&#xA;&#x9;&quot;[MEASURES].[EmployeeKey]&quot; as EmployeeId,&#xA;&#x9;round(cast(&quot;[MEASURES].[Estimated Bonus]&quot; as float),2) as EstimatedBonus,&#xA;&#x9;round(cast(&quot;[MEASURES].[DailyPoints]&quot; as float),2) as DailyPoints,&#xA;&#x9;round(cast(&quot;[Measures].[WorkTimeHrs]&quot; as float),2) as WorkTimeHrs,&#xA;&#x9;Null as EmpInternalId&#xA;from openquery(OLAP, &#xA;'With &#xA;Member [Measures].[Estimated Bonus] As ''IIf ([Measures].[DailyPoints]&gt;0, [Measures].[DailyPoints]/[Measures].[WorkTimeHrs]*.3, 0)''&#xA;, SolveOrder = 6&#xA;, Format = ''0.0%''&#xA;Member [MEASURES].[storekey] as ''[Stores].[Stores].currentmember.member_key''&#xA;Member [MEASURES].[EmployeeKey] as ''[Employees].[Employees].currentmember.member_key''&#xA;Set [ReorderChildren Measures 0] As ''{[Measures].[Estimated Bonus],[Measures].[Quantity],[Measures].[Net Revenue],[Measures].[No Of Customer],[Measures].[DailyTargets],[Measures].[PctNetRevOfDailyTargets],[Measures].[DailyPoints],[Measures].[GP],[Measures].[WorkTimeHrs],[Measures].[QtyPerWorkHour],[Measures].[SalesPerWorkHour],[Measures].[CustomersPerWorkHour]}''&#xA;Set [ReorderParents Measures] As ''{}''&#xA;Set [Expand Measures] As ''{}''&#xA;Set [Expand ActualEmpDep.Department Id] As ''{}''&#xA;Set [Expand Employees.Employees] As ''{}''&#xA;Set [Filter Employees.Employees] As ''{ [Employees].[Employees].[All Employees], [Employees].[Employees].[Employees].AllMembers }''&#xA;Set [SetAxisX] As ''{Order(Unique({[MEASURES].[storekey],[MEASURES].[EmployeeKey],[Measures].[DailyPoints],[Measures].[WorkTimeHrs],[Measures].[Estimated Bonus]}) ,iif([Measures].CurrentMember.Level.Ordinal &gt; 0 And ( (Count([ReorderParents Measures])&gt;0 And Rank([Measures].CurrentMember.Parent,[ReorderParents Measures])=0) OR (Count([ReorderParents Measures])=0)),0,-Rank([Measures].CurrentMember,StrToSet(&quot;[ReorderChildren Measures &quot; + iif([Measures].CurrentMember.Level.Ordinal=0,&quot;0&quot;,Cstr(Rank([Measures].CurrentMember.Parent,[ReorderParents Measures]))) + &quot;]&quot;))),desc)}''&#xA;Set [NewSetX] As ''{NonEmpty([SetAxisX],[NewSetY])}''&#xA;Set [MainAxisX] As ''{[NewSetX]}''&#xA;Set [SetAxisY] As ''{Generate({{HIERARCHIZE ( [Stores].[Stores].[Store Desc].AllMembers )} AS [AxDim11]}  ,&#xA;&#xA;{[AxDim11].Current}*{Generate({{HIERARCHIZE ( [ActualEmpDep].[Department Id].[Department Id].AllMembers )} AS [AxDim12]}  ,&#xA;&#xA;{[AxDim12].Current}*{{Filter ([Filter Employees.Employees],([Measures].[WorkTimeHrs]) &gt;  0)}&#xA;&#xA;})&#xA;&#xA;})&#xA;&#xA;}''&#xA;Set [NewSetY] As ''{NonEmpty([SetAxisY],[SetAxisX])}''&#xA;Set [MainAxisY] As ''{head([NewSetY],100000)}''&#xA;&#xA;Select &#xA;Non Empty  [MainAxisX] On Columns ,&#xA;&#xA;Non Empty [MainAxisY] On Rows &#xA;From [Productivity]&#xA;WHERE ( [Date].[Date].[10/2014]  )')&#xA;Where &quot;[MEASURES].[EmployeeKey]&quot; &lt;&gt;'0'"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::EXPR" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:Disabled="True"
+      DTS:DTSID="{878E8792-9FF1-4DF7-97F6-419BC1290FD6}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachItemEnumerator"
+        DTS:DTSID="{D3776B39-6514-4099-BF5E-DD9DB99E003C}"
+        DTS:ObjectName="{D3776B39-6514-4099-BF5E-DD9DB99E003C}">
+        <DTS:ObjectData />
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container\Execute SQL Task"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{77F98390-26DD-4D1B-8CFA-990C707D33AC}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{3A3A0D9F-DBD3-410F-9DCD-4C6EEF5CE2A8}" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{37A050FB-249C-4B8A-AC30-CA42060D0D2E}"
+          DTS:ObjectName="{37A050FB-249C-4B8A-AC30-CA42060D0D2E}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::EXPR" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into DW_Exp_DailyEstBonus MDX"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{A052397C-D3A2-4231-B60C-C12F4FC8308E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into DW_Exp_DailyEstBonus MDX"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{13BEC3F9-6A84-4DE6-A75E-0208462F3936}"
+          SQLTask:SqlStatementSource="select CONVERT(smalldatetime,getdate()-1,112) dtDate,&#xA;&#x9;&quot;[MEASURES].[storekey]&quot;  as StoreId,&#xA;&#x9;&quot;[ActualEmpDep].[Department Id].[Department Id].[MEMBER_CAPTION]&quot; as ActualDep,&#xA;&#x9;&quot;[MEASURES].[EmployeeKey]&quot; as EmployeeId,&#xA;&#x9;round(cast(&quot;[MEASURES].[Estimated Bonus]&quot; as float),2) as EstimatedBonus,&#xA;&#x9;round(cast(&quot;[MEASURES].[DailyPoints]&quot; as float),2) as DailyPoints,&#xA;&#x9;round(cast(&quot;[Measures].[WorkTimeHrs]&quot; as float),2) as WorkTimeHrs,&#xA;&#x9;Null as EmpInternalId&#xA;from openquery(OLAP, &#xA;'With &#xA;Member [Measures].[Estimated Bonus] As ''IIf ([Measures].[DailyPoints]&gt;0, [Measures].[DailyPoints]/[Measures].[WorkTimeHrs]*.3, 0)''&#xA;, SolveOrder = 6&#xA;, Format = ''0.0%''&#xA;Member [MEASURES].[storekey] as ''[Stores].[Stores].currentmember.member_key''&#xA;Member [MEASURES].[EmployeeKey] as ''[Employees].[Employees].currentmember.member_key''&#xA;Set [ReorderChildren Measures 0] As ''{[Measures].[Estimated Bonus],[Measures].[Quantity],[Measures].[Net Revenue],[Measures].[No Of Customer],[Measures].[DailyTargets],[Measures].[PctNetRevOfDailyTargets],[Measures].[DailyPoints],[Measures].[GP],[Measures].[WorkTimeHrs],[Measures].[QtyPerWorkHour],[Measures].[SalesPerWorkHour],[Measures].[CustomersPerWorkHour]}''&#xA;Set [ReorderParents Measures] As ''{}''&#xA;Set [Expand Measures] As ''{}''&#xA;Set [Expand ActualEmpDep.Department Id] As ''{}''&#xA;Set [Expand Employees.Employees] As ''{}''&#xA;Set [Filter Employees.Employees] As ''{ [Employees].[Employees].[All Employees], [Employees].[Employees].[Employees].AllMembers }''&#xA;Set [SetAxisX] As ''{Order(Unique({[MEASURES].[storekey],[MEASURES].[EmployeeKey],[Measures].[DailyPoints],[Measures].[WorkTimeHrs],[Measures].[Estimated Bonus]}) ,iif([Measures].CurrentMember.Level.Ordinal &gt; 0 And ( (Count([ReorderParents Measures])&gt;0 And Rank([Measures].CurrentMember.Parent,[ReorderParents Measures])=0) OR (Count([ReorderParents Measures])=0)),0,-Rank([Measures].CurrentMember,StrToSet(&quot;[ReorderChildren Measures &quot; + iif([Measures].CurrentMember.Level.Ordinal=0,&quot;0&quot;,Cstr(Rank([Measures].CurrentMember.Parent,[ReorderParents Measures]))) + &quot;]&quot;))),desc)}''&#xA;Set [NewSetX] As ''{NonEmpty([SetAxisX],[NewSetY])}''&#xA;Set [MainAxisX] As ''{[NewSetX]}''&#xA;Set [SetAxisY] As ''{Generate({{HIERARCHIZE ( [Stores].[Stores].[Store Desc].AllMembers )} AS [AxDim11]}  ,&#xA;&#xA;{[AxDim11].Current}*{Generate({{HIERARCHIZE ( [ActualEmpDep].[Department Id].[Department Id].AllMembers )} AS [AxDim12]}  ,&#xA;&#xA;{[AxDim12].Current}*{{Filter ([Filter Employees.Employees],([Measures].[WorkTimeHrs]) &gt;  0)}&#xA;&#xA;})&#xA;&#xA;})&#xA;&#xA;}''&#xA;Set [NewSetY] As ''{NonEmpty([SetAxisY],[SetAxisX])}''&#xA;Set [MainAxisY] As ''{head([NewSetY],100000)}''&#xA;&#xA;Select &#xA;Non Empty  [MainAxisX] On Columns ,&#xA;&#xA;Non Empty [MainAxisY] On Rows &#xA;From [Productivity]&#xA;WHERE ( [Date].[Date].[10/2014]  )')&#xA;Where &quot;[MEASURES].[EmployeeKey]&quot; &lt;&gt;'0'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update DW_Exp_DailyEstBonus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{3224AA4C-C0C1-4135-A621-3A7BEBA8C571}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update DW_Exp_DailyEstBonus"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{13BEC3F9-6A84-4DE6-A75E-0208462F3936}"
+          SQLTask:SqlStatementSource="Update DW_Exp_DailyEstBonus Set&#xA;&#x9;EmpInternalId = DWH_DIM_Employees.EmpInternalId&#xA;From dbo.DWH_DIM_Employees&#xA;Where DW_Exp_DailyEstBonus.EmployeeId = DWH_DIM_Employees.Employee_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8F06B4AA-993D-432C-AEB1-8381190CEAD9}"
+      DTS:From="Package\Delete from DW_Exp_DailyEstBonus"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Insert into DW_Exp_DailyEstBonus MDX" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{EFDBDB2F-0193-414E-ADDB-55652CBB332D}"
+      DTS:From="Package\Insert into DW_Exp_DailyEstBonus MDX"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update DW_Exp_DailyEstBonus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{1ACA7439-45BA-4FFD-8926-F8BDC846C5C2}"
+      DTS:From="Package\Execute SQL Task 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Foreach Loop Container" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="249,42"
+          Id="Package\Delete from DW_Exp_DailyEstBonus"
+          TopLeft="118,90" />
+        <NodeLayout
+          Size="268,42"
+          Id="Package\Insert into DW_Exp_DailyEstBonus MDX"
+          TopLeft="128,171" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\Update DW_Exp_DailyEstBonus"
+          TopLeft="133,258" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="242.5,132">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.5,39"
+              Start="0,0"
+              End="19.5,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="4,19.5" />
+                  <mssgle:LineSegment
+                    End="15.5,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.5,19.5"
+                    Point2="19.5,19.5"
+                    Point3="19.5,23.5" />
+                  <mssgle:LineSegment
+                    End="19.5,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="262,213">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15,45"
+              Start="0,0"
+              End="-15,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5"
+                    Point2="0,22.5"
+                    Point3="-4,22.5" />
+                  <mssgle:LineSegment
+                    End="-11,22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11,22.5"
+                    Point2="-15,22.5"
+                    Point3="-15,26.5" />
+                  <mssgle:LineSegment
+                    End="-15,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="468,163" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Execute SQL Task 1"
+          TopLeft="846,210" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Foreach Loop Container\Execute SQL Task"
+          TopLeft="70,32" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="238,129"
+          Size="238,172"
+          Id="Package\Foreach Loop Container"
+          TopLeft="841,296" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="932,252">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28,44"
+              Start="0,0"
+              End="28,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18"
+                    Point2="0,22"
+                    Point3="4,22" />
+                  <mssgle:LineSegment
+                    End="24,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24,22"
+                    Point2="28,22"
+                    Point3="28,26" />
+                  <mssgle:LineSegment
+                    End="28,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

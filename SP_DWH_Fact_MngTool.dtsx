@@ -1,0 +1,681 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/24/2019 9:56:37 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERPANORAMA"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{10C9E2C1-47AA-4345-958B-68F97A72B5D0}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="SP_DWH_Fact_MngTool"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="233"
+  DTS:VersionGUID="{C3DAAC47-5B36-45BF-84A9-4DE5DDEAC7FD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[superpanorama.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+      DTS:ObjectName="superpanorama.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-sp_DWH_Invoice_Fact-{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}superpanorama.SuperPharmPoland;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FF029FE5-6869-4FDC-B4EB-A7D854C9F4D9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dtDate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1EEB874C-5FE1-4792-8E90-B58DC74C40A0}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot; INSERT INTO STG_MngTool_Migvan (iStoreId,dItemInternalKey)  SELECT  store_id,item_id from dbo.DWH_Invoice_Fact where INVOICE_DATE between '&quot; +(DT_WSTR,19) @[User::StartDate] +&quot;' AND '&quot;+ (DT_WSTR,19)@[User::dtDate] &#xA;+&quot;' group by store_id,item_id having sum(QUANTITY) &gt;= 30 and SUM(Net_Revenue) &gt; 100&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR1">
+      <DTS:VariableValue
+        DTS:DataType="8"> INSERT INTO STG_MngTool_Migvan (iStoreId,dItemInternalKey)  SELECT  store_id,item_id from dbo.DWH_Invoice_Fact where INVOICE_DATE between '' AND '' group by store_id,item_id having sum(QUANTITY) &gt;= 30 and SUM(Net_Revenue) &gt; 100</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3C247CC2-5C29-4132-9C75-28190E0885A2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;insert into STG_MngTool_NetItemSales &#xA;select INVOICE_DATE,item_id,sum(Net_Revenue),sum(QUANTITY)&#xA;from DWH_Invoice_Fact &#xA;where INVOICE_DATE = '&quot;+  (DT_WSTR,19)@[User::dtDate] + &quot;'  &#xA;group by INVOICE_DATE,item_id&#xA;having sum(QUANTITY) &gt;= 10 &quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR2">
+      <DTS:VariableValue
+        DTS:DataType="8">insert into STG_MngTool_NetItemSales 
+select INVOICE_DATE,item_id,sum(Net_Revenue),sum(QUANTITY)
+from DWH_Invoice_Fact 
+where INVOICE_DATE = ''  
+group by INVOICE_DATE,item_id
+having sum(QUANTITY) &gt;= 10 </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{16879DE1-E181-41ED-AB2A-C2442519E177}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;Insert Into STG_MngTool_Fact &#xA;Select INVOICE_DATE,store_id,item_id,sum(QUANTITY),sum(Net_Revenue),0&#xA;From DWH_Invoice_Fact&#xA;Where INVOICE_DATE ='&quot;+(DT_WSTR,19)@[User::dtDate] &#xA; +&quot;' Group by INVOICE_DATE,store_id,item_id &quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR3">
+      <DTS:VariableValue
+        DTS:DataType="8">Insert Into STG_MngTool_Fact 
+Select INVOICE_DATE,store_id,item_id,sum(QUANTITY),sum(Net_Revenue),0
+From DWH_Invoice_Fact
+Where INVOICE_DATE ='' Group by INVOICE_DATE,store_id,item_id </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5FC28956-A0B7-45E4-A639-E5748B98E33B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;Insert Into STG_MngTool_Fact&#xA;Select distinct '&quot;+(DT_WSTR,19)@[User::dtDate] +&quot;'dtDate,STG_MngTool_Migvan.iStoreId,STG_MngTool_Migvan.dItemInternalKey,0 qty,0 sales,0&#xA;From STG_MngTool_Migvan&#xA;Where not exists (Select *&#xA;                  From STG_MngTool_Fact&#xA;                  Where STG_MngTool_Fact.iStoreId = STG_MngTool_Migvan.iStoreId&#xA;                    AND STG_MngTool_Fact.dItemInternalKey = STG_MngTool_Migvan.dItemInternalKey)&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR4">
+      <DTS:VariableValue
+        DTS:DataType="8">Insert Into STG_MngTool_Fact
+Select distinct ''dtDate,STG_MngTool_Migvan.iStoreId,STG_MngTool_Migvan.dItemInternalKey,0 qty,0 sales,0
+From STG_MngTool_Migvan
+Where not exists (Select *
+                  From STG_MngTool_Fact
+                  Where STG_MngTool_Fact.iStoreId = STG_MngTool_Migvan.iStoreId
+                    AND STG_MngTool_Fact.dItemInternalKey = STG_MngTool_Migvan.dItemInternalKey)</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2D186A7D-A07B-4C46-8BB3-76D4733F20C4}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;delete from DWH_MngTool_Fact&#xA;where  dtDate ='&quot;+(DT_WSTR,19)@[User::dtDate] +&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR6">
+      <DTS:VariableValue
+        DTS:DataType="8">delete from DWH_MngTool_Fact
+where  dtDate =''</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9C12F1B5-E98B-4C0B-BE86-EA40BBB29CAF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StartDate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\delete from DWH_MngTool_Fact"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{837D42A0-775B-4817-9ED0-675F4C6024B7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="delete from DWH_MngTool_Fact"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStatementSource="Update STG_MngTool_Fact Set&#xA;        EODInv = isnull(T1.qty,0)&#xA;From (Select dtDate, iStoreId, dItemInternalKey, SUM(Qunatity) Qty&#xA;   From DWH_Fact_Inventory, STG_MngTool_Fact&#xA;   Where DWH_Fact_Inventory.Store_ID = STG_MngTool_Fact.iStoreId&#xA;   And DWH_Fact_Inventory.Item_ID = STG_MngTool_Fact.dItemInternalKey&#xA;   And DWH_Fact_Inventory.Dt_Key = STG_MngTool_Fact.dtDate&#xA;   Group by dtDate, iStoreId, dItemInternalKey) T1&#xA;Where STG_MngTool_Fact.dtDate = T1.dtDate &#xA;And STG_MngTool_Fact.dItemInternalKey = T1.dItemInternalKey &#xA;And STG_MngTool_Fact.iStoreId = T1.iStoreId " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D084AE01-656C-4052-A9C4-7192EC2A2899}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStatementSource=" select&#xA;CONVERT(VARCHAR,(CONVERT(varchar,dateadd(mm,-3,CAST(getdate() AS DATE)),120)+' 00:00:00'),120) AS StartDate,&#xA;CONVERT(VARCHAR,(CONVERT(varchar,CAST(GETDATE()-1 AS DATE),120)+' 00:00:00'),120)  As dtDate&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::StartDate" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="1"
+            SQLTask:DtsVariableName="User::dtDate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Into DWH_MngTool_Fact"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F5FDA57F-84FC-4CFF-95EB-90F3D7D25355}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Into DWH_MngTool_Fact"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStatementSource="Insert Into DWH_MngTool_Fact&#xA;select STG_MngTool_Fact.*,NeworkSales,NetworkQty,cast(SalesPercentage as float),cast(QtyPercentage as float),round(NeworkSales*cast(SalesPercentage as float),2),round(NetworkQty*cast(QtyPercentage as float),0)&#xA;from STG_MngTool_Fact,STG_MngTool_NetItemSales,STG_MngTool_Dep_Pct--,DWH_DIM_Items&#xA;where STG_MngTool_Fact.dItemInternalKey = STG_MngTool_NetItemSales.dItemInternalKey&#xA;and STG_MngTool_Fact.dtDate = STG_MngTool_NetItemSales.dtDate&#xA;and STG_MngTool_Fact.iStoreId = STG_MngTool_Dep_Pct.iStoreId&#xA;--and STG_MngTool_Fact.dItemInternalKey = DWH_DIM_Items.Item_ID&#xA;and STG_MngTool_Dep_Pct.iDepartmentId = STG_MngTool_Fact.dItemInternalKey&#xA;--and NeworkSales*cast(SalesPercentage as float) &gt;= 1 and NetworkQty*cast(QtyPercentage as float) &gt;= 0.8&#xA;and round(NeworkSales*cast(SalesPercentage as float),0) &gt;= 1 and round(NetworkQty*cast(QtyPercentage as float),0) &gt;= 1" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Into STG_MngTool_Fact"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DF2BA63A-9F73-4432-83C9-6E82F9064F23}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:ExecValue=""
+      DTS:ExecValueType="8"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Into STG_MngTool_Fact"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::EXPR3"
+          SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::dtDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Into STG_MngTool_Fact Continue"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BBB3313E-21B9-4B46-B25F-AE610DD87257}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:ExecValue=""
+      DTS:ExecValueType="8"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Into STG_MngTool_Fact Continue"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::EXPR4"
+          SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::dtDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into STG_MngTool_Migvan"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2A698144-291E-4CDA-A8A0-56DE86C23C3B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:ExecValue=""
+      DTS:ExecValueType="8"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into STG_MngTool_Migvan"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::EXPR1"
+          SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::StartDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::dtDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into STG_MngTool_NetItemSales"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0C9C6B03-CE11-4631-B5EA-3EAE7E7B2FFB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:ExecValue=""
+      DTS:ExecValueType="8"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into STG_MngTool_NetItemSales"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::EXPR2"
+          SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::dtDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\TRUNCATE TABLE STG_MngTool_Fact"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2F60E575-A9F7-4223-B7BB-550F24281FEF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="TRUNCATE TABLE STG_MngTool_Fact"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE STG_MngTool_Fact" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate table STG_MngTool_Migvan"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D65574FE-53A4-4355-9019-2435003F3109}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate table STG_MngTool_Migvan"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE STG_MngTool_Migvan" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate table STG_MngTool_NetItemSales"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E368637F-AA7D-4992-9249-5C1B7844A698}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate table STG_MngTool_NetItemSales"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4A3BB995-BC0B-4B97-BD51-8362111CD0CD}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE  STG_MngTool_NetItemSales" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8351C26D-46C4-437D-8D75-B907DF3F7F17}"
+      DTS:From="Package\truncate table STG_MngTool_Migvan"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Execute SQL Task" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{CCBEA3E1-30C3-4F7B-8513-3D1D860DBC27}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\insert into STG_MngTool_Migvan" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8CB7928D-47BC-41A0-A94E-97BD52279A11}"
+      DTS:From="Package\insert into STG_MngTool_Migvan"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\truncate table STG_MngTool_NetItemSales" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{1FAAF1BB-4A7C-478D-86B5-7523B9F924E0}"
+      DTS:From="Package\truncate table STG_MngTool_NetItemSales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\insert into STG_MngTool_NetItemSales" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{92A504EE-C6E8-4E30-959D-CDB118AED21B}"
+      DTS:From="Package\insert into STG_MngTool_NetItemSales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\TRUNCATE TABLE STG_MngTool_Fact" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{9C934B43-819F-4794-9ECA-5FC3BA963A4A}"
+      DTS:From="Package\TRUNCATE TABLE STG_MngTool_Fact"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Insert Into STG_MngTool_Fact" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{A1142E10-01E2-4A58-988F-4550AE5C28DF}"
+      DTS:From="Package\Insert Into STG_MngTool_Fact"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Insert Into STG_MngTool_Fact Continue" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{E431F3DD-A390-4AAE-8569-214B5E2F24BD}"
+      DTS:From="Package\Insert Into STG_MngTool_Fact Continue"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\delete from DWH_MngTool_Fact" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{D5C79919-FEF6-49F5-B412-5FAF7F11E01A}"
+      DTS:From="Package\delete from DWH_MngTool_Fact"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Insert Into DWH_MngTool_Fact" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="232,42"
+          Id="Package\delete from DWH_MngTool_Fact"
+          TopLeft="77.5,693.25" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="115,100" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\Insert Into DWH_MngTool_Fact"
+          TopLeft="81,779" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Insert Into STG_MngTool_Fact"
+          TopLeft="87,522" />
+        <NodeLayout
+          Size="269,42"
+          Id="Package\Insert Into STG_MngTool_Fact Continue"
+          TopLeft="62,606" />
+        <NodeLayout
+          Size="234,42"
+          Id="Package\insert into STG_MngTool_Migvan"
+          TopLeft="85,185" />
+        <NodeLayout
+          Size="264,42"
+          Id="Package\insert into STG_MngTool_NetItemSales"
+          TopLeft="68,359" />
+        <NodeLayout
+          Size="259,42"
+          Id="Package\TRUNCATE TABLE STG_MngTool_Fact"
+          TopLeft="69,440" />
+        <NodeLayout
+          Size="252,42"
+          Id="Package\truncate table STG_MngTool_Migvan"
+          TopLeft="67.5,13.5" />
+        <NodeLayout
+          Size="282,42"
+          Id="Package\truncate table STG_MngTool_NetItemSales"
+          TopLeft="61,264" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="195,55.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.5"
+              Start="0,0"
+              End="0,37">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="199.25,142">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="202,227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="201,306">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53"
+              Start="0,0"
+              End="0,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="199.25,401">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="198.75,482">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="197.75,564">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="195,648">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.25"
+              Start="0,0"
+              End="0,37.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="194.25,735.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.75"
+              Start="0,0"
+              End="0,36.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,2283 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/10/2023 8:24:42 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{F8AC8D15-B129-406D-8630-2618AAC8A694}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="cdp_Dim_Customers_dwh"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="298"
+  DTS:VersionGUID="{7F81E33E-4C40-4239-B2CB-10372945E98A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[172.27.160.70.CDP]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AFA1CD30-2941-43CA-A7F1-F9D032D3A7AD}"
+      DTS:ObjectName="172.27.160.70.CDP">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.27.160.70;Initial Catalog=CDP;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+      DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{FDB22F64-F1AF-4A0B-9015-7A3A65FEF176}"
+      DTS:ObjectName="MagentoDB_new.promoviewonly">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="ijDEajDV0rQ="
+            IV="fqROhMK3i6ceQlLbhEW5zw==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>fqROhMK3i6ceQlLbhEW5z6wC8b2FVSQkPyeXUe21ibViDRGA9Qff+YLTzftpKmIlAFu1J5/OmCsOI9izGCWiH4ZtsDULeeWCGXXlPH2fmiTTTjTxw8u5cJ/4cFPqOFHFG+CBtEs85HI7gD2zTWSuIc0aez0v9wFNgWJB03XGSR8At/M23J2NOXQtQdXiVSpN</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1D1EC848-3BA8-4274-95D9-B66812CBE249}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Add new emails to cdp_customer_emails_ids"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DEACF643-0673-4993-A02F-C4ED0C206FA5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Add new emails to cdp_customer_emails_ids"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1D1EC848-3BA8-4274-95D9-B66812CBE249}"
+          SQLTask:SqlStatementSource="insert into cdp_customer_emails_ids (email)&#xA;select [main_email]&#xA;from cdp_dwh_Dim_Customers&#xA;where not exists (&#xA;select *&#xA;from cdp_customer_emails_ids&#xA;where cdp_customer_emails_ids.email = cdp_dwh_Dim_Customers.[main_email])&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{29323BE2-7246-4EEE-AFA3-53F5AA2A2835}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_dwh_Dim_Customers"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_dwh_Dim_Customers]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[source]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="42"
+                      cachedName="source"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[source]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[main_email]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="main_email"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[main_email]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[main_email]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[connected_email_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="connected_email_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[connected_email_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[connected_email_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[connected_email_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="connected_email_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[connected_email_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[connected_email_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[ls_id]"
+                      cachedDataType="i8"
+                      cachedName="ls_id"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[ls_id]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[ls_id]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[magento_id]"
+                      cachedDataType="i8"
+                      cachedName="magento_id"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[magento_id]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[magento_id]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[fname_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="fname_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[fname_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[fname_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[lname_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="lname_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[lname_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[lname_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[fname_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="fname_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[fname_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[fname_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[lname_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="lname_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[lname_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[lname_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[billing_name_sales]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="billing_name_sales"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[billing_name_sales]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[billing_name_sales]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[phone_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="phone_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[phone_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="phone_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[phone_sales]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="phone_sales"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone_sales]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_sales]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[gender_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="gender_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[gender_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[gender_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[gender_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="gender_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[gender_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[gender_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Country_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Country_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Country_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Country_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[City_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="City_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[City_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[City_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Street_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Street_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Street_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Street_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Number_of_building_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Number_of_building_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_building_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_building_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Number_of_flat_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Number_of_flat_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_flat_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_flat_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Zip_Code_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Zip_Code_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Zip_Code_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Zip_Code_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Country_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Country_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Country_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Country_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[City_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="City_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[City_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[City_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Street_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Street_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Street_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Street_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Zip_Code_magento]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Zip_Code_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Zip_Code_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Zip_Code_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[billing address_sales]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="billing address_sales"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[billing address_sales]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[billing address_sales]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Registration_Date_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="Registration_Date_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Registration_Date_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_Date_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[created_at_magento]"
+                      cachedDataType="dbDate"
+                      cachedName="created_at_magento"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[created_at_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[created_at_magento]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[created_at_sales]"
+                      cachedDataType="dbDate"
+                      cachedName="created_at_sales"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[created_at_sales]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[created_at_sales]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Card_Number_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Card_Number_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Card_Number_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Card_Number_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Number_of_form_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Number_of_form_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_form_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_form_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Registration_at_cash_counter_ls]"
+                      cachedDataType="i4"
+                      cachedName="Registration_at_cash_counter_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Registration_at_cash_counter_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_at_cash_counter_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[App_Token_ls]"
+                      cachedDataType="i4"
+                      cachedName="App_Token_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[App_Token_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[App_Token_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Date_of_birth_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="Date_of_birth_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Date_of_birth_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_birth_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Modification_Date_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="Modification_Date_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Modification_Date_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Modification_Date_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Registration_channel_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Registration_channel_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Registration_channel_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_channel_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Correctness_of_address_ls]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Correctness_of_address_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Correctness_of_address_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Correctness_of_address_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Club_terms_&amp;_conditions_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Club_terms_&amp;_conditions_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Club_terms_&amp;_conditions_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Club_terms_&amp;_conditions_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[RODO_consent_ls]"
+                      cachedDataType="ui1"
+                      cachedName="RODO_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[RODO_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[RODO_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[SMS_consent_ls]"
+                      cachedDataType="ui1"
+                      cachedName="SMS_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[SMS_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[SMS_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Email_consent_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Email_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Email_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Email_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Mobile_Push_consent_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Mobile_Push_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Mobile_Push_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Mobile_Push_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="DATE_Club_terms_&amp;_conditions_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Club_terms_&amp;_conditions_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[DATE_RODO_consent_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="DATE_RODO_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_RODO_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_RODO_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[DATE_SMS_consent_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="DATE_SMS_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_SMS_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_SMS_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[DATE_Email_consent_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="DATE_Email_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_Email_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Email_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[DATE_Mobile_Push_consent_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="DATE_Mobile_Push_consent_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_Mobile_Push_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Mobile_Push_consent_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Current_balance_of_points_ls]"
+                      cachedDataType="i4"
+                      cachedName="Current_balance_of_points_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Current_balance_of_points_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Current_balance_of_points_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Current_level_of_points_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Current_level_of_points_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Current_level_of_points_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Current_level_of_points_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Date_of_level_of_points_change_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="Date_of_level_of_points_change_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Date_of_level_of_points_change_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_level_of_points_change_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Date_of_upcoming_points_expiration_ls]"
+                      cachedDataType="dbDate"
+                      cachedName="Date_of_upcoming_points_expiration_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Date_of_upcoming_points_expiration_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_upcoming_points_expiration_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Number_of_points_to_be_expired_soon_ls]"
+                      cachedDataType="r8"
+                      cachedName="Number_of_points_to_be_expired_soon_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_points_to_be_expired_soon_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_points_to_be_expired_soon_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Direct_mailing_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Direct_mailing_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Direct_mailing_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Direct_mailing_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Communication_on_behalf_of_Third_Party_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Communication_on_behalf_of_Third_Party_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Communication_on_behalf_of_Third_Party_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Communication_on_behalf_of_Third_Party_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Sharing _data_with_Third_Party_ls]"
+                      cachedDataType="ui1"
+                      cachedName="Sharing _data_with_Third_Party_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Sharing _data_with_Third_Party_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Sharing _data_with_Third_Party_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Employee_flag_ls]"
+                      cachedDataType="i4"
+                      cachedName="Employee_flag_ls"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Employee_flag_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Employee_flag_ls]" />
+                    <inputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].Columns[Magento_newsletter_subscription]"
+                      cachedDataType="i4"
+                      cachedName="Magento_newsletter_subscription"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Magento_newsletter_subscription]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Magento_newsletter_subscription]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="42"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[main_email]"
+                      dataType="wstr"
+                      length="100"
+                      name="main_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[connected_email_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="connected_email_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[connected_email_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="connected_email_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[ls_id]"
+                      dataType="i8"
+                      name="ls_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[magento_id]"
+                      dataType="i8"
+                      name="magento_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[fname_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="fname_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[lname_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="lname_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[fname_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="fname_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[lname_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="lname_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[billing_name_sales]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing_name_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="phone_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="phone_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[phone_sales]"
+                      dataType="wstr"
+                      length="100"
+                      name="phone_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[gender_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="gender_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[gender_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="gender_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Country_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Country_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[City_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="City_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Street_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Street_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_building_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Number_of_building_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_flat_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Number_of_flat_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Zip_Code_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Zip_Code_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Country_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="Country_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[City_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="City_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Street_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="Street_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Zip_Code_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="Zip_Code_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[billing address_sales]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing address_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Registration_Date_ls]"
+                      dataType="dbDate"
+                      name="Registration_Date_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[created_at_magento]"
+                      dataType="dbDate"
+                      name="created_at_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[created_at_sales]"
+                      dataType="dbDate"
+                      name="created_at_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Card_Number_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Card_Number_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_form_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Number_of_form_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Registration_at_cash_counter_ls]"
+                      dataType="i4"
+                      name="Registration_at_cash_counter_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[App_Token_ls]"
+                      dataType="i4"
+                      name="App_Token_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Date_of_birth_ls]"
+                      dataType="dbDate"
+                      name="Date_of_birth_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Modification_Date_ls]"
+                      dataType="dbDate"
+                      name="Modification_Date_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Registration_channel_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Registration_channel_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Correctness_of_address_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Correctness_of_address_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Club_terms_&amp;_conditions_ls]"
+                      dataType="ui1"
+                      name="Club_terms_&amp;_conditions_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[RODO_consent_ls]"
+                      dataType="ui1"
+                      name="RODO_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[SMS_consent_ls]"
+                      dataType="ui1"
+                      name="SMS_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Email_consent_ls]"
+                      dataType="ui1"
+                      name="Email_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Mobile_Push_consent_ls]"
+                      dataType="ui1"
+                      name="Mobile_Push_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_Club_terms_&amp;_conditions_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_RODO_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_RODO_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_SMS_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_SMS_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_Email_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_Email_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[DATE_Mobile_Push_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_Mobile_Push_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Current_balance_of_points_ls]"
+                      dataType="i4"
+                      name="Current_balance_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Current_level_of_points_ls]"
+                      dataType="ui1"
+                      name="Current_level_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Date_of_level_of_points_change_ls]"
+                      dataType="dbDate"
+                      name="Date_of_level_of_points_change_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Date_of_upcoming_points_expiration_ls]"
+                      dataType="dbDate"
+                      name="Date_of_upcoming_points_expiration_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Number_of_points_to_be_expired_soon_ls]"
+                      dataType="r8"
+                      name="Number_of_points_to_be_expired_soon_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Direct_mailing_ls]"
+                      dataType="ui1"
+                      name="Direct_mailing_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Communication_on_behalf_of_Third_Party_ls]"
+                      dataType="ui1"
+                      name="Communication_on_behalf_of_Third_Party_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Sharing _data_with_Third_Party_ls]"
+                      dataType="ui1"
+                      name="Sharing _data_with_Third_Party_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Employee_flag_ls]"
+                      dataType="i4"
+                      name="Employee_flag_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input].ExternalColumns[Magento_newsletter_subscription]"
+                      dataType="i4"
+                      name="Magento_newsletter_subscription" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="cdp_stg_Dim_Customers"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_stg_Dim_Customers]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      length="42"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[source]"
+                      name="source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[main_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[main_email]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[main_email]"
+                      name="main_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[connected_email_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[connected_email_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[connected_email_ls]"
+                      name="connected_email_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[connected_email_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[connected_email_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[connected_email_magento]"
+                      name="connected_email_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[ls_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[ls_id]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[ls_id]"
+                      name="ls_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[magento_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[magento_id]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[magento_id]"
+                      name="magento_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[fname_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[fname_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[fname_ls]"
+                      name="fname_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[lname_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[lname_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[lname_ls]"
+                      name="lname_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[fname_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[fname_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[fname_magento]"
+                      name="fname_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[lname_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[lname_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[lname_magento]"
+                      name="lname_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[billing_name_sales]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[billing_name_sales]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[billing_name_sales]"
+                      name="billing_name_sales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[phone_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_ls]"
+                      name="phone_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[phone_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_magento]"
+                      name="phone_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_sales]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[phone_sales]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[phone_sales]"
+                      name="phone_sales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[gender_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[gender_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[gender_ls]"
+                      name="gender_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[gender_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[gender_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[gender_magento]"
+                      name="gender_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Country_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Country_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Country_ls]"
+                      name="Country_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[City_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[City_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[City_ls]"
+                      name="City_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Street_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Street_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Street_ls]"
+                      name="Street_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_building_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_building_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_building_ls]"
+                      name="Number_of_building_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_flat_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_flat_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_flat_ls]"
+                      name="Number_of_flat_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Zip_Code_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Zip_Code_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Zip_Code_ls]"
+                      name="Zip_Code_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Country_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Country_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Country_magento]"
+                      name="Country_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[City_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[City_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[City_magento]"
+                      name="City_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Street_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Street_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Street_magento]"
+                      name="Street_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Zip_Code_magento]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Zip_Code_magento]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Zip_Code_magento]"
+                      name="Zip_Code_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[billing address_sales]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[billing address_sales]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[billing address_sales]"
+                      name="billing address_sales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_Date_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Registration_Date_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_Date_ls]"
+                      name="Registration_Date_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[created_at_magento]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[created_at_magento]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[created_at_magento]"
+                      name="created_at_magento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[created_at_sales]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[created_at_sales]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[created_at_sales]"
+                      name="created_at_sales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Card_Number_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Card_Number_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Card_Number_ls]"
+                      name="Card_Number_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_form_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_form_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_form_ls]"
+                      name="Number_of_form_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_at_cash_counter_ls]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Registration_at_cash_counter_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_at_cash_counter_ls]"
+                      name="Registration_at_cash_counter_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[App_Token_ls]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[App_Token_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[App_Token_ls]"
+                      name="App_Token_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_birth_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Date_of_birth_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_birth_ls]"
+                      name="Date_of_birth_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Modification_Date_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Modification_Date_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Modification_Date_ls]"
+                      name="Modification_Date_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_channel_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Registration_channel_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Registration_channel_ls]"
+                      name="Registration_channel_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Correctness_of_address_ls]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Correctness_of_address_ls]"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Correctness_of_address_ls]"
+                      name="Correctness_of_address_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Club_terms_&amp;_conditions_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Club_terms_&amp;_conditions_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Club_terms_&amp;_conditions_ls]"
+                      name="Club_terms_&amp;_conditions_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[RODO_consent_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[RODO_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[RODO_consent_ls]"
+                      name="RODO_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[SMS_consent_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[SMS_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[SMS_consent_ls]"
+                      name="SMS_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Email_consent_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Email_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Email_consent_ls]"
+                      name="Email_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Mobile_Push_consent_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Mobile_Push_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Mobile_Push_consent_ls]"
+                      name="Mobile_Push_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      name="DATE_Club_terms_&amp;_conditions_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_RODO_consent_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_RODO_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_RODO_consent_ls]"
+                      name="DATE_RODO_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_SMS_consent_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_SMS_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_SMS_consent_ls]"
+                      name="DATE_SMS_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Email_consent_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_Email_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Email_consent_ls]"
+                      name="DATE_Email_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Mobile_Push_consent_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_Mobile_Push_consent_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[DATE_Mobile_Push_consent_ls]"
+                      name="DATE_Mobile_Push_consent_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Current_balance_of_points_ls]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Current_balance_of_points_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Current_balance_of_points_ls]"
+                      name="Current_balance_of_points_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Current_level_of_points_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Current_level_of_points_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Current_level_of_points_ls]"
+                      name="Current_level_of_points_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_level_of_points_change_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Date_of_level_of_points_change_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_level_of_points_change_ls]"
+                      name="Date_of_level_of_points_change_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_upcoming_points_expiration_ls]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Date_of_upcoming_points_expiration_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Date_of_upcoming_points_expiration_ls]"
+                      name="Date_of_upcoming_points_expiration_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_points_to_be_expired_soon_ls]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_points_to_be_expired_soon_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Number_of_points_to_be_expired_soon_ls]"
+                      name="Number_of_points_to_be_expired_soon_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Direct_mailing_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Direct_mailing_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Direct_mailing_ls]"
+                      name="Direct_mailing_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Communication_on_behalf_of_Third_Party_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Communication_on_behalf_of_Third_Party_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Communication_on_behalf_of_Third_Party_ls]"
+                      name="Communication_on_behalf_of_Third_Party_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Sharing _data_with_Third_Party_ls]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Sharing _data_with_Third_Party_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Sharing _data_with_Third_Party_ls]"
+                      name="Sharing _data_with_Third_Party_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Employee_flag_ls]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Employee_flag_ls]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Employee_flag_ls]"
+                      name="Employee_flag_ls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Magento_newsletter_subscription]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Magento_newsletter_subscription]"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].Columns[Magento_newsletter_subscription]"
+                      name="Magento_newsletter_subscription"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="42"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[main_email]"
+                      dataType="wstr"
+                      length="100"
+                      name="main_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[connected_email_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="connected_email_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[connected_email_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="connected_email_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[ls_id]"
+                      dataType="i8"
+                      name="ls_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[magento_id]"
+                      dataType="i8"
+                      name="magento_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[fname_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="fname_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[lname_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="lname_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[fname_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="fname_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[lname_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="lname_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[billing_name_sales]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing_name_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[phone_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="phone_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[phone_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="phone_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[phone_sales]"
+                      dataType="wstr"
+                      length="100"
+                      name="phone_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[gender_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="gender_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[gender_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="gender_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Country_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Country_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[City_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="City_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Street_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Street_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_building_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Number_of_building_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_flat_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Number_of_flat_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Zip_Code_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Zip_Code_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Country_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="Country_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[City_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="City_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Street_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="Street_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Zip_Code_magento]"
+                      dataType="wstr"
+                      length="100"
+                      name="Zip_Code_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[billing address_sales]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing address_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Registration_Date_ls]"
+                      dataType="dbDate"
+                      name="Registration_Date_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[created_at_magento]"
+                      dataType="dbDate"
+                      name="created_at_magento" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[created_at_sales]"
+                      dataType="dbDate"
+                      name="created_at_sales" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Card_Number_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Card_Number_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_form_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Number_of_form_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Registration_at_cash_counter_ls]"
+                      dataType="i4"
+                      name="Registration_at_cash_counter_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[App_Token_ls]"
+                      dataType="i4"
+                      name="App_Token_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Date_of_birth_ls]"
+                      dataType="dbDate"
+                      name="Date_of_birth_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Modification_Date_ls]"
+                      dataType="dbDate"
+                      name="Modification_Date_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Registration_channel_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Registration_channel_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Correctness_of_address_ls]"
+                      dataType="wstr"
+                      length="100"
+                      name="Correctness_of_address_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Club_terms_&amp;_conditions_ls]"
+                      dataType="ui1"
+                      name="Club_terms_&amp;_conditions_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[RODO_consent_ls]"
+                      dataType="ui1"
+                      name="RODO_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[SMS_consent_ls]"
+                      dataType="ui1"
+                      name="SMS_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Email_consent_ls]"
+                      dataType="ui1"
+                      name="Email_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Mobile_Push_consent_ls]"
+                      dataType="ui1"
+                      name="Mobile_Push_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_Club_terms_&amp;_conditions_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_RODO_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_RODO_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_SMS_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_SMS_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_Email_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_Email_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[DATE_Mobile_Push_consent_ls]"
+                      dataType="dbDate"
+                      name="DATE_Mobile_Push_consent_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Current_balance_of_points_ls]"
+                      dataType="i4"
+                      name="Current_balance_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Current_level_of_points_ls]"
+                      dataType="ui1"
+                      name="Current_level_of_points_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Date_of_level_of_points_change_ls]"
+                      dataType="dbDate"
+                      name="Date_of_level_of_points_change_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Date_of_upcoming_points_expiration_ls]"
+                      dataType="dbDate"
+                      name="Date_of_upcoming_points_expiration_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Number_of_points_to_be_expired_soon_ls]"
+                      dataType="r8"
+                      name="Number_of_points_to_be_expired_soon_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Direct_mailing_ls]"
+                      dataType="ui1"
+                      name="Direct_mailing_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Communication_on_behalf_of_Third_Party_ls]"
+                      dataType="ui1"
+                      name="Communication_on_behalf_of_Third_Party_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Sharing _data_with_Third_Party_ls]"
+                      dataType="ui1"
+                      name="Sharing _data_with_Third_Party_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Employee_flag_ls]"
+                      dataType="i4"
+                      name="Employee_flag_ls" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output].ExternalColumns[Magento_newsletter_subscription]"
+                      dataType="i4"
+                      name="Magento_newsletter_subscription" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="42"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[source]"
+                      name="source" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[main_email]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[main_email]"
+                      name="main_email" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[connected_email_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[connected_email_ls]"
+                      name="connected_email_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[connected_email_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[connected_email_magento]"
+                      name="connected_email_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[ls_id]"
+                      dataType="i8"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[ls_id]"
+                      name="ls_id" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[magento_id]"
+                      dataType="i8"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[magento_id]"
+                      name="magento_id" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[fname_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[fname_ls]"
+                      name="fname_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[lname_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[lname_ls]"
+                      name="lname_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[fname_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[fname_magento]"
+                      name="fname_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[lname_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[lname_magento]"
+                      name="lname_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[billing_name_sales]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[billing_name_sales]"
+                      name="billing_name_sales" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[phone_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[phone_ls]"
+                      name="phone_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[phone_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[phone_magento]"
+                      name="phone_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[phone_sales]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[phone_sales]"
+                      name="phone_sales" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[gender_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[gender_ls]"
+                      name="gender_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[gender_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[gender_magento]"
+                      name="gender_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Country_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Country_ls]"
+                      name="Country_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[City_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[City_ls]"
+                      name="City_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Street_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Street_ls]"
+                      name="Street_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_building_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_building_ls]"
+                      name="Number_of_building_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_flat_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_flat_ls]"
+                      name="Number_of_flat_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Zip_Code_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Zip_Code_ls]"
+                      name="Zip_Code_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Country_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Country_magento]"
+                      name="Country_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[City_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[City_magento]"
+                      name="City_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Street_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Street_magento]"
+                      name="Street_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Zip_Code_magento]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Zip_Code_magento]"
+                      name="Zip_Code_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[billing address_sales]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[billing address_sales]"
+                      name="billing address_sales" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Registration_Date_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Registration_Date_ls]"
+                      name="Registration_Date_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[created_at_magento]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[created_at_magento]"
+                      name="created_at_magento" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[created_at_sales]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[created_at_sales]"
+                      name="created_at_sales" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Card_Number_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Card_Number_ls]"
+                      name="Card_Number_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_form_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_form_ls]"
+                      name="Number_of_form_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Registration_at_cash_counter_ls]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Registration_at_cash_counter_ls]"
+                      name="Registration_at_cash_counter_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[App_Token_ls]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[App_Token_ls]"
+                      name="App_Token_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Date_of_birth_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Date_of_birth_ls]"
+                      name="Date_of_birth_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Modification_Date_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Modification_Date_ls]"
+                      name="Modification_Date_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Registration_channel_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Registration_channel_ls]"
+                      name="Registration_channel_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Correctness_of_address_ls]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Correctness_of_address_ls]"
+                      name="Correctness_of_address_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Club_terms_&amp;_conditions_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Club_terms_&amp;_conditions_ls]"
+                      name="Club_terms_&amp;_conditions_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[RODO_consent_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[RODO_consent_ls]"
+                      name="RODO_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[SMS_consent_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[SMS_consent_ls]"
+                      name="SMS_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Email_consent_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Email_consent_ls]"
+                      name="Email_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Mobile_Push_consent_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Mobile_Push_consent_ls]"
+                      name="Mobile_Push_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_Club_terms_&amp;_conditions_consent_ls]"
+                      name="DATE_Club_terms_&amp;_conditions_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_RODO_consent_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_RODO_consent_ls]"
+                      name="DATE_RODO_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_SMS_consent_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_SMS_consent_ls]"
+                      name="DATE_SMS_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_Email_consent_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_Email_consent_ls]"
+                      name="DATE_Email_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_Mobile_Push_consent_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[DATE_Mobile_Push_consent_ls]"
+                      name="DATE_Mobile_Push_consent_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Current_balance_of_points_ls]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Current_balance_of_points_ls]"
+                      name="Current_balance_of_points_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Current_level_of_points_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Current_level_of_points_ls]"
+                      name="Current_level_of_points_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Date_of_level_of_points_change_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Date_of_level_of_points_change_ls]"
+                      name="Date_of_level_of_points_change_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Date_of_upcoming_points_expiration_ls]"
+                      dataType="dbDate"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Date_of_upcoming_points_expiration_ls]"
+                      name="Date_of_upcoming_points_expiration_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_points_to_be_expired_soon_ls]"
+                      dataType="r8"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Number_of_points_to_be_expired_soon_ls]"
+                      name="Number_of_points_to_be_expired_soon_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Direct_mailing_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Direct_mailing_ls]"
+                      name="Direct_mailing_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Communication_on_behalf_of_Third_Party_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Communication_on_behalf_of_Third_Party_ls]"
+                      name="Communication_on_behalf_of_Third_Party_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Sharing _data_with_Third_Party_ls]"
+                      dataType="ui1"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Sharing _data_with_Third_Party_ls]"
+                      name="Sharing _data_with_Third_Party_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Employee_flag_ls]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Employee_flag_ls]"
+                      name="Employee_flag_ls" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Magento_newsletter_subscription]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[Magento_newsletter_subscription]"
+                      name="Magento_newsletter_subscription" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers.Paths[OLE DB Source Output]"
+              endId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate cdp_dwh_Dim_Customers"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2B6AB041-F3FD-467D-B825-73DA20140AD2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate cdp_dwh_Dim_Customers"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1D1EC848-3BA8-4274-95D9-B66812CBE249}"
+          SQLTask:SqlStatementSource="truncate table cdp_dwh_Dim_Customers&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
+      DTS:CreationName=""
+      DTS:DTSID="{573AB427-6DCB-4A90-B3C9-B9710B7C2848}"
+      DTS:From="Package\truncate cdp_dwh_Dim_Customers"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 13"
+      DTS:To="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 15]"
+      DTS:CreationName=""
+      DTS:DTSID="{41669596-B00E-447E-AE04-51B6598D6578}"
+      DTS:From="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 15"
+      DTS:To="Package\Add new emails to cdp_customer_emails_ids" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="288.8,41.6"
+          Id="Package\Add new emails to cdp_customer_emails_ids"
+          TopLeft="381.191840474311,355.455465621685" />
+        <NodeLayout
+          Size="339.2,41.6"
+          Id="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers"
+          TopLeft="363.603173490279,216.911661053912" />
+        <NodeLayout
+          Size="243.2,41.6"
+          Id="Package\truncate cdp_dwh_Dim_Customers"
+          TopLeft="401.820868362031,80.4444322492546" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="523.420868362031,122.044432249255">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9.78230512824814,94.8672288046574"
+              Start="0,0"
+              End="9.78230512824814,87.3672288046574">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.4336144023287" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.4336144023287"
+                    Point2="0,47.4336144023287"
+                    Point3="4,47.4336144023287" />
+                  <mssgle:LineSegment
+                    End="5.78230512824814,47.4336144023287" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.78230512824814,47.4336144023287"
+                    Point2="9.78230512824814,47.4336144023287"
+                    Point3="9.78230512824814,51.4336144023287" />
+                  <mssgle:LineSegment
+                    End="9.78230512824814,87.3672288046574" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="529.397506982295,258.511661053912">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96.943804567773"
+              Start="0,0"
+              End="0,89.443804567773">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,89.443804567773" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="dwh"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="51.2,40"
+          Id="46003287-0081-4d7f-8c73-d61192f2961c"
+          TopLeft="512.721097166961,37.9731097762557" />
+        <AnnotationLayout
+          Text="customer_emails_ids"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="136.8,40"
+          Id="cb24afe1-3b89-4ba4-8211-e5b6e0206187"
+          TopLeft="461.020416014401,307.14958413959" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="195.2,41.6"
+          Id="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers"
+          TopLeft="174.4,86.4" />
+        <NodeLayout
+          Size="200.8,41.6"
+          Id="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers"
+          TopLeft="430.4,151.2" />
+        <EdgeLayout
+          Id="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers.Paths[OLE DB Source Output]"
+          TopLeft="272,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="258.8,23.2"
+              Start="0,0"
+              End="258.8,15.7">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.59999999999999" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.59999999999999"
+                    Point2="0,11.6"
+                    Point3="4,11.6" />
+                  <mssgle:LineSegment
+                    End="254.8,11.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="254.8,11.6"
+                    Point2="258.8,11.6"
+                    Point3="258.8,15.6" />
+                  <mssgle:LineSegment
+                    End="258.8,15.7" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_dwh_Dim_Customers">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\cdp_stg_Dim_Customers --&gt; cdp_dwh_Dim_Customers\cdp_stg_Dim_Customers">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

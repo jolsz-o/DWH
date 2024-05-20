@@ -1,0 +1,2327 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/28/2018 9:47:57 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERPANORAMA"
+  DTS:CreatorName="SPP\Elrana"
+  DTS:DTSID="{B2708AB4-1828-455C-B942-F1D3789BCAD3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="ODS_eComm"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="24"
+  DTS:VersionGUID="{6D1AF884-403F-4089-9295-D3C455D8F604}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1611FA14-EFFA-4BA7-B052-0052B7DE06E8}"
+      DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.ecommerce">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;Initial Catalog=ecommerce;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-ODS_eComm-{1611FA14-EFFA-4BA7-B052-0052B7DE06E8}HEADOFFICE\FARMAX_SQLSRV.ecommerce;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{85989071-288F-493E-A389-7CCADC193517}"
+      DTS:ObjectName="localhost.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-ODS_eComm-{85989071-288F-493E-A389-7CCADC193517}localhost.SuperPharmPoland;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{1BC906B6-5FA5-465B-BBC1-1B6D279D7623}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\ODS_eComm_Sales"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="ODS_eComm_Sales"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_eComm_Sales]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\ODS_eComm_Sales.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IdOrder]"
+                      cachedDataType="i4"
+                      cachedName="IdOrder"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdOrder]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdOrder]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IdClient]"
+                      cachedDataType="i4"
+                      cachedName="IdClient"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdClient]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdClient]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[NR_OPER]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_OPER"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_OPER]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[OrderNumber]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="OrderNumber"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[OrderNumber]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[OrderNumber]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[OPIS]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="OPIS"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[OPIS]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[OPIS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[NR_CEN]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_CEN"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NR_CEN]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_CEN]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[GrossPrice]"
+                      cachedDataType="r8"
+                      cachedName="GrossPrice"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[GrossPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GrossPrice]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[NetPrice]"
+                      cachedDataType="r8"
+                      cachedName="NetPrice"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NetPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NetPrice]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[PurchasePrice]"
+                      cachedDataType="r8"
+                      cachedName="PurchasePrice"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[PurchasePrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[PurchasePrice]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[DicountPrice]"
+                      cachedDataType="r8"
+                      cachedName="DicountPrice"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[DicountPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DicountPrice]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[RealPrice]"
+                      cachedDataType="r8"
+                      cachedName="RealPrice"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[RealPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[RealPrice]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[Data_Order]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="Data_Order"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Data_Order]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Data_Order]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[DATA_OP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DATA_OP"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[DATA_OP]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DATA_OP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[CashGlobal]"
+                      cachedDataType="r8"
+                      cachedName="CashGlobal"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[CashGlobal]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[CashGlobal]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[TAX]"
+                      cachedDataType="r8"
+                      cachedName="TAX"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[TAX]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[TAX]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[GP_Percent]"
+                      cachedDataType="numeric"
+                      cachedName="GP_Percent"
+                      cachedPrecision="10"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[GP_Percent]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GP_Percent]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[Quantity]"
+                      cachedDataType="r8"
+                      cachedName="Quantity"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Quantity]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[KREDYT]"
+                      cachedDataType="r8"
+                      cachedName="KREDYT"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[KREDYT]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[KREDYT]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[KTM]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="13"
+                      cachedName="KTM"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[KTM]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[KTM]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IsSend]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="IsSend"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IsSend]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsSend]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[Service]"
+                      cachedDataType="i4"
+                      cachedName="Service"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Service]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Service]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[_id]"
+                      cachedDataType="i4"
+                      cachedName="_id"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[_id]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[LP]"
+                      cachedDataType="i4"
+                      cachedName="LP"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[LP]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[LP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[NR_KONTR]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="NR_KONTR"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NR_KONTR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_KONTR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[Type]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="Type"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Type]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Type]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IsPharmacy]"
+                      cachedDataType="bool"
+                      cachedName="IsPharmacy"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IsPharmacy]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPharmacy]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IsPharmacyDate]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="IsPharmacyDate"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IsPharmacyDate]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPharmacyDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[LifestyleClientId]"
+                      cachedDataType="i4"
+                      cachedName="LifestyleClientId"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[LifestyleClientId]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[LifestyleClientId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IdCarrier]"
+                      cachedDataType="ui1"
+                      cachedName="IdCarrier"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdCarrier]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdCarrier]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[Order4Order]"
+                      cachedDataType="bool"
+                      cachedName="Order4Order"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Order4Order]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Order4Order]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[Order4OrderStatus]"
+                      cachedDataType="ui1"
+                      cachedName="Order4OrderStatus"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Order4OrderStatus]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Order4OrderStatus]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[quickPickup]"
+                      cachedDataType="i4"
+                      cachedName="quickPickup"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[quickPickup]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[quickPickup]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[IdDeliveryShop]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="IdDeliveryShop"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdDeliveryShop]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdDeliveryShop]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[eOrderCountry]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="eOrderCountry"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[eOrderCountry]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[eOrderCountry]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[GrossPriceCURR]"
+                      cachedDataType="r8"
+                      cachedName="GrossPriceCURR"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[GrossPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GrossPriceCURR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[NetPriceCURR]"
+                      cachedDataType="r8"
+                      cachedName="NetPriceCURR"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NetPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NetPriceCURR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[PurchasePriceCURR]"
+                      cachedDataType="r8"
+                      cachedName="PurchasePriceCURR"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[PurchasePriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[PurchasePriceCURR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[DicountPriceCURR]"
+                      cachedDataType="r8"
+                      cachedName="DicountPriceCURR"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[DicountPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DicountPriceCURR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].Columns[RealPriceCURR]"
+                      cachedDataType="r8"
+                      cachedName="RealPriceCURR"
+                      externalMetadataColumnId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[RealPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[RealPriceCURR]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdOrder]"
+                      dataType="i4"
+                      name="IdOrder" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdClient]"
+                      dataType="i4"
+                      name="IdClient" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="OrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="200"
+                      name="OPIS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_CEN" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[GrossPrice]"
+                      dataType="r8"
+                      name="GrossPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NetPrice]"
+                      dataType="r8"
+                      name="NetPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[PurchasePrice]"
+                      dataType="r8"
+                      name="PurchasePrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[DicountPrice]"
+                      dataType="r8"
+                      name="DicountPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[RealPrice]"
+                      dataType="r8"
+                      name="RealPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Data_Order]"
+                      dataType="dbTimeStamp2"
+                      name="Data_Order" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[CashGlobal]"
+                      dataType="r8"
+                      name="CashGlobal" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[TAX]"
+                      dataType="r8"
+                      name="TAX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[GP_Percent]"
+                      dataType="numeric"
+                      name="GP_Percent"
+                      precision="10"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      dataType="r8"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[KREDYT]"
+                      dataType="r8"
+                      name="KREDYT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="KTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IsSend]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="IsSend" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Service]"
+                      dataType="i4"
+                      name="Service" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[_id]"
+                      dataType="i4"
+                      name="_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[LP]"
+                      dataType="i4"
+                      name="LP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NR_KONTR]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_KONTR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="9"
+                      name="Type" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IsPharmacy]"
+                      dataType="bool"
+                      name="IsPharmacy" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IsPharmacyDate]"
+                      dataType="dbTimeStamp2"
+                      name="IsPharmacyDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[LifestyleClientId]"
+                      dataType="i4"
+                      name="LifestyleClientId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdCarrier]"
+                      dataType="ui1"
+                      name="IdCarrier" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Order4Order]"
+                      dataType="bool"
+                      name="Order4Order" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[Order4OrderStatus]"
+                      dataType="ui1"
+                      name="Order4OrderStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[quickPickup]"
+                      dataType="i4"
+                      name="quickPickup" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[IdDeliveryShop]"
+                      codePage="1250"
+                      dataType="str"
+                      length="100"
+                      name="IdDeliveryShop" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[eOrderCountry]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="eOrderCountry" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[GrossPriceCURR]"
+                      dataType="r8"
+                      name="GrossPriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[NetPriceCURR]"
+                      dataType="r8"
+                      name="NetPriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[PurchasePriceCURR]"
+                      dataType="r8"
+                      name="PurchasePriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[DicountPriceCURR]"
+                      dataType="r8"
+                      name="DicountPriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input].ExternalColumns[RealPriceCURR]"
+                      dataType="r8"
+                      name="RealPriceCURR" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\ODS_eComm_Sales.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ODS_eComm_Sales.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODS_eComm_Sales.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ODS_eComm_Sales.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\v_sales ecomm"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="v_sales ecomm"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">-- Select *
+-- From ecommerce.v_sales
+-- Where Data_Order &gt;= getdate() - 30
+-- ;
+
+-- changed by alisa 31.12.23
+SELECT
+	   [IdOrder]
+      ,[IdClient]
+      ,[NR_OPER]
+      ,[OrderNumber]
+      ,[OPIS]
+      ,[NR_CEN]
+      ,[GrossPrice]
+      ,[NetPrice]
+      ,[PurchasePrice]
+      ,[DicountPrice]
+      ,[RealPrice]
+      ,[Data_Order]
+      ,[DATA_OP]
+      ,[CashGlobal]
+      ,[TAX]
+      ,[GP_Percent]
+      ,[Quantity]
+      ,[KREDYT]
+      ,[KTM]
+      ,[IsSend]
+      ,[Service]
+      ,[_id]
+      ,[LP]
+      ,[NR_KONTR]
+      ,[Type]
+      ,[IsPharmacy]
+      ,[IsPharmacyDate]
+      ,[LifestyleClientId]
+      ,[IsCOD]
+      ,[IsPaid]
+      ,[IdSenderPharmacy]
+      ,[IS_PHARMACEUTICAL_PRODUCT]
+      ,[p24_TransferAmount]
+      ,[Source]
+      ,[IdCarrier]
+      ,[Order4Order]
+      ,[Order4OrderStatus]
+      ,[quickPickup]
+      ,[IdDeliveryShop]
+      ,[eOrderCountry]
+	  ,[GrossPrice][GrossPriceCURR]
+	  ,[NetPrice] as [NetPriceCURR]
+	  ,[PurchasePrice] as [PurchasePriceCURR]
+	  ,[DicountPrice] as [DicountPriceCURR]
+	  ,[RealPrice] as [RealPriceCURR]
+FROM [ecommerce].[eCommerce].[v_Sales]
+Where Data_Order &gt;= getdate() - 30
+union all
+SELECT
+	   [IdOrder]
+      ,[IdClient]
+      ,[NR_OPER]
+      ,[OrderNumber]
+      ,[OPIS]
+      ,[NR_CEN]
+      ,[GrossPrice]
+      ,[NetPrice]
+      ,[PurchasePrice]
+      ,[DicountPrice]
+      ,[RealPrice]
+      ,[Data_Order]
+      ,[DATA_OP]
+      ,[CashGlobal]
+      ,[TAX]
+      ,[GP_Percent]
+      ,[Quantity]
+      ,[KREDYT]
+      ,[KTM]
+      ,[IsSend]
+      ,[Service]
+      ,[_id]
+      ,[LP]
+      ,[NR_KONTR]
+      ,[Type]
+      ,[IsPharmacy]
+      ,[IsPharmacyDate]
+      ,[LifestyleClientId]
+      ,[IsCOD]
+      ,[IsPaid]
+      ,[IdSenderPharmacy]
+      ,[IS_PHARMACEUTICAL_PRODUCT]
+      ,[p24_TransferAmount]
+      ,[Source]
+      ,NULL as [IdCarrier]
+      ,NULL as [Order4Order]
+      ,NULL as [Order4OrderStatus]
+      ,NULL as [quickPickup]
+      ,NULL as [IdDeliveryShop]
+      ,[OrderCountry] as [eOrderCountry]
+	  ,[GrossPriceCURR]
+	  ,[NetPriceCURR]
+	  ,[PurchasePriceCURR]
+	  ,[DicountPriceCURR]
+	  ,[RealPriceCURR]
+FROM [ecommerce].[eCommerce].[v_Sales_CrossBorder]
+Where Data_Order &gt;= getdate() - 30
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\v_sales ecomm.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdOrder]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdOrder]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdOrder]"
+                      name="IdOrder"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdClient]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdClient]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdClient]"
+                      name="IdClient"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_OPER]"
+                      name="NR_OPER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[OrderNumber]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[OrderNumber]"
+                      name="OrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[OPIS]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[OPIS]"
+                      name="OPIS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NR_CEN]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_CEN]"
+                      name="NR_CEN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GrossPrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[GrossPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GrossPrice]"
+                      name="GrossPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NetPrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NetPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NetPrice]"
+                      name="NetPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[PurchasePrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[PurchasePrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[PurchasePrice]"
+                      name="PurchasePrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DicountPrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DicountPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DicountPrice]"
+                      name="DicountPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[RealPrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[RealPrice]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[RealPrice]"
+                      name="RealPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Data_Order]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Data_Order]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Data_Order]"
+                      name="Data_Order"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DATA_OP]"
+                      name="DATA_OP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[CashGlobal]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[CashGlobal]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[CashGlobal]"
+                      name="CashGlobal"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[TAX]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[TAX]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[TAX]"
+                      name="TAX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GP_Percent]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[GP_Percent]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GP_Percent]"
+                      name="GP_Percent"
+                      precision="10"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Quantity]"
+                      name="Quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[KREDYT]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[KREDYT]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[KREDYT]"
+                      name="KREDYT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[KTM]"
+                      length="13"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[KTM]"
+                      name="KTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsSend]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsSend]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsSend]"
+                      name="IsSend"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Service]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Service]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Service]"
+                      name="Service"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[_id]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[_id]"
+                      name="_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[LP]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[LP]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[LP]"
+                      name="LP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_KONTR]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NR_KONTR]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NR_KONTR]"
+                      name="NR_KONTR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Type]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Type]"
+                      length="11"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Type]"
+                      name="Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPharmacy]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsPharmacy]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPharmacy]"
+                      name="IsPharmacy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPharmacyDate]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsPharmacyDate]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPharmacyDate]"
+                      name="IsPharmacyDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[LifestyleClientId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[LifestyleClientId]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[LifestyleClientId]"
+                      name="LifestyleClientId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsCOD]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsCOD]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsCOD]"
+                      name="IsCOD"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPaid]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsPaid]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IsPaid]"
+                      name="IsPaid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdSenderPharmacy]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdSenderPharmacy]"
+                      length="3"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdSenderPharmacy]"
+                      name="IdSenderPharmacy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IS_PHARMACEUTICAL_PRODUCT]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IS_PHARMACEUTICAL_PRODUCT]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IS_PHARMACEUTICAL_PRODUCT]"
+                      name="IS_PHARMACEUTICAL_PRODUCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[p24_TransferAmount]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[p24_TransferAmount]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[p24_TransferAmount]"
+                      name="p24_TransferAmount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Source]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Source]"
+                      length="7"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Source]"
+                      name="Source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdCarrier]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdCarrier]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdCarrier]"
+                      name="IdCarrier"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Order4Order]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Order4Order]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Order4Order]"
+                      name="Order4Order"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Order4OrderStatus]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Order4OrderStatus]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[Order4OrderStatus]"
+                      name="Order4OrderStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[quickPickup]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[quickPickup]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[quickPickup]"
+                      name="quickPickup"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdDeliveryShop]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdDeliveryShop]"
+                      length="3"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[IdDeliveryShop]"
+                      name="IdDeliveryShop"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[eOrderCountry]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[eOrderCountry]"
+                      length="2"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[eOrderCountry]"
+                      name="eOrderCountry"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GrossPriceCURR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[GrossPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[GrossPriceCURR]"
+                      name="GrossPriceCURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NetPriceCURR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NetPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[NetPriceCURR]"
+                      name="NetPriceCURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[PurchasePriceCURR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[PurchasePriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[PurchasePriceCURR]"
+                      name="PurchasePriceCURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DicountPriceCURR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DicountPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DicountPriceCURR]"
+                      name="DicountPriceCURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[RealPriceCURR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[RealPriceCURR]"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].Columns[RealPriceCURR]"
+                      name="RealPriceCURR"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdOrder]"
+                      dataType="i4"
+                      name="IdOrder" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdClient]"
+                      dataType="i4"
+                      name="IdClient" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="OrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="200"
+                      name="OPIS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_CEN" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[GrossPrice]"
+                      dataType="r8"
+                      name="GrossPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NetPrice]"
+                      dataType="r8"
+                      name="NetPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[PurchasePrice]"
+                      dataType="r8"
+                      name="PurchasePrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DicountPrice]"
+                      dataType="r8"
+                      name="DicountPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[RealPrice]"
+                      dataType="r8"
+                      name="RealPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Data_Order]"
+                      dataType="dbTimeStamp2"
+                      name="Data_Order" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      name="DATA_OP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[CashGlobal]"
+                      dataType="r8"
+                      name="CashGlobal" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[TAX]"
+                      dataType="r8"
+                      name="TAX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[GP_Percent]"
+                      dataType="numeric"
+                      name="GP_Percent"
+                      precision="11"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Quantity]"
+                      dataType="r8"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[KREDYT]"
+                      dataType="r8"
+                      name="KREDYT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="KTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsSend]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      name="IsSend" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Service]"
+                      dataType="i4"
+                      name="Service" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[_id]"
+                      dataType="i4"
+                      name="_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[LP]"
+                      dataType="i4"
+                      name="LP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NR_KONTR]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="NR_KONTR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="11"
+                      name="Type" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsPharmacy]"
+                      dataType="bool"
+                      name="IsPharmacy" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsPharmacyDate]"
+                      dataType="dbTimeStamp2"
+                      name="IsPharmacyDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[LifestyleClientId]"
+                      dataType="i4"
+                      name="LifestyleClientId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsCOD]"
+                      dataType="i4"
+                      name="IsCOD" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IsPaid]"
+                      dataType="bool"
+                      name="IsPaid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdSenderPharmacy]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="IdSenderPharmacy" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IS_PHARMACEUTICAL_PRODUCT]"
+                      dataType="bool"
+                      name="IS_PHARMACEUTICAL_PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[p24_TransferAmount]"
+                      dataType="r8"
+                      name="p24_TransferAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="7"
+                      name="Source" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdCarrier]"
+                      dataType="ui1"
+                      name="IdCarrier" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Order4Order]"
+                      dataType="bool"
+                      name="Order4Order" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[Order4OrderStatus]"
+                      dataType="ui1"
+                      name="Order4OrderStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[quickPickup]"
+                      dataType="i4"
+                      name="quickPickup" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[IdDeliveryShop]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="IdDeliveryShop" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[eOrderCountry]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      name="eOrderCountry" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[GrossPriceCURR]"
+                      dataType="r8"
+                      name="GrossPriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[NetPriceCURR]"
+                      dataType="r8"
+                      name="NetPriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[PurchasePriceCURR]"
+                      dataType="r8"
+                      name="PurchasePriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DicountPriceCURR]"
+                      dataType="r8"
+                      name="DicountPriceCURR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[RealPriceCURR]"
+                      dataType="r8"
+                      name="RealPriceCURR" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdOrder]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdOrder]"
+                      name="IdOrder" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdClient]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdClient]"
+                      name="IdClient" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[OrderNumber]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[OrderNumber]"
+                      name="OrderNumber" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[OPIS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[OPIS]"
+                      name="OPIS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NR_CEN]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NR_CEN]"
+                      name="NR_CEN" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[GrossPrice]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[GrossPrice]"
+                      name="GrossPrice" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NetPrice]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NetPrice]"
+                      name="NetPrice" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[PurchasePrice]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[PurchasePrice]"
+                      name="PurchasePrice" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DicountPrice]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DicountPrice]"
+                      name="DicountPrice" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[RealPrice]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[RealPrice]"
+                      name="RealPrice" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Data_Order]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Data_Order]"
+                      name="Data_Order" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DATA_OP]"
+                      name="DATA_OP" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[CashGlobal]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[CashGlobal]"
+                      name="CashGlobal" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[TAX]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[TAX]"
+                      name="TAX" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[GP_Percent]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[GP_Percent]"
+                      name="GP_Percent"
+                      precision="11"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Quantity]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Quantity]"
+                      name="Quantity" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[KREDYT]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[KREDYT]"
+                      name="KREDYT" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[KTM]"
+                      name="KTM" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsSend]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsSend]"
+                      name="IsSend" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Service]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Service]"
+                      name="Service" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[_id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[_id]"
+                      name="_id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[LP]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[LP]"
+                      name="LP" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NR_KONTR]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NR_KONTR]"
+                      name="NR_KONTR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Type]"
+                      codePage="1250"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Type]"
+                      name="Type" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsPharmacy]"
+                      dataType="bool"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsPharmacy]"
+                      name="IsPharmacy" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsPharmacyDate]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsPharmacyDate]"
+                      name="IsPharmacyDate" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[LifestyleClientId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[LifestyleClientId]"
+                      name="LifestyleClientId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsCOD]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsCOD]"
+                      name="IsCOD" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsPaid]"
+                      dataType="bool"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IsPaid]"
+                      name="IsPaid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdSenderPharmacy]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdSenderPharmacy]"
+                      name="IdSenderPharmacy" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IS_PHARMACEUTICAL_PRODUCT]"
+                      dataType="bool"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IS_PHARMACEUTICAL_PRODUCT]"
+                      name="IS_PHARMACEUTICAL_PRODUCT" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[p24_TransferAmount]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[p24_TransferAmount]"
+                      name="p24_TransferAmount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Source]"
+                      codePage="1250"
+                      dataType="str"
+                      length="7"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Source]"
+                      name="Source" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdCarrier]"
+                      dataType="ui1"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdCarrier]"
+                      name="IdCarrier" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Order4Order]"
+                      dataType="bool"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Order4Order]"
+                      name="Order4Order" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Order4OrderStatus]"
+                      dataType="ui1"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[Order4OrderStatus]"
+                      name="Order4OrderStatus" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[quickPickup]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[quickPickup]"
+                      name="quickPickup" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdDeliveryShop]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[IdDeliveryShop]"
+                      name="IdDeliveryShop" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[eOrderCountry]"
+                      codePage="1250"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[eOrderCountry]"
+                      name="eOrderCountry" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[GrossPriceCURR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[GrossPriceCURR]"
+                      name="GrossPriceCURR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NetPriceCURR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[NetPriceCURR]"
+                      name="NetPriceCURR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[PurchasePriceCURR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[PurchasePriceCURR]"
+                      name="PurchasePriceCURR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DicountPriceCURR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DicountPriceCURR]"
+                      name="DicountPriceCURR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[RealPriceCURR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[RealPriceCURR]"
+                      name="RealPriceCURR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\ODS_eComm_Sales.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\v_sales ecomm.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\one time import for retriving NULLs in DH_OPER"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{28432b2e-d2be-415f-9390-9bf8934b7070}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="one time import for retriving NULLs in DH_OPER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="ODS_eComm_Sales_history"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ODS_eComm_Sales_history]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].Columns[INVOICE_DATE]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="INVOICE_DATE"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]" />
+                    <inputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].Columns[DH_OPER]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="DH_OPER"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[DH_OPER]"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DH_OPER]" />
+                    <inputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].Columns[INVOICE_NUMBER]"
+                      cachedDataType="i4"
+                      cachedName="INVOICE_NUMBER"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_NUMBER]"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].Columns[INVOICE_ID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="INVOICE_ID"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ID]"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp2"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[DH_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="DH_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_NUMBER]"
+                      dataType="i4"
+                      name="INVOICE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="INVOICE_ID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="v_sales ecomm"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">-- import data to side table in superdew
+select *
+from
+(select distinct
+		Data_Order as INVOICE_DATE,
+		OrderNumber as DH_OPER,
+		IdOrder as INVOICE_NUMBER,
+		NR_OPER as INVOICE_ID
+from ecommerce.v_sales
+union all
+select distinct
+		Data_Order as INVOICE_DATE,
+		OrderNumber as DH_OPER,
+		IdOrder as INVOICE_NUMBER,
+		NR_OPER as INVOICE_ID
+from ecommerce.v_Sales_CrossBorder) un
+where 1=1 
+and 
+(
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	4) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	5) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	6) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	7) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	8) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	9) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	10) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	11) or
+(year(cast(INVOICE_DATE as date)) = 2018 and month(cast(INVOICE_DATE as date)) =	12) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	1) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	2) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	3) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	4) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	5) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	6) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	7) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	8) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	9) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	10) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	11) or
+(year(cast(INVOICE_DATE as date)) = 2019 and month(cast(INVOICE_DATE as date)) =	12) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	1) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	2) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	3) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	4) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	5) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	6) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	7) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	8) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	9) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	10) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	11) or
+(year(cast(INVOICE_DATE as date)) = 2020 and month(cast(INVOICE_DATE as date)) =	12) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	1) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	2) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	3) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	4) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	5) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	6) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	7) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	8) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	9) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	10) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	11) or
+(year(cast(INVOICE_DATE as date)) = 2021 and month(cast(INVOICE_DATE as date)) =	12) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	1) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	2) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	3) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	4) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	5) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	6) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	7) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	8) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	9) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	10) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	11) or
+(year(cast(INVOICE_DATE as date)) = 2022 and month(cast(INVOICE_DATE as date)) =	12) or
+(year(cast(INVOICE_DATE as date)) = 2023 and month(cast(INVOICE_DATE as date)) =	1) or
+(year(cast(INVOICE_DATE as date)) = 2023 and month(cast(INVOICE_DATE as date)) =	2) or
+(year(cast(INVOICE_DATE as date)) = 2023 and month(cast(INVOICE_DATE as date)) =	3) or
+(year(cast(INVOICE_DATE as date)) = 2023 and month(cast(INVOICE_DATE as date)) =	4) or
+(year(cast(INVOICE_DATE as date)) = 2023 and month(cast(INVOICE_DATE as date)) =	5) 
+)
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  connectionManagerRefId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.ecommerce]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DH_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DH_OPER]"
+                      length="10"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[DH_OPER]"
+                      name="DH_OPER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_NUMBER]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_NUMBER]"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_NUMBER]"
+                      name="INVOICE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ID]"
+                      length="10"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].Columns[INVOICE_ID]"
+                      name="INVOICE_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp2"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[DH_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="DH_OPER" />
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_NUMBER]"
+                      dataType="i4"
+                      name="INVOICE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="INVOICE_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DH_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[DH_OPER]"
+                      name="DH_OPER" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[INVOICE_NUMBER]"
+                      dataType="i4"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[INVOICE_NUMBER]"
+                      name="INVOICE_NUMBER" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[INVOICE_ID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[INVOICE_ID]"
+                      name="INVOICE_ID" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\one time import for retriving NULLs in DH_OPER.Paths[OLE DB Source Output]"
+              endId="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate ecomm Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{53BBA82A-81F4-4517-BB2A-4E3BA07D39EB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate ecomm Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{85989071-288F-493E-A389-7CCADC193517}"
+          SQLTask:SqlStatementSource="Truncate Table ODS_eComm_Sales&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B9D74D8D-A927-426A-ABA4-20643DC31A1C}"
+      DTS:From="Package\Truncate ecomm Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="108.8,35.2"
+          Id="Package\Data Flow Task"
+          TopLeft="50.5377358490566,99.933962264151" />
+        <NodeLayout
+          Size="306.4,41.6"
+          Id="Package\one time import for retriving NULLs in DH_OPER"
+          TopLeft="234.642861045137,97.2516079502115" />
+        <NodeLayout
+          Size="187.2,41.6"
+          Id="Package\Truncate ecomm Table"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="102.018867924528,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.433962264151"
+              Start="0,0"
+              End="0,44.933962264151">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.933962264151" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151.2,41.6"
+          Id="Package\Data Flow Task\v_sales ecomm"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Data Flow Task\ODS_eComm_Sales"
+          TopLeft="19.0849056603774,119.72641509434" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="81.1,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23.5849056603774,72.62641509434"
+              Start="0,0"
+              End="23.5849056603774,65.12641509434">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.31320754717" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.31320754717"
+                    Point2="0,36.31320754717"
+                    Point3="4,36.31320754717" />
+                  <mssgle:LineSegment
+                    End="19.5849056603774,36.31320754717" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19.5849056603774,36.31320754717"
+                    Point2="23.5849056603774,36.31320754717"
+                    Point3="23.5849056603774,40.31320754717" />
+                  <mssgle:LineSegment
+                    End="23.5849056603774,65.12641509434" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\ODS_eComm_Sales">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\v_sales ecomm">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\one time import for retriving NULLs in DH_OPER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151.2,41.6"
+          Id="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm"
+          TopLeft="43.1,93.5" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history"
+          TopLeft="231.2,94.4" />
+        <EdgeLayout
+          Id="Package\one time import for retriving NULLs in DH_OPER.Paths[OLE DB Source Output]"
+          TopLeft="194.3,114.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36.9,0"
+              Start="0,0"
+              End="29.4,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="29.4,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\one time import for retriving NULLs in DH_OPER\ODS_eComm_Sales_history">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\one time import for retriving NULLs in DH_OPER\v_sales ecomm">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

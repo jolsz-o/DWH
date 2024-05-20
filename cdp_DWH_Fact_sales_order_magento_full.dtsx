@@ -1,0 +1,1735 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/14/2023 12:07:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\amitchickov"
+  DTS:DTSID="{6E19D322-A979-4480-9BF1-86CDEDA72D44}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="cdp_DWH_Fact_sales_order_magento_full"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="421"
+  DTS:VersionGUID="{8BDD73FC-A094-48AA-8E48-DE41957257D1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+      DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{F50822FA-B2A0-4B4E-9802-2C4169973763}"
+      DTS:ObjectName="MagentoDB_new.promoviewonly">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="RdbdLpXK1zI="
+            IV="05NYNq+LAlVq8WixAgheOw==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>05NYNq+LAlVq8WixAgheO9MnCfZqc/dXKp3mYPMeJTqeye6Om4njTe2uhrb0D1NFC/g+rmzssACdD4ouMFOT+MtukWcQzEWbfXELXisZJ7KfUaBmzA/4pCCza0+Lz0nneOaDsIr+GQjH8ocrGcBuOxLmxSL+Sv0+FKRW3ZBjxfBptVHi5qXkbZcnBkpxNGFN</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6A08D429-2F44-409A-8A52-9D4101EDA209}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{45b0cb17-c83c-49f0-bf43-b0b42626acf8}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_DWH_Fact_sales_order_magento"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_STG_Fact_sales_order_magento]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      cachedDataType="i8"
+                      cachedName="customer_id"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[customer_id]" />
+                    <inputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[created_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="created_at"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[created_at]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[created_at]" />
+                    <inputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[customer_email]"
+                      cachedDataType="wstr"
+                      cachedLength="192"
+                      cachedName="customer_email"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[customer_email]" />
+                    <inputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[gross_revenue]"
+                      cachedDataType="numeric"
+                      cachedName="gross_revenue"
+                      cachedPrecision="20"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[gross_revenue]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[gross_revenue]" />
+                    <inputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[entity_id]"
+                      cachedDataType="i4"
+                      cachedName="entity_id"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[entity_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[created_at]"
+                      dataType="dbTimeStamp"
+                      name="created_at" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="382"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[gross_revenue]"
+                      dataType="numeric"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      dataType="i4"
+                      name="entity_id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="cdp_ODS_sales_order"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_ODS_sales_order]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[customer_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[customer_id]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[customer_id]"
+                      name="customer_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[created_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[created_at]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[created_at]"
+                      name="created_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[customer_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[customer_email]"
+                      length="192"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[customer_email]"
+                      name="customer_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[gross_revenue]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[gross_revenue]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[gross_revenue]"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[entity_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[entity_id]"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].Columns[entity_id]"
+                      name="entity_id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[created_at]"
+                      dataType="dbTimeStamp"
+                      name="created_at" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="192"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[gross_revenue]"
+                      dataType="numeric"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output].ExternalColumns[entity_id]"
+                      dataType="i4"
+                      name="entity_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[customer_id]"
+                      dataType="i8"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[customer_id]"
+                      name="customer_id" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[gross_revenue]"
+                      dataType="numeric"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[gross_revenue]"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[created_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[created_at]"
+                      name="created_at" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[customer_email]"
+                      dataType="wstr"
+                      length="192"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[customer_email]"
+                      name="customer_email" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[entity_id]"
+                      dataType="i4"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[entity_id]"
+                      name="entity_id" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento.Paths[OLE DB Source Output]"
+              endId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{36a66491-597c-4a1d-8684-31a70b0eb80a}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_DWH_Fact_sales_order_magento"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_DWH_Fact_sales_order_magento]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      cachedDataType="i8"
+                      cachedName="customer_id"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[customer_id]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[created_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="created_at"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[created_at]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[created_at]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[customer_email]"
+                      cachedDataType="wstr"
+                      cachedLength="382"
+                      cachedName="customer_email"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[customer_email]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[gross_revenue]"
+                      cachedDataType="numeric"
+                      cachedName="gross_revenue"
+                      cachedPrecision="20"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[gross_revenue]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[gross_revenue]" />
+                    <inputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].Columns[entity_id]"
+                      cachedDataType="i4"
+                      cachedName="entity_id"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[entity_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[created_at]"
+                      dataType="dbTimeStamp"
+                      name="created_at" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="382"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[gross_revenue]"
+                      dataType="numeric"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      dataType="i4"
+                      name="entity_id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="cdp_STG_Fact_sales_order_magento"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_STG_Fact_sales_order_magento]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[customer_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[customer_id]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[customer_id]"
+                      name="customer_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[created_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[created_at]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[created_at]"
+                      name="created_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[customer_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[customer_email]"
+                      length="382"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[customer_email]"
+                      name="customer_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[gross_revenue]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[gross_revenue]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[gross_revenue]"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[entity_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[entity_id]"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].Columns[entity_id]"
+                      name="entity_id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[created_at]"
+                      dataType="dbTimeStamp"
+                      name="created_at" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="382"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[gross_revenue]"
+                      dataType="numeric"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output].ExternalColumns[entity_id]"
+                      dataType="i4"
+                      name="entity_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[customer_id]"
+                      dataType="i8"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[customer_id]"
+                      name="customer_id" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[created_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[created_at]"
+                      name="created_at" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[customer_email]"
+                      dataType="wstr"
+                      length="382"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[customer_email]"
+                      name="customer_email" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[gross_revenue]"
+                      dataType="numeric"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[gross_revenue]"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[entity_id]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[entity_id]"
+                      name="entity_id" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento.Paths[OLE DB Source Output]"
+              endId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Delete from DWH where exists in stg"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ecde2884-cd7a-421b-9aa3-62c8b9fa078c}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete from DWH where exists in stg"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6A08D429-2F44-409A-8A52-9D4101EDA209}"
+          SQLTask:SqlStatementSource="delete from [dbo].[cdp_DWH_Fact_sales_order_magento]&#xA;where cast([created_at] as date) &gt;= (select min(cast([created_at] as date)) as min_date&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; from [dbo].[cdp_STG_Fact_sales_order_magento])&#xA;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{cbdb8cfa-39e8-4471-b378-e01b74be6073}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="1000000"
+          defaultBufferSize="31457280"
+          version="1">
+          <components>
+            <component
+              refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET sales_order"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">-- DIM_KPI -- sales_order
+-- ----------------------
+
+select /*+ MAX_EXECUTION_TIME(100000000) */
+customer_id, 
+grand_total as gross_revenue,
+customer_email, 
+created_at,
+entity_id
+from magento.sales_order
+where status in ('complete', 'received', 'served', 'expects_to_receive', 'not_received')
+-- removed cast as date JO 24_05_20
+and created_at &gt;= DATE_SUB(cast(CURDATE() as date), INTERVAL 5 DAY)
+-- and cast(created_at as date) &gt;= '2022-01-01'
+;</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+                  connectionManagerRefId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[customer_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[customer_id]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[customer_id]"
+                      name="customer_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[gross_revenue]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[gross_revenue]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[gross_revenue]"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[customer_email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[customer_email]"
+                      length="192"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[customer_email]"
+                      name="customer_email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[created_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[created_at]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[created_at]"
+                      name="created_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[entity_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[entity_id]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[entity_id]"
+                      name="entity_id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[gross_revenue]"
+                      dataType="numeric"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="192"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[created_at]"
+                      dataType="dbTimeStamp"
+                      name="created_at" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].ExternalColumns[entity_id]"
+                      dataType="i8"
+                      name="entity_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[customer_id]"
+                      dataType="i8"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[customer_id]"
+                      name="customer_id" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[gross_revenue]"
+                      dataType="numeric"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[gross_revenue]"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[customer_email]"
+                      dataType="wstr"
+                      length="192"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[customer_email]"
+                      name="customer_email" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[created_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[created_at]"
+                      name="created_at" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[entity_id]"
+                      dataType="i8"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[entity_id]"
+                      name="entity_id" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="cdp_ODS_sales_order"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[cdp_ODS_sales_order]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].Columns[customer_email]"
+                      cachedDataType="wstr"
+                      cachedLength="192"
+                      cachedName="customer_email"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[customer_email]" />
+                    <inputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].Columns[created_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="created_at"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[created_at]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[created_at]" />
+                    <inputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].Columns[customer_id]"
+                      cachedDataType="i8"
+                      cachedName="customer_id"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[customer_id]" />
+                    <inputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].Columns[gross_revenue]"
+                      cachedDataType="numeric"
+                      cachedName="gross_revenue"
+                      cachedPrecision="20"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[gross_revenue]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[gross_revenue]" />
+                    <inputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].Columns[entity_id]"
+                      cachedDataType="i8"
+                      cachedName="entity_id"
+                      externalMetadataColumnId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output].Columns[entity_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[customer_email]"
+                      dataType="wstr"
+                      length="192"
+                      name="customer_email" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[created_at]"
+                      dataType="dbTimeStamp"
+                      name="created_at" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
+                      dataType="i8"
+                      name="customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[gross_revenue]"
+                      dataType="numeric"
+                      name="gross_revenue"
+                      precision="20"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input].ExternalColumns[entity_id]"
+                      dataType="i4"
+                      name="entity_id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order.Paths[ADO NET Source Output]"
+              endId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table cdp_ODS_sales_order"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{b75b9e39-904b-40ff-958e-fc9e75883359}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table cdp_ODS_sales_order"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6A08D429-2F44-409A-8A52-9D4101EDA209}"
+          SQLTask:SqlStatementSource="truncate table cdp_ODS_sales_order" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table cdp_STG_Fact_sales_order_magento"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{070e4641-1771-4d73-923d-c5ca1f59e659}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table cdp_STG_Fact_sales_order_magento"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6A08D429-2F44-409A-8A52-9D4101EDA209}"
+          SQLTask:SqlStatementSource="truncate table cdp_STG_Fact_sales_order_magento" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{cb7ad20c-aa35-4468-b0c2-79d5f7adba26}"
+      DTS:From="Package\Truncate table cdp_STG_Fact_sales_order_magento"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1 1"
+      DTS:To="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{0d9b6247-ba2e-42a7-8e14-263fddd09d2c}"
+      DTS:From="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2 1"
+      DTS:To="Package\Delete from DWH where exists in stg" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{17e0cfa3-43ab-4b96-8304-e2b08f7999a7}"
+      DTS:From="Package\Delete from DWH where exists in stg"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3 1"
+      DTS:To="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{379f110d-1283-4f36-b9b4-2860cd35266f}"
+      DTS:From="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Truncate table cdp_STG_Fact_sales_order_magento" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8 1 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{a2b74401-5d2f-40ec-85da-c7c99e214f61}"
+      DTS:From="Package\Truncate table cdp_ODS_sales_order"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8 1 1"
+      DTS:To="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="377.6,41.6"
+          Id="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento"
+          TopLeft="577.055787412626,443.959654904177" />
+        <NodeLayout
+          Size="453.6,41.6"
+          Id="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento"
+          TopLeft="985.98096067532,391.511473472" />
+        <NodeLayout
+          Size="252.8,41.6"
+          Id="Package\Delete from DWH where exists in stg"
+          TopLeft="1069.4707617848,292.201668157649" />
+        <NodeLayout
+          Size="356.8,41.6"
+          Id="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order"
+          TopLeft="183.004081942666,394.774781689702" />
+        <NodeLayout
+          Size="252.8,41.6"
+          Id="Package\Truncate table cdp_ODS_sales_order"
+          TopLeft="241.432654366268,293.957413329" />
+        <NodeLayout
+          Size="324,41.6"
+          Id="Package\Truncate table cdp_STG_Fact_sales_order_magento"
+          TopLeft="581.089801086765,291.55012895717" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1 1]"
+          TopLeft="795.756467753431,333.15012895717">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-91.5006803408053,110.809525947006"
+              Start="0,0"
+              End="-91.5006803408053,103.309525947006">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.4527597555362" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.4527597555362"
+                    Point2="0,55.4527597555362"
+                    Point3="-4,55.4527597555362" />
+                  <mssgle:LineSegment
+                    End="-87.5006803408053,55.4527597555362" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-87.5006803408053,55.4527597555362"
+                    Point2="-91.5006803408053,55.4527597555362"
+                    Point3="-91.5006803408053,59.4527597555362" />
+                  <mssgle:LineSegment
+                    End="-91.5006803408053,103.309525947006" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2 1]"
+          TopLeft="827.455787412626,443.959654904177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="327.614974372172,-110.157986746528"
+              Start="0,0"
+              End="327.614974372172,-102.657986746528">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-50.9368512138461" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-50.9368512138461"
+                    Point2="0,-54.9368512138461"
+                    Point3="4,-54.9368512138461" />
+                  <mssgle:LineSegment
+                    End="323.614974372172,-54.9368512138461" />
+                  <mssgle:CubicBezierSegment
+                    Point1="323.614974372172,-54.9368512138461"
+                    Point2="327.614974372172,-54.9368512138461"
+                    Point3="327.614974372172,-58.9368512138461" />
+                  <mssgle:LineSegment
+                    End="327.614974372172,-102.657986746528" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3 1]"
+          TopLeft="1236.6707617848,333.801668157649">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-23.88980110948,57.7098053143509"
+              Start="0,0"
+              End="-23.88980110948,50.2098053143509">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.3016949759832" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.3016949759832"
+                    Point2="0,23.3016949759832"
+                    Point3="-4,23.3016949759832" />
+                  <mssgle:LineSegment
+                    End="-19.88980110948,23.3016949759832" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-19.88980110948,23.3016949759832"
+                    Point2="-23.88980110948,23.3016949759832"
+                    Point3="-23.88980110948,27.3016949759832" />
+                  <mssgle:LineSegment
+                    End="-23.88980110948,50.2098053143509" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="419.537415275999,394.774781689702">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="270.885719144099,-61.624652732532"
+              Start="0,0"
+              End="270.885719144099,-54.124652732532">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-26.7950451961223" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-26.7950451961223"
+                    Point2="0,-30.7950451961223"
+                    Point3="4,-30.7950451961223" />
+                  <mssgle:LineSegment
+                    End="266.885719144099,-30.7950451961223" />
+                  <mssgle:CubicBezierSegment
+                    Point1="266.885719144099,-30.7950451961223"
+                    Point2="270.885719144099,-30.7950451961223"
+                    Point3="270.885719144099,-34.7950451961223" />
+                  <mssgle:LineSegment
+                    End="270.885719144099,-54.124652732532" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8 1 1]"
+          TopLeft="367.832654366268,335.557413329">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-64.5619057569353,59.217368360702"
+              Start="0,0"
+              End="-64.5619057569353,51.717368360702">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.371803065455" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.371803065455"
+                    Point2="0,35.371803065455"
+                    Point3="-4,35.371803065455" />
+                  <mssgle:LineSegment
+                    End="-60.5619057569353,35.371803065455" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-60.5619057569353,35.371803065455"
+                    Point2="-64.5619057569353,35.371803065455"
+                    Point3="-64.5619057569353,39.371803065455" />
+                  <mssgle:LineSegment
+                    End="-64.5619057569353,51.717368360702" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="ODS"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="52.8,40"
+          Id="d5eb0359-3126-4dca-acd4-47dec58afb75"
+          TopLeft="404.269390811448,237.489064356633" />
+        <AnnotationLayout
+          Text="STG"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="48.8,40"
+          Id="c0b34053-8a95-4f66-87ce-241c6e355392"
+          TopLeft="748.038103808192,244.822395866769" />
+        <AnnotationLayout
+          Text="This is an incremental daily load.&#xA;Historical load was done since 2022 and it's commented out from 1st data flow task."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="473.6,56"
+          Id="0418425b-ea21-46ff-a8ac-41b224c64063"
+          TopLeft="232.000003950937,134.763027100085" />
+        <AnnotationLayout
+          Text="ODS"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="52.8,40"
+          Id="a3d10085-d99c-4d33-b374-4d7195275402"
+          TopLeft="1156.57144826772,241.035297498076" />
+        <AnnotationLayout
+          Text="-- sales order --&#xA;------------------"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="115.2,56"
+          Id="241e3a1b-52a6-4b9f-baaa-e3ade3151e13"
+          TopLeft="698.285726177449,85.6470600246971" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="257.6,41.6"
+          Id="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento"
+          TopLeft="242.4,156.8" />
+        <NodeLayout
+          Size="181.6,41.6"
+          Id="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order"
+          TopLeft="121.6,94.4" />
+        <EdgeLayout
+          Id="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento.Paths[OLE DB Source Output]"
+          TopLeft="303.2,115.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68,41.6"
+              Start="0,0"
+              End="68,34.1">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="64,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="64,0"
+                    Point2="68,0"
+                    Point3="68,4" />
+                  <mssgle:LineSegment
+                    End="68,34.1" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\cdp_ODS_sales_order --&gt; cdp_STG_Fact_sales_order_magento\cdp_ODS_sales_order">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="257.6,41.6"
+          Id="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento"
+          TopLeft="341.142862952485,196.988238056803" />
+        <NodeLayout
+          Size="252.8,41.6"
+          Id="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento"
+          TopLeft="103.42857318995,118.682354605652" />
+        <EdgeLayout
+          Id="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento.Paths[OLE DB Source Output]"
+          TopLeft="229.82857318995,160.282354605652">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="240.114289762536,36.7058834511516"
+              Start="0,0"
+              End="240.114289762536,29.2058834511516">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.3529417255758" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.3529417255758"
+                    Point2="0,18.3529417255758"
+                    Point3="4,18.3529417255758" />
+                  <mssgle:LineSegment
+                    End="236.114289762536,18.3529417255758" />
+                  <mssgle:CubicBezierSegment
+                    Point1="236.114289762536,18.3529417255758"
+                    Point2="240.114289762536,18.3529417255758"
+                    Point3="240.114289762536,22.3529417255758" />
+                  <mssgle:LineSegment
+                    End="240.114289762536,29.2058834511516" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_DWH_Fact_sales_order_magento">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\cdp_STG_Fact_sales_order_magento --&gt; cdp_DWH_Fact_sales_order_magento\cdp_STG_Fact_sales_order_magento">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order"
+          TopLeft="158.857145562464,114.211766318879" />
+        <NodeLayout
+          Size="181.6,41.6"
+          Id="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order"
+          TopLeft="384.8,203.2" />
+        <EdgeLayout
+          Id="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order.Paths[ADO NET Source Output]"
+          TopLeft="248.457145562464,155.811766318879">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="227.142854437536,47.388233681121"
+              Start="0,0"
+              End="227.142854437536,39.888233681121">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.6941168405605" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.6941168405605"
+                    Point2="0,23.6941168405605"
+                    Point3="4,23.6941168405605" />
+                  <mssgle:LineSegment
+                    End="223.142854437536,23.6941168405605" />
+                  <mssgle:CubicBezierSegment
+                    Point1="223.142854437536,23.6941168405605"
+                    Point2="227.142854437536,23.6941168405605"
+                    Point3="227.142854437536,27.6941168405605" />
+                  <mssgle:LineSegment
+                    End="227.142854437536,39.888233681121" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\ADO NET sales_order">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Magento  sales_order --&gt; SUPERDW cdp_ODS_sales_order\cdp_ODS_sales_order">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

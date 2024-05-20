@@ -1,0 +1,812 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/12/2015 8:04:42 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERPANORAMA"
+  DTS:CreatorName="SPP\elrana"
+  DTS:DTSID="{AE857427-7816-4F2E-8C18-C1B045A4B4CB}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="InventoryODSLoad"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{376B9724-6FA1-4101-84F9-C5493E000AEA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Farmax]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F05443A1-A995-4BE9-92FA-7BCCFBC954EC}"
+      DTS:ObjectName="Farmax">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HEADOFFICE\FARMAX_SQLSRV;User ID=panorama;Initial Catalog=FARMAX;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-DTS_ODS_FASE_FARMAX-{B4A693F2-19FC-4B31-A891-BFD8FC1D365A}Farmax;">
+          <EncryptedData
+            Type="http://www.w3.org/2001/04/xmlenc#Element"
+            Salt="nCPLs1h2Poo="
+            IV="jZ6GAuePOfm0n+TvlCio4Q==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            <EncryptionMethod
+              Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+            <CipherData>
+              <CipherValue>jZ6GAuePOfm0n+TvlCio4SBIUgwIUyWl/lIyXIRoG694gzzuB+yz3hyVtfRw+d1bD4lnmMu8qEJBLn7+Lcfv7il/LMEbYeZWqKGJZ60TiOT2pHPnKuhs95zU57Iolgc1+HP9ReREuZf+MZcjtaN0e8WXanTW+HfdLfIJHT7TcbV3j2/RB4u/hhp5NLDRCGox</CipherValue>
+            </CipherData>
+          </EncryptedData>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ODS_SALES_FARMAX]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{99F40116-BB7E-4916-89B0-DD343623EE21}"
+      DTS:ObjectName="ODS_SALES_FARMAX">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=SuperPharmPoland;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DTS_ODS_FASE_FARMAX-{7F302B90-6BC4-4F0C-9DDE-83DAE65D873C}ODS_SALES_FARMAX;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Inventory - POZ"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Sup_Inventory"
+      DTS:DTSID="{7F47C6D6-D5EE-4484-A5E2-FE175B9A5AEB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Inventory - POZ"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Inventory - POZ\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ODS_POZ]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Inventory - POZ\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ODS_SALES_FARMAX]"
+                  connectionManagerRefId="Package.ConnectionManagers[ODS_SALES_FARMAX]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CENA_ZB]"
+                      cachedDataType="r8"
+                      cachedName="CENA_ZB"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA_ZB]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_ZB]" />
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CENA_EWID]"
+                      cachedDataType="r8"
+                      cachedName="CENA_EWID"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA_EWID]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_EWID]" />
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ILO]"
+                      cachedDataType="r8"
+                      cachedName="ILO"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ILO]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ILO]" />
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[KTM]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="13"
+                      cachedName="KTM"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KTM]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[KTM]" />
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[KTM2]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="KTM2"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KTM2]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[KTM2]" />
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID_SKLEP]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="ID_SKLEP"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]" />
+                    <inputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ilosc_Robot]"
+                      cachedDataType="i2"
+                      cachedName="ilosc_Robot"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ilosc_Robot]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ilosc_Robot]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA_ZB]"
+                      dataType="r8"
+                      name="CENA_ZB" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CENA_EWID]"
+                      dataType="r8"
+                      name="CENA_EWID" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ILO]"
+                      dataType="r8"
+                      name="ILO" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KTM2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="KTM2" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="KTM" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ilosc_Robot]"
+                      dataType="i4"
+                      name="ilosc_Robot" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      codePage="1250"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[WYSLANE]"
+                      name="WYSLANE" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[POD_OBR]"
+                      dataType="i4"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[POD_OBR]"
+                      name="POD_OBR" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OP_DOS]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OP_DOS]"
+                      name="NR_OP_DOS" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NR_OPER]"
+                      name="NR_OPER" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_AKCJA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[LOG_AKCJA]"
+                      name="LOG_AKCJA" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILOSC_DP]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILOSC_DP]"
+                      name="ILOSC_DP" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KOD_MAG]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KOD_MAG]"
+                      name="KOD_MAG" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[OLD_ZAKUP]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[OLD_ZAKUP]"
+                      name="OLD_ZAKUP" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[RABAT]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[RABAT]"
+                      name="RABAT" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NBLOKADA]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NBLOKADA]"
+                      name="NBLOKADA" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[BLOKADA]"
+                      dataType="bool"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[BLOKADA]"
+                      name="BLOKADA" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[FAKTURA]"
+                      codePage="1250"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[FAKTURA]"
+                      name="FAKTURA" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[S_N]"
+                      codePage="1250"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[S_N]"
+                      name="S_N" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[TERMIN_W]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[TERMIN_W]"
+                      name="TERMIN_W" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[MARZA]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[MARZA]"
+                      name="MARZA" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_ZB]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_ZB]"
+                      name="CENA_ZB" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_HURT]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_HURT]"
+                      name="CENA_HURT" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_EWID]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[CENA_EWID]"
+                      name="CENA_EWID" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILO]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ILO]"
+                      name="ILO" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[DATA]"
+                      name="DATA" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="40"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[NTM]"
+                      name="NTM" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KTM2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KTM2]"
+                      name="KTM2" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KTM]"
+                      name="KTM" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KOD_HURT]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[KOD_HURT]"
+                      name="KOD_HURT" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Inventory - POZ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Inventory - POZ\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select 
+CENA_ZB,
+CENA_EWID,
+ILO,
+KTM,
+KTM2,
+ID_SKLEP,
+[ilosc_Robot]
+from POZ  (nolock)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Inventory - POZ\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Farmax]"
+                  connectionManagerRefId="Package.ConnectionManagers[Farmax]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_ZB]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_ZB]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_ZB]"
+                      name="CENA_ZB"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_EWID]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_EWID]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[CENA_EWID]"
+                      name="CENA_EWID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ILO]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ILO]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ILO]"
+                      name="ILO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KTM]"
+                      length="13"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[KTM]"
+                      name="KTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[KTM2]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KTM2]"
+                      length="10"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[KTM2]"
+                      name="KTM2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      length="3"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ilosc_Robot]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ilosc_Robot]"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].Columns[ilosc_Robot]"
+                      name="ilosc_Robot"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      name="KTM" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[KTM2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="KTM2" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ILO]"
+                      dataType="r8"
+                      name="ILO" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_EWID]"
+                      dataType="r8"
+                      name="CENA_EWID" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CENA_ZB]"
+                      dataType="r8"
+                      name="CENA_ZB" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="ID_SKLEP" />
+                    <externalMetadataColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ilosc_Robot]"
+                      dataType="i2"
+                      name="ilosc_Robot" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA_ZB]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA_ZB]"
+                      name="CENA_ZB" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA_EWID]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CENA_EWID]"
+                      name="CENA_EWID" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ILO]"
+                      dataType="r8"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ILO]"
+                      name="ILO" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KTM]"
+                      codePage="1250"
+                      dataType="str"
+                      length="13"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KTM]"
+                      name="KTM" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ilosc_Robot]"
+                      dataType="i2"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ilosc_Robot]"
+                      name="ilosc_Robot" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KTM2]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[KTM2]"
+                      name="KTM2" />
+                    <outputColumn
+                      refId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID_SKLEP]"
+                      name="ID_SKLEP" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Inventory - POZ.Paths[OLE DB Source Output]"
+              endId="Package\Inventory - POZ\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Inventory - POZ\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate ODS_POZ Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FE5FCCBD-859E-4D11-9D18-0ECDA31CD656}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate ODS_POZ Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{99F40116-BB7E-4916-89B0-DD343623EE21}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE ODS_POZ" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1B34E2EB-D5C3-4142-A1AA-D91AB13F0032}"
+      DTS:From="Package\Truncate ODS_POZ Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Inventory - POZ" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Inventory - POZ"
+          TopLeft="18.0714287855187,113.553718108169" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Truncate ODS_POZ Table"
+          TopLeft="10.07142858116,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="78.07142858116,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.00000020435876,64.0537181081692"
+              Start="0,0"
+              End="8.00000020435876,56.5537181081692">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.0268590540846" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.0268590540846"
+                    Point2="0,32.0268590540846"
+                    Point3="4,32.0268590540846" />
+                  <mssgle:LineSegment
+                    End="4.00000020435876,32.0268590540846" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.00000020435876,32.0268590540846"
+                    Point2="8.00000020435876,32.0268590540846"
+                    Point3="8.00000020435876,36.0268590540846" />
+                  <mssgle:LineSegment
+                    End="8.00000020435876,56.5537181081692" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Inventory - POZ">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Inventory - POZ\OLE DB Source"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Inventory - POZ\OLE DB Destination"
+          TopLeft="5.5,87.1603773584906" />
+        <EdgeLayout
+          Id="Package\Inventory - POZ.Paths[OLE DB Source Output]"
+          TopLeft="73.5,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.2,37.6603773584906"
+              Start="0,0"
+              End="17.2,30.1603773584906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.8301886792453" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.8301886792453"
+                    Point2="0,18.8301886792453"
+                    Point3="4,18.8301886792453" />
+                  <mssgle:LineSegment
+                    End="13.2,18.8301886792453" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.2,18.8301886792453"
+                    Point2="17.2,18.8301886792453"
+                    Point3="17.2,22.8301886792453" />
+                  <mssgle:LineSegment
+                    End="17.2,30.1603773584906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Inventory - POZ\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Inventory - POZ\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

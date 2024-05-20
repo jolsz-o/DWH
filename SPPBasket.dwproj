@@ -1,0 +1,410 @@
+﻿<Project xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <ProductVersion>15.0.19103.0</ProductVersion>
+  <SchemaVersion>9.0.2.10</SchemaVersion>
+  <State>$base64$PFNvdXJjZUNvbnRyb2xJbmZvIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOmRkbDI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDAzL2VuZ2luZS8yIiB4bWxuczpkZGwyXzI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDAzL2VuZ2luZS8yLzIiIHhtbG5zOmRkbDEwMF8xMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDA4L2VuZ2luZS8xMDAvMTAwIiB4bWxuczpkZGwyMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEwL2VuZ2luZS8yMDAiIHhtbG5zOmRkbDIwMF8yMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEwL2VuZ2luZS8yMDAvMjAwIiB4bWxuczpkZGwzMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDExL2VuZ2luZS8zMDAiIHhtbG5zOmRkbDMwMF8zMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDExL2VuZ2luZS8zMDAvMzAwIiB4bWxuczpkZGw0MDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEyL2VuZ2luZS80MDAiIHhtbG5zOmRkbDQwMF80MDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEyL2VuZ2luZS80MDAvNDAwIiB4bWxuczpkZGw1MDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEzL2VuZ2luZS81MDAiIHhtbG5zOmRkbDUwMF81MDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEzL2VuZ2luZS81MDAvNTAwIiB4bWxuczpkd2Q9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vRGF0YVdhcmVob3VzZS9EZXNpZ25lci8xLjAiPg0KICA8RW5hYmxlZD5mYWxzZTwvRW5hYmxlZD4NCiAgPFByb2plY3ROYW1lPjwvUHJvamVjdE5hbWU+DQogIDxBdXhQYXRoPjwvQXV4UGF0aD4NCiAgPExvY2FsUGF0aD48L0xvY2FsUGF0aD4NCiAgPFByb3ZpZGVyPjwvUHJvdmlkZXI+DQo8L1NvdXJjZUNvbnRyb2xJbmZvPg==</State>
+  <Database>
+    <Name>SPPBasket.database</Name>
+    <FullPath>SPPBasket.database</FullPath>
+  </Database>
+  <Cubes>
+    <ProjectItem>
+      <Name>Sales.cube</Name>
+      <FullPath>Sales.cube</FullPath>
+      <Dependencies>
+        <ProjectItem>
+          <Name>Sales.partitions</Name>
+          <FullPath>Sales.partitions</FullPath>
+        </ProjectItem>
+      </Dependencies>
+    </ProjectItem>
+  </Cubes>
+  <Dimensions>
+    <ProjectItem>
+      <Name>Actual Supplier.dim</Name>
+      <FullPath>Actual Supplier.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Brand.dim</Name>
+      <FullPath>Brand.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Cash Credit.dim</Name>
+      <FullPath>Cash Credit.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>CashRegister Dep.dim</Name>
+      <FullPath>CashRegister Dep.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>CashRegisters.dim</Name>
+      <FullPath>CashRegisters.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Date.dim</Name>
+      <FullPath>Date.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Employees.dim</Name>
+      <FullPath>Employees.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Hours.dim</Name>
+      <FullPath>Hours.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Identical Stores.dim</Name>
+      <FullPath>Identical Stores.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Insurance Company.dim</Name>
+      <FullPath>Insurance Company.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Is Gov Price.dim</Name>
+      <FullPath>Is Gov Price.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Items.dim</Name>
+      <FullPath>Items.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ItemsBasket.dim</Name>
+      <FullPath>ItemsBasket.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>LifeStyle.dim</Name>
+      <FullPath>LifeStyle.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>LS Customers.dim</Name>
+      <FullPath>LS Customers.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Main Supplier.dim</Name>
+      <FullPath>Main Supplier.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Managers.dim</Name>
+      <FullPath>Managers.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Manufacturer.dim</Name>
+      <FullPath>Manufacturer.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Month.dim</Name>
+      <FullPath>Month.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Participation_Type.dim</Name>
+      <FullPath>Participation_Type.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Producer.dim</Name>
+      <FullPath>Producer.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Products Line.dim</Name>
+      <FullPath>Products Line.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Promotions.dim</Name>
+      <FullPath>Promotions.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Stores.dim</Name>
+      <FullPath>Stores.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>VAT Percentage.dim</Name>
+      <FullPath>VAT Percentage.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Vw Fact Invoice.dim</Name>
+      <FullPath>Vw Fact Invoice.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>WeekDay.dim</Name>
+      <FullPath>WeekDay.dim</FullPath>
+    </ProjectItem>
+  </Dimensions>
+  <DataSources>
+    <ProjectItem>
+      <Name>Super Pharm Poland.ds</Name>
+      <FullPath>Super Pharm Poland.ds</FullPath>
+    </ProjectItem>
+  </DataSources>
+  <DataSourceViews>
+    <ProjectItem>
+      <Name>Super Pharm Poland.dsv</Name>
+      <FullPath>Super Pharm Poland.dsv</FullPath>
+    </ProjectItem>
+  </DataSourceViews>
+  <Roles>
+    <ProjectItem>
+      <Name>MainOfficeUsers.role</Name>
+      <FullPath>MainOfficeUsers.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PanAdmin.role</Name>
+      <FullPath>PanAdmin.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>SPP025.role</Name>
+      <FullPath>SPP025.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo1.role</Name>
+      <FullPath>StoreNo1.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo10.role</Name>
+      <FullPath>StoreNo10.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo11.role</Name>
+      <FullPath>StoreNo11.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo12.role</Name>
+      <FullPath>StoreNo12.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo13.role</Name>
+      <FullPath>StoreNo13.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo14.role</Name>
+      <FullPath>StoreNo14.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo15.role</Name>
+      <FullPath>StoreNo15.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo16.role</Name>
+      <FullPath>StoreNo16.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo17.role</Name>
+      <FullPath>StoreNo17.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo18.role</Name>
+      <FullPath>StoreNo18.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo19.role</Name>
+      <FullPath>StoreNo19.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo2.role</Name>
+      <FullPath>StoreNo2.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo20.role</Name>
+      <FullPath>StoreNo20.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo21.role</Name>
+      <FullPath>StoreNo21.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo22.role</Name>
+      <FullPath>StoreNo22.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo23.role</Name>
+      <FullPath>StoreNo23.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo24.role</Name>
+      <FullPath>StoreNo24.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo26.role</Name>
+      <FullPath>StoreNo26.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo3.role</Name>
+      <FullPath>StoreNo3.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo4.role</Name>
+      <FullPath>StoreNo4.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo44.role</Name>
+      <FullPath>StoreNo44.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo45.role</Name>
+      <FullPath>StoreNo45.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo46.role</Name>
+      <FullPath>StoreNo46.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo5.role</Name>
+      <FullPath>StoreNo5.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo6.role</Name>
+      <FullPath>StoreNo6.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo7.role</Name>
+      <FullPath>StoreNo7.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo8.role</Name>
+      <FullPath>StoreNo8.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo80.role</Name>
+      <FullPath>StoreNo80.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo81.role</Name>
+      <FullPath>StoreNo81.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo82.role</Name>
+      <FullPath>StoreNo82.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo83.role</Name>
+      <FullPath>StoreNo83.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo84.role</Name>
+      <FullPath>StoreNo84.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo85.role</Name>
+      <FullPath>StoreNo85.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo86.role</Name>
+      <FullPath>StoreNo86.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo87.role</Name>
+      <FullPath>StoreNo87.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo88.role</Name>
+      <FullPath>StoreNo88.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo89.role</Name>
+      <FullPath>StoreNo89.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo9.role</Name>
+      <FullPath>StoreNo9.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo90.role</Name>
+      <FullPath>StoreNo90.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo91.role</Name>
+      <FullPath>StoreNo91.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo92.role</Name>
+      <FullPath>StoreNo92.role</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>StoreNo93.role</Name>
+      <FullPath>StoreNo93.role</FullPath>
+    </ProjectItem>
+  </Roles>
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <ConnectionMappings>
+          <ConfigurationSetting>
+            <Id>Super Pharm Poland</Id>
+            <Name>Super Pharm Poland</Name>
+            <Value xsi:type="xsd:string">Provider=SQLNCLI10.1;Data Source=172.27.160.146;Integrated Security=SSPI;Initial Catalog=SuperPharmPoland</Value>
+          </ConfigurationSetting>
+        </ConnectionMappings>
+        <ConnectionSecurityMappings>
+          <ConfigurationSetting>
+            <Id>Super Pharm Poland</Id>
+            <Name>Super Pharm Poland</Name>
+            <Value xsi:type="xsd:int">0</Value>
+          </ConfigurationSetting>
+        </ConnectionSecurityMappings>
+        <ReportActionServers>
+          <ConfigurationSetting>
+            <Id>Sales</Id>
+            <Name>Sales</Name>
+            <Value xsi:type="ConfigurationSettingsCollection">
+              <ConfigurationSetting>
+                <Id>Report Action</Id>
+                <Name>Report Action</Name>
+                <Value xsi:type="xsd:string">panoramaonline</Value>
+              </ConfigurationSetting>
+              <ConfigurationSetting>
+                <Id>Report Action 1</Id>
+                <Name>Report Action 1</Name>
+                <Value xsi:type="xsd:string">panoramaonline</Value>
+              </ConfigurationSetting>
+              <ConfigurationSetting>
+                <Id>Report Action 2</Id>
+                <Name>Report Action 2</Name>
+                <Value xsi:type="xsd:string">panoramaonline</Value>
+              </ConfigurationSetting>
+              <ConfigurationSetting>
+                <Id>Report Action 3</Id>
+                <Name>Report Action 3</Name>
+                <Value xsi:type="xsd:string">panoramaonline</Value>
+              </ConfigurationSetting>
+            </Value>
+          </ConfigurationSetting>
+        </ReportActionServers>
+        <ReportActionPaths>
+          <ConfigurationSetting>
+            <Id>Sales</Id>
+            <Name>Sales</Name>
+            <Value xsi:type="ConfigurationSettingsCollection">
+              <ConfigurationSetting>
+                <Id>Report Action</Id>
+                <Name>Report Action</Name>
+                <Value xsi:type="xsd:string">/ReportServer?/SPPReports/DrillThroughInvoice&amp;rc:Parameters=False</Value>
+              </ConfigurationSetting>
+              <ConfigurationSetting>
+                <Id>Report Action 1</Id>
+                <Name>Report Action 1</Name>
+                <Value xsi:type="xsd:string">/ReportServer?/SPPReports/DrillThroughFullInvoice&amp;rc:Parameters=False</Value>
+              </ConfigurationSetting>
+              <ConfigurationSetting>
+                <Id>Report Action 2</Id>
+                <Name>Report Action 2</Name>
+                <Value xsi:type="xsd:string">/ReportServer?/SPPReports/DrillThroughExceptionInvoice&amp;rc:Parameters=False</Value>
+              </ConfigurationSetting>
+              <ConfigurationSetting>
+                <Id>Report Action 3</Id>
+                <Name>Report Action 3</Name>
+                <Value xsi:type="xsd:string">/ReportServer?/SPPReports/DrillThroughInvoiceWithCustDetails&amp;rc:Parameters=False</Value>
+              </ConfigurationSetting>
+            </Value>
+          </ConfigurationSetting>
+        </ReportActionPaths>
+        <DeploymentServerEdition>Enterprise</DeploymentServerEdition>
+      </Options>
+    </Configuration>
+  </Configurations>
+  <References>
+    <ReferenceItem>
+      <ID>pnOlapLib</ID>
+      <Name>pnOlapLib</Name>
+      <FullPath>assemblies\pnolaplib\pnOlapLib.dll</FullPath>
+    </ReferenceItem>
+  </References>
+</Project>

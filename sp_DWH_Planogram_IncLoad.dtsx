@@ -1,0 +1,1019 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/11/2020 12:16:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{E0523F41-7EDF-4B48-B99E-E5CB56F24638}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="sp_DWH_Planogram_IncLoad"
+  DTS:PackageType="5"
+  DTS:VersionBuild="31"
+  DTS:VersionGUID="{DC00B743-6C97-4449-B8B2-A25E4E9E16A1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{40AC3959-9562-4DE1-8E87-6737A0EC4E6B}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\INSERT INTO DWH_Fact_Logistic_New"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D48CAA0F-2067-4C46-80FD-96B27DC45AC9}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="INSERT INTO DWH_Fact_Logistic_New"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DW_Dim_Planograms"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DW_Dim_Planograms]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].Columns[PlanogramId]"
+                      cachedDataType="i4"
+                      cachedName="PlanogramId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlanogramId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlanogramId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].Columns[PlnDepartment]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PlnDepartment"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnDepartment]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnDepartment]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].Columns[PlnCategory]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PlnCategory"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnCategory]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnCategory]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].Columns[PlnSubCategory]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PlnSubCategory"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnSubCategory]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnSubCategory]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].Columns[PlanogramName]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="PlanogramName"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlanogramName]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlanogramName]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].Columns[PlnStatus]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PlnStatus"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnStatus]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnStatus]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlanogramId]"
+                      dataType="i4"
+                      name="PlanogramId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnDepartment]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnDepartment" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnCategory" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnSubCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnSubCategory" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlanogramName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="255"
+                      name="PlanogramName" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnStatus]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnStatus" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnStartDate]"
+                      dataType="dbTimeStamp"
+                      name="PlnStartDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input].ExternalColumns[PlnEndDate]"
+                      dataType="dbTimeStamp"
+                      name="PlnEndDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ODS_Planogram_Planogram"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select PLN_ID PlanogramId, DEPARTMENT PlnDepartment, CATEGORY PlnCategory, 
+	SUBCATEGORY PlnSubCategory,	PLANOGRAM PlanogramName, Status PlnStatus,
+	convert(smalldatetime,Replace(StartDate,'.','-'),103) [StartDate], convert(smalldatetime,[EndDate],103)[EndDate]
+From dbo.ODS_Planogram_Planogram
+Where RIGHT(isnull(StartDate,'1900'),4) &gt;= 2015
+And  Not Exists (Select * From DW_Dim_Planograms
+				  Where ODS_Planogram_Planogram.PLN_ID = DW_Dim_Planograms.PlanogramId)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlanogramId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlanogramId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlanogramId]"
+                      name="PlanogramId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnDepartment]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnDepartment]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnDepartment]"
+                      name="PlnDepartment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnCategory]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnCategory]"
+                      name="PlnCategory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnSubCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnSubCategory]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnSubCategory]"
+                      name="PlnSubCategory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlanogramName]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlanogramName]"
+                      length="255"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlanogramName]"
+                      name="PlanogramName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnStatus]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnStatus]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[PlnStatus]"
+                      name="PlnStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[StartDate]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[StartDate]"
+                      name="StartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[EndDate]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].Columns[EndDate]"
+                      name="EndDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlanogramId]"
+                      dataType="i4"
+                      name="PlanogramId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnDepartment]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnDepartment" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnCategory" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnSubCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnSubCategory" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlanogramName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="255"
+                      name="PlanogramName" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[PlnStatus]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="PlnStatus" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[StartDate]"
+                      dataType="dbTimeStamp"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output].ExternalColumns[EndDate]"
+                      dataType="dbTimeStamp"
+                      name="EndDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlanogramId]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlanogramId]"
+                      name="PlanogramId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnDepartment]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnDepartment]"
+                      name="PlnDepartment" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnCategory]"
+                      name="PlnCategory" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnSubCategory]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnSubCategory]"
+                      name="PlnSubCategory" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlanogramName]"
+                      codePage="1250"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlanogramName]"
+                      name="PlanogramName" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnStatus]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[PlnStatus]"
+                      name="PlnStatus" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[StartDate]"
+                      name="StartDate" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[EndDate]"
+                      name="EndDate" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New.Paths[OLE DB Source Output]"
+              endId="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Into DW_Dim_PlnFixels"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{FDADE1FA-7FF4-4BCF-8F65-7280211AF5F6}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Into DW_Dim_PlnFixels"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DW_Dim_PlnFixels"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DW_Dim_PlnFixels]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].Columns[SectionId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SectionId"
+                      externalMetadataColumnId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].ExternalColumns[SectionId]"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[SectionId]" />
+                    <inputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].Columns[SegmentId]"
+                      cachedDataType="i2"
+                      cachedName="SegmentId"
+                      externalMetadataColumnId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].ExternalColumns[SegmentId]"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[SegmentId]" />
+                    <inputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].Columns[FixelId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="FixelId"
+                      externalMetadataColumnId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].ExternalColumns[FixelId]"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[FixelId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].ExternalColumns[SectionId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="SectionId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].ExternalColumns[SegmentId]"
+                      dataType="i2"
+                      name="SegmentId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input].ExternalColumns[FixelId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="FixelId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ODS_Planogram_Fixel"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select  Distinct SECTION_ID SectionId, SEGMENT SegmentId, FIXEL_ID FixelId
+From (SELECT  distinct  f.SECTION_ID,  f.Segment, f.FIXEL_ID
+  FROM dbo.ODS_Planogram_Fixel F
+  Inner join dbo.ODS_Planogram_Planogram P
+  on f.PLN_ID = p.PLN_ID
+  Where YEAR(convert(smalldatetime,Replace(P.StartDate,'.','-'),103)) &gt;= 2015
+  And not ISNULL(P.StartDate,'') = '') Fxl
+Where Not Exists (Select * From DW_Dim_PlnFixels
+				  Where Fxl.FIXEL_ID = DW_Dim_PlnFixels.FixelId)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[SectionId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].ExternalColumns[SectionId]"
+                      length="50"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[SectionId]"
+                      name="SectionId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[SegmentId]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].ExternalColumns[SegmentId]"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[SegmentId]"
+                      name="SegmentId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[FixelId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].ExternalColumns[FixelId]"
+                      length="50"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].Columns[FixelId]"
+                      name="FixelId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].ExternalColumns[SectionId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="SectionId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].ExternalColumns[SegmentId]"
+                      dataType="i2"
+                      name="SegmentId" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output].ExternalColumns[FixelId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      name="FixelId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[SectionId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[SectionId]"
+                      name="SectionId" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[SegmentId]"
+                      dataType="i2"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[SegmentId]"
+                      name="SegmentId" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[FixelId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[FixelId]"
+                      name="FixelId" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert Into DW_Dim_PlnFixels.Paths[OLE DB Source Output]"
+              endId="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{76BE5CF7-719B-475E-A36D-3ED251FD5DAA}"
+      DTS:From="Package\INSERT INTO DWH_Fact_Logistic_New"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Insert Into DW_Dim_PlnFixels" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Insert Into DW_Dim_PlnFixels"
+          TopLeft="47,116" />
+        <NodeLayout
+          Size="263,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New"
+          TopLeft="23,19" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="155.75,61">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55"
+              Start="0,0"
+              End="0,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Insert Into DW_Dim_PlnFixels">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel"
+          TopLeft="113,17" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels"
+          TopLeft="119,96" />
+        <EdgeLayout
+          Id="Package\Insert Into DW_Dim_PlnFixels.Paths[OLE DB Source Output]"
+          TopLeft="203.25,59">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert Into DW_Dim_PlnFixels\ODS_Planogram_Fixel">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\INSERT INTO DWH_Fact_Logistic_New">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="211,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram"
+          TopLeft="16,12" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms"
+          TopLeft="24,82" />
+        <EdgeLayout
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New.Paths[OLE DB Source Output]"
+          TopLeft="118,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28"
+              Start="0,0"
+              End="0,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO DWH_Fact_Logistic_New\DW_Dim_Planograms">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO DWH_Fact_Logistic_New\ODS_Planogram_Planogram">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert Into DW_Dim_PlnFixels\DW_Dim_PlnFixels">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

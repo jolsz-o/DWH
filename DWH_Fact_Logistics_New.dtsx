@@ -1,0 +1,1170 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/11/2020 12:16:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SUPERDW"
+  DTS:CreatorName="SPP\udih"
+  DTS:DTSID="{419B9BD5-8382-41F8-8A63-049B44EEECD9}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="DWH_Fact_Logistics_New"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{735A026D-FF83-43E2-9915-27C01B8A4D4B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BFAE810B-5D0E-456B-9CD8-4890A380B125}"
+      DTS:ObjectName="SUPERDW.SuperPharmPoland">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SUPERDW;Initial Catalog=SuperPharmPoland;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BF984C4D-4F23-4144-BD12-A67F39664C3B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;DELETE FROM DWH_Fact_Logistic_New WHERE dtDate BETWEEN CONVERT(DATETIME,'&quot;+(DT_STR,120,1250)@[User::MinDate] +&quot;',104) AND &quot;+&quot;CONVERT(DATETIME,'&quot;+(DT_STR,120,1250)@[User::MaxDate] +&quot;',104)&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EXPR">
+      <DTS:VariableValue
+        DTS:DataType="8">DELETE FROM DWH_Fact_Logistic_New WHERE dtDate BETWEEN CONVERT(DATETIME,'02.05.2020',104) AND CONVERT(DATETIME,'02.05.2020',104)</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{05E1439D-C022-4098-BEE5-0CD94EC8AFAD}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MaxDate">
+      <DTS:VariableValue
+        DTS:DataType="7">5/2/2020</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E6A284AC-9C43-414F-A66A-CCB9B0E88FA4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MinDate">
+      <DTS:VariableValue
+        DTS:DataType="7">5/2/2020</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete Records From DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4F8BE350-043F-4B48-9E45-8CAC03BD0A6C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Records From DW"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BFAE810B-5D0E-456B-9CD8-4890A380B125}"
+          SQLTask:SqlStatementSource="declare &#xA;@MinDate datetime,&#xA;@MaxDate datetime&#xA;&#xA;Select @MinDate = MIN([dtDate]), @MaxDate = case when MAX([dtDate]) &gt; getdate() then getdate() else Max([dtDate]) end&#xA;From STG_Fact_Logistic_New&#xA;&#xA;Delete From DWH_Fact_Logistic_New Where [dtDate] between @MinDate and @MaxDate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{1BEED1A8-D990-4D9B-8435-1A9D86386011}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BFAE810B-5D0E-456B-9CD8-4890A380B125}"
+          SQLTask:SqlStatementSource="select&#xA;CONVERT(varchar,MIN(dtDate),120) AS MinDate,CONVERT(varchar,MAX(dtDate),120)  As MaxDate&#xA;FROM STG_Fact_Logistic_New"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MinDate"
+            SQLTask:DtsVariableName="User::MinDate" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MaxDate"
+            SQLTask:DtsVariableName="User::MaxDate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task 2"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{AC8CF186-34C6-4DEA-B0C1-EB7F30377B81}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task 2"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BFAE810B-5D0E-456B-9CD8-4890A380B125}"
+          SQLTask:SqlStatementSource="DELETE FROM DWH_Fact_Logistic_New&#xA;WHERE CONVERT(VARCHAR,dtDate,120) between ? and ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::MinDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::MaxDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\INSERT INTO DWH_Fact_Logistic_New"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{93CAEB49-A265-43EC-B271-BB5B9A8FB995}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="INSERT INTO DWH_Fact_Logistic_New"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Inputs[Data Conversion Input].Columns[SourceDocType]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SourceDocType"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocType]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Inputs[Data Conversion Input].Columns[SourceDocId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SourceDocId"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocId]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output].Columns[SourceDocType]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output].Columns[SourceDocType]"
+                      name="SourceDocType"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocType]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output].Columns[SourceDocId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output].Columns[SourceDocId]"
+                      name="SourceDocId"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocId]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DWH_Fact_Logistic_New"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DWH_Fact_Logistic_New]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[dtDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dtDate"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[dtDate]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[StoreId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="StoreId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[StoreId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[ItemId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ItemId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[ItemId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[ItemId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[SupplierId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="SupplierId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[SupplierId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SupplierId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[EmployeeId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="EmployeeId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[EmployeeId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[DocumentId]"
+                      cachedDataType="i2"
+                      cachedName="DocumentId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[DocumentId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[DocumentId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[DocumentParentId]"
+                      cachedDataType="i2"
+                      cachedName="DocumentParentId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[DocumentParentId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[DocumentParentId]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[ValuePerItem]"
+                      cachedDataType="r8"
+                      cachedName="ValuePerItem"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[ValuePerItem]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[ValuePerItem]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[TotalValue]"
+                      cachedDataType="r8"
+                      cachedName="TotalValue"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[TotalValue]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[TotalValue]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[RecordID]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="RecordID"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[RecordID]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[RecordID]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[Qty]"
+                      cachedDataType="i4"
+                      cachedName="Qty"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[Qty]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[Qty]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[CostPerItem]"
+                      cachedDataType="r8"
+                      cachedName="CostPerItem"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[CostPerItem]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[CostPerItem]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[TotalCost]"
+                      cachedDataType="r8"
+                      cachedName="TotalCost"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[TotalCost]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[TotalCost]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[SourceDocType]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="SourceDocType"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[SourceDocType]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output].Columns[SourceDocType]" />
+                    <inputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].Columns[SourceDocId]"
+                      cachedCodepage="1250"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="SourceDocId"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[SourceDocId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output].Columns[SourceDocId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[RecordID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="RecordID" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[ItemId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[SupplierId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SupplierId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[DocumentId]"
+                      dataType="i2"
+                      name="DocumentId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[DocumentParentId]"
+                      dataType="i2"
+                      name="DocumentParentId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[SourceDocId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SourceDocId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[SourceDocType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SourceDocType" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[Qty]"
+                      dataType="i4"
+                      name="Qty" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[CostPerItem]"
+                      dataType="r8"
+                      name="CostPerItem" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[TotalCost]"
+                      dataType="r8"
+                      name="TotalCost" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[ValuePerItem]"
+                      dataType="r8"
+                      name="ValuePerItem" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input].ExternalColumns[TotalValue]"
+                      dataType="r8"
+                      name="TotalValue" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STG_Fact_Logistic_New"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * 
+FROM STG_Fact_Logistic_New
+Where dtDate &lt; GETDATE()
+And StoreId &lt;&gt; '94'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1250</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  connectionManagerRefId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[dtDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[dtDate]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[dtDate]"
+                      name="dtDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[StoreId]"
+                      length="3"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[StoreId]"
+                      name="StoreId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[ItemId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[ItemId]"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[ItemId]"
+                      name="ItemId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SupplierId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[SupplierId]"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SupplierId]"
+                      name="SupplierId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[EmployeeId]"
+                      length="3"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[EmployeeId]"
+                      name="EmployeeId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[DocumentId]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[DocumentId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[DocumentId]"
+                      name="DocumentId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[DocumentParentId]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[DocumentParentId]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[DocumentParentId]"
+                      name="DocumentParentId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocId]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[SourceDocId]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocId]"
+                      name="SourceDocId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocType]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[SourceDocType]"
+                      length="50"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[SourceDocType]"
+                      name="SourceDocType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[ValuePerItem]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[ValuePerItem]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[ValuePerItem]"
+                      name="ValuePerItem"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[TotalValue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[TotalValue]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[TotalValue]"
+                      name="TotalValue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[RecordID]"
+                      codePage="1250"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[RecordID]"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[RecordID]"
+                      name="RecordID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[Qty]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[Qty]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[Qty]"
+                      name="Qty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[CostPerItem]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[CostPerItem]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[CostPerItem]"
+                      name="CostPerItem"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[TotalCost]"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].Columns[TotalCost]"
+                      name="TotalCost"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[dtDate]"
+                      dataType="dbTimeStamp"
+                      name="dtDate" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="StoreId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[ItemId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="ItemId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[SupplierId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SupplierId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[DocumentId]"
+                      dataType="i2"
+                      name="DocumentId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[DocumentParentId]"
+                      dataType="i2"
+                      name="DocumentParentId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[SourceDocId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SourceDocId" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[SourceDocType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="SourceDocType" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[ValuePerItem]"
+                      dataType="r8"
+                      name="ValuePerItem" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[TotalValue]"
+                      dataType="r8"
+                      name="TotalValue" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[RecordID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      name="RecordID" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[Qty]"
+                      dataType="i4"
+                      name="Qty" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[CostPerItem]"
+                      dataType="r8"
+                      name="CostPerItem" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output].ExternalColumns[TotalCost]"
+                      dataType="r8"
+                      name="TotalCost" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[RecordID]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[RecordID]"
+                      name="RecordID" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[dtDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[dtDate]"
+                      name="dtDate" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[StoreId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[StoreId]"
+                      name="StoreId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ItemId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ItemId]"
+                      name="ItemId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[SupplierId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[SupplierId]"
+                      name="SupplierId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[EmployeeId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[EmployeeId]"
+                      name="EmployeeId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[DocumentId]"
+                      dataType="i2"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[DocumentId]"
+                      name="DocumentId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[DocumentParentId]"
+                      dataType="i2"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[DocumentParentId]"
+                      name="DocumentParentId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[SourceDocId]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[SourceDocId]"
+                      name="SourceDocId" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[SourceDocType]"
+                      codePage="1250"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[SourceDocType]"
+                      name="SourceDocType" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[Qty]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[Qty]"
+                      name="Qty" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[CostPerItem]"
+                      dataType="r8"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[CostPerItem]"
+                      name="CostPerItem" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[TotalCost]"
+                      dataType="r8"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[TotalCost]"
+                      name="TotalCost" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ValuePerItem]"
+                      dataType="r8"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ValuePerItem]"
+                      name="ValuePerItem" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[TotalValue]"
+                      dataType="r8"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[TotalValue]"
+                      name="TotalValue" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New.Paths[Data Conversion Output]"
+              endId="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\INSERT INTO DWH_Fact_Logistic_New.Paths[OLE DB Source Output]"
+              endId="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E14D0403-F9AC-44D9-ADC4-3ADC6BC6F0C1}"
+      DTS:From="Package\Execute SQL Task 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Execute SQL Task 2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{56F3C6B6-3B6E-4B4C-9C06-C7EE177983A5}"
+      DTS:From="Package\Delete Records From DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\INSERT INTO DWH_Fact_Logistic_New" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\Delete Records From DW"
+          TopLeft="97,212" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Execute SQL Task 1"
+          TopLeft="109,67" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Execute SQL Task 2"
+          TopLeft="102,147" />
+        <NodeLayout
+          Size="263,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New"
+          TopLeft="53,309" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="191.5,109">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="196,254">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11.5,55"
+              Start="0,0"
+              End="-11.5,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="-4,27.5" />
+                  <mssgle:LineSegment
+                    End="-7.5,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7.5,27.5"
+                    Point2="-11.5,27.5"
+                    Point3="-11.5,31.5" />
+                  <mssgle:LineSegment
+                    End="-11.5,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text=" DELETE FROM DWH_Fact_Logistic_New&#xA;WHERE dtDate between @MinDate and @MaxDate"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="301,56"
+          Id="4d459c27-2a80-47eb-a350-88717221ea73"
+          TopLeft="307,213" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\INSERT INTO DWH_Fact_Logistic_New">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New"
+          TopLeft="177,286" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New"
+          TopLeft="191,128" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New\Data Conversion"
+          TopLeft="210,201" />
+        <EdgeLayout
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New.Paths[OLE DB Source Output]"
+          TopLeft="287.25,170">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\INSERT INTO DWH_Fact_Logistic_New.Paths[Data Conversion Output]"
+          TopLeft="288,243">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13,43"
+              Start="0,0"
+              End="-13,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="-4,21.5" />
+                  <mssgle:LineSegment
+                    End="-9,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9,21.5"
+                    Point2="-13,21.5"
+                    Point3="-13,25.5" />
+                  <mssgle:LineSegment
+                    End="-13,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO DWH_Fact_Logistic_New\STG_Fact_Logistic_New">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT INTO DWH_Fact_Logistic_New\DWH_Fact_Logistic_New">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
