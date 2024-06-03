@@ -5,22 +5,22 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="SUPERDW"
   DTS:CreatorName="SPP\amitchickov"
-  DTS:DTSID="{1B4FC217-6BBC-4AA2-8CD9-CAACD91FA20C}"
+  DTS:DTSID="{21E80E17-9908-4F97-BC55-8EE62F2154A4}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
   DTS:LocaleID="1045"
-  DTS:ObjectName="cdp_Dim_Customer_KPIs_Full_historic_load_full"
+  DTS:ObjectName="cdp_Dim_Customer_KPIs_Full_historic_load_full_BC"
   DTS:PackageType="5"
   DTS:ProtectionLevel="2"
-  DTS:VersionBuild="470"
-  DTS:VersionGUID="{529F14DA-D99B-4B16-86DF-EF8CB5E95019}">
+  DTS:VersionBuild="479"
+  DTS:VersionGUID="{4AC15A3A-7882-4AB6-89FD-0F1A406B1997}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[172.27.160.70.CDP]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{125ADD16-BBAF-4119-84BC-21C7AD8082AB}"
+      DTS:DTSID="{26F25014-3487-4111-B30C-CE18E34B9ABD}"
       DTS:ObjectName="172.27.160.70.CDP">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -30,7 +30,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[HEADOFFICE\FARMAX_SQLSRV.FARMAX]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{C7884F3F-17C6-457B-81CA-8F6DE1CCB422}"
+      DTS:DTSID="{4965930F-86DD-4933-A016-08E6683D65CF}"
       DTS:ObjectName="HEADOFFICE\FARMAX_SQLSRV.FARMAX">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -40,19 +40,19 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
       DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-      DTS:DTSID="{160CAE87-3E71-4824-9F31-5D07977AA0C8}"
+      DTS:DTSID="{63A783D6-F4B5-47BB-8A4E-ABB34161FCC1}"
       DTS:ObjectName="MagentoDB_new.promoviewonly">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
           <EncryptedData
             Type="http://www.w3.org/2001/04/xmlenc#Element"
-            Salt="nIEzQGNaZvE="
-            IV="13bwL639GPBNEyjCV8b7XA==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            Salt="rDuXjS0C/aQ="
+            IV="nKEbDw2PE0IBi2oT9/e0gg==" xmlns="http://www.w3.org/2001/04/xmlenc#">
             <EncryptionMethod
               Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
             <CipherData>
-              <CipherValue>13bwL639GPBNEyjCV8b7XLOiZ991vpbmu77e13h+nh+xwLfK4ijdPcdzEyLgEbyVKu3kRwVLSCbyjLkoucu6UmJZc1QtuBc3qa0diBAfOITH3pzqSeCT5B4+Z/ID9uBcuYzk0Ukzp4WXquQkslSBvoJgipE3n9/ivkN9tWemlDX4vkHIBIXgx6sbztp3G0SZ</CipherValue>
+              <CipherValue>nKEbDw2PE0IBi2oT9/e0giKKc/1UQB4BA84TctH/VtWwGE5MgYHrtLBtq8PJ5P0Ok0oUsxyQkmYQxQWmUtD7Zexygabdpr9J72CE/J95KrVoGrn9jFl+DSTqAf38Tc6CjuqgNauKiVAiiSSo5GYiCq8s924lMzb60VI46UqV6lwJ8SWXhWN9oRhm6NIy1dr1</CipherValue>
             </CipherData>
           </EncryptedData>
         </DTS:ConnectionManager>
@@ -61,7 +61,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{C1C9B73D-95A1-4F63-9EA4-9069FC3CE926}"
+      DTS:DTSID="{BB09ACEF-B9F4-42D0-AA3E-A71E3E2BEFCA}"
       DTS:ObjectName="SUPERDW.SuperPharmPoland">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -75,7 +75,7 @@
       DTS:refId="Package\1st_load  -    172,27,160,70_Freshdesk_tickets --&gt; SUPERDW cdp_ODS_Freshdesk_tickets"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{B3CC74B3-3498-46BB-B4C8-213BBD944B41}"
+      DTS:DTSID="{CBABD2E7-D1F3-48A4-A962-086C676000C8}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="1st_load  -    172,27,160,70_Freshdesk_tickets --&gt; SUPERDW cdp_ODS_Freshdesk_tickets"
@@ -1550,7 +1550,7 @@ where cf_grupa = 'Reklamacje'
       DTS:refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{47F63E95-FC0F-4FC8-8326-4FC88A7CDEB9}"
+      DTS:DTSID="{BF2F85A8-0680-47DB-BD3C-9E0B016F1FD9}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs"
@@ -3608,7 +3608,7 @@ from inv_c full join row_c on inv_c.[Loyalty Id] = row_c.[Loyalty Id]
 					   cast(isnull(sum([Net_Revenue]),0) as numeric(20,2))															            [Net_Revenue_Life_Time],
 					   isnull(count(distinct INVOICE_ID+STORE_ID),0)                                                                            [inv_count_Life_Time]
 					   ---------------------------
-				from [SuperPharmPoland].[dbo].[DWH_Invoice_Fact]
+				from [SuperPharmPoland].[dbo].[Vw_Fact_Invoice]
 				where LSClientID &gt; 0 and is_ecommerce = 0
 				and [DOCUMENT_TYPE] &lt;&gt; 'ZWR'
 				group by LSClientId
@@ -3620,7 +3620,7 @@ from inv_c full join row_c on inv_c.[Loyalty Id] = row_c.[Loyalty Id]
 								LSClientId, S.StoreParentId
 								,dense_rank()over(partition by LSClientId order by count(distinct a.STORE_ID+INVOICE_ID) desc ,sum(Net_Revenue) desc ,count(INVOICE_ROW_NUMBER) desc, max(INVOICE_DATE) desc) as rank_by_params
 								,row_number()over(partition by LSClientId order by count(distinct a.STORE_ID+INVOICE_ID) desc ,sum(Net_Revenue) desc ,count(INVOICE_ROW_NUMBER) desc, max(INVOICE_DATE) desc) as row_num
-						from [SuperPharmPoland].[dbo].[DWH_Invoice_Fact] a
+						from [SuperPharmPoland].[dbo].[Vw_Fact_Invoice] a
 						join DWH_DIM_Stores s on s.Store_ID = a.STORE_ID
 						where LSClientID &gt; 0 and is_ecommerce = 0
 						and [DOCUMENT_TYPE] &lt;&gt; 'ZWR'
@@ -16804,54 +16804,54 @@ group by [requester_email]
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\ODS Magento Sale Orders (email).Outputs[OLE DB Source Output]" />
             <path
               refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output9]"
-              endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 4.Inputs[Merge Join Left Input]"
-              name="Sort Output"
-              startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_Merge Join 3.Outputs[Sort Output]" />
-            <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output]"
-              endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 4.Inputs[Merge Join Right Input]"
-              name="Sort Output"
-              startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_ODS Magento Sale Orders (email).Outputs[Sort Output]" />
-            <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output1]"
-              endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 6.Inputs[Merge Join Left Input]"
-              name="Sort Output"
-              startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_Merge Join 5.Outputs[Sort Output]" />
-            <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output2]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 2.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_cdp_ODS_CiValue_coupons &amp; cdp_ODS_activated_cupons.Outputs[Sort Output]" />
             <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output3]"
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 3.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_short_term_kpis_calculation_over_DWH_Invoice_Fact.Outputs[Sort Output]" />
             <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output4]"
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output1]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 7.Inputs[Merge Join Left Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_Merge Join 4.Outputs[Sort Output]" />
             <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output5]"
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output2]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 7.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_ODS Magento Sale Orders (magento id).Outputs[Sort Output]" />
             <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output6]"
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output3]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 2.Inputs[Merge Join Left Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_Merge Join 1.Outputs[Sort Output]" />
             <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output7]"
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output4]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 6.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_cdp_dwh_DIM_customer_KPIs.Outputs[Sort Output]" />
             <path
-              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output8]"
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output5]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 1.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_ODS_Freshdesk_tickets.Outputs[Sort Output]" />
+            <path
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output6]"
+              endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 4.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_Merge Join 3.Outputs[Sort Output]" />
+            <path
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output7]"
+              endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 4.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_ODS Magento Sale Orders (email).Outputs[Sort Output]" />
+            <path
+              refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output8]"
+              endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 6.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Sort_Merge Join 5.Outputs[Sort Output]" />
             <path
               refId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output10]"
               endId="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs\Merge Join 1.Inputs[Merge Join Left Input]"
@@ -16865,7 +16865,7 @@ group by [requester_email]
       DTS:refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{E55C55A0-6CF9-4D77-856F-5ECA2AE078F6}"
+      DTS:DTSID="{2BD83C60-B005-41D7-9584-47C0FEEA5D4C}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs"
@@ -17238,6 +17238,12 @@ group by [requester_email]
                       cachedName="gross_Revenue_Life_Time_online"
                       externalMetadataColumnId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[gross_Revenue_Life_Time_online]"
                       lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[gross_Revenue_Life_Time_online]" />
+                    <inputColumn
+                      refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].Columns[last_transaction_date_all]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="last_transaction_date_all"
+                      externalMetadataColumnId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_transaction_date_all]"
+                      lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_all]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -17436,6 +17442,10 @@ group by [requester_email]
                       refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[gross_Revenue_Life_Time_online]"
                       dataType="r8"
                       name="gross_Revenue_Life_Time_online" />
+                    <externalMetadataColumn
+                      refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs.Inputs[OLE DB Destination Input].ExternalColumns[last_transaction_date_all]"
+                      dataType="dbTimeStamp"
+                      name="last_transaction_date_all" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -17955,6 +17965,15 @@ group by [requester_email]
                       lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[gross_Revenue_Life_Time_online]"
                       name="gross_Revenue_Life_Time_online"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_all]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_transaction_date_all]"
+                      lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].Columns[last_transaction_date_all]"
+                      name="last_transaction_date_all"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -18153,6 +18172,10 @@ group by [requester_email]
                       refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[gross_Revenue_Life_Time_online]"
                       dataType="r8"
                       name="gross_Revenue_Life_Time_online" />
+                    <externalMetadataColumn
+                      refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Output].ExternalColumns[last_transaction_date_all]"
+                      dataType="dbTimeStamp"
+                      name="last_transaction_date_all" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -18403,6 +18426,11 @@ group by [requester_email]
                       lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[gross_Revenue_Life_Time_online]"
                       name="gross_Revenue_Life_Time_online" />
                     <outputColumn
+                      refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_transaction_date_all]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[last_transaction_date_all]"
+                      name="last_transaction_date_all" />
+                    <outputColumn
                       refId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
                       lineageId="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_STG_DIM_customer_KPIs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
@@ -18434,7 +18462,7 @@ group by [requester_email]
       DTS:refId="Package\1st_load  -    Truncate cdp_DWH_DIM_customer_KPIs"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{4348D06D-0112-456B-B95E-7D53157EF785}"
+      DTS:DTSID="{0232E370-83AA-4A39-BC77-AE0D4609EBFE}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="1st_load  -    Truncate cdp_DWH_DIM_customer_KPIs"
@@ -18443,7 +18471,7 @@ group by [requester_email]
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{C1C9B73D-95A1-4F63-9EA4-9069FC3CE926}"
+          SQLTask:Connection="{BB09ACEF-B9F4-42D0-AA3E-A71E3E2BEFCA}"
           SQLTask:SqlStatementSource="truncate table [SuperPharmPoland].[dbo].cdp_DWH_DIM_customer_KPIs" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -18451,7 +18479,7 @@ group by [requester_email]
       DTS:refId="Package\1st_load  -    Truncate cdp_ODS_Freshdesk_tickets"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{E3196E10-31DF-4E26-B26D-E1C2CBCEE05D}"
+      DTS:DTSID="{824C2715-6375-4B6A-8213-9935C957FD73}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="1st_load  -    Truncate cdp_ODS_Freshdesk_tickets"
@@ -18460,7 +18488,7 @@ group by [requester_email]
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{C1C9B73D-95A1-4F63-9EA4-9069FC3CE926}"
+          SQLTask:Connection="{BB09ACEF-B9F4-42D0-AA3E-A71E3E2BEFCA}"
           SQLTask:SqlStatementSource="truncate table [SuperPharmPoland].[dbo].[cdp_ODS_Freshdesk_tickets]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -18468,7 +18496,7 @@ group by [requester_email]
       DTS:refId="Package\1st_load  -    Truncate cdp_STG_DIM_customer_KPIs"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{95D81C90-D711-4124-920F-5508F4786D7A}"
+      DTS:DTSID="{1737535F-8202-46D2-90C1-0E8BA4987B8A}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="1st_load  -    Truncate cdp_STG_DIM_customer_KPIs"
@@ -18477,7 +18505,7 @@ group by [requester_email]
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{C1C9B73D-95A1-4F63-9EA4-9069FC3CE926}"
+          SQLTask:Connection="{BB09ACEF-B9F4-42D0-AA3E-A71E3E2BEFCA}"
           SQLTask:SqlStatementSource="truncate table [SuperPharmPoland].[dbo].cdp_STG_DIM_customer_KPIs" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -18485,7 +18513,7 @@ group by [requester_email]
       DTS:refId="Package\create supporting tables for coupons KPIs calc"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{F06578E6-1ACB-4127-8D60-0C1F3B6428D1}"
+      DTS:DTSID="{EE568BB4-5739-4A2D-B8B3-343799557C1B}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="create supporting tables for coupons KPIs calc"
@@ -18494,8 +18522,25 @@ group by [requester_email]
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{C1C9B73D-95A1-4F63-9EA4-9069FC3CE926}"
+          SQLTask:Connection="{BB09ACEF-B9F4-42D0-AA3E-A71E3E2BEFCA}"
           SQLTask:SqlStatementSource="-- select only inv coupons&#xA;drop table if exists inv_coupons&#xA;;&#xA;&#xA;select promotion_id&#xA;into inv_coupons&#xA;from DWH_dim_campaign_new&#xA;where promotion_type like '%paragon%'&#xA;;&#xA;&#xA;&#xA;-- select only raw coupons &#xA;drop table if exists raw_coupons&#xA;;&#xA;&#xA;select promotion_id&#xA;into raw_coupons&#xA;from DWH_dim_campaign_new&#xA;where promotion_type not like '%paragon%'&#xA;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update last transaction all channels"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DA08B413-086A-4096-B34F-731B44257CEB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update last transaction all channels"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BB09ACEF-B9F4-42D0-AA3E-A71E3E2BEFCA}"
+          SQLTask:SqlStatementSource="update [dbo].[cdp_stg_DIM_customer_KPIs]&#xA;&#xA;set last_transaction_date_all = &#xA;&#xA;case &#xA;&#xA;when last_order_date_online is null and last_transaction_date_offline is null then null &#xA;when isnull(last_order_date_online, '1900-01-01') &gt;= isnull(last_transaction_date_offline, '1900-01-01') then last_order_date_online&#xA;when isnull(last_transaction_date_offline, '1900-01-01') &gt;= isnull(last_order_date_online, '1900-01-01') then last_transaction_date_offline&#xA;end&#xA;&#xA;from &#xA;&#xA;[dbo].[cdp_stg_DIM_customer_KPIs]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -18503,7 +18548,7 @@ group by [requester_email]
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{E99AD32D-16F1-453A-8F00-BF9AFDECE9F9}"
+      DTS:DTSID="{8E1DAFED-6336-47BF-81BB-6D6120549E65}"
       DTS:From="Package\1st_load  -    Truncate cdp_STG_DIM_customer_KPIs"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -18511,7 +18556,7 @@ group by [requester_email]
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{A22AA466-A7EE-4D6C-8C62-0DE0DF653230}"
+      DTS:DTSID="{28A4D6E1-AC1B-489D-9E26-6283B7DC91EC}"
       DTS:From="Package\create supporting tables for coupons KPIs calc"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -18519,7 +18564,7 @@ group by [requester_email]
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 17]"
       DTS:CreationName=""
-      DTS:DTSID="{1CD4C1B5-B233-42F8-96B7-6CD0CA26BC7B}"
+      DTS:DTSID="{4CA2386F-9938-4725-A44A-1981A159CC71}"
       DTS:From="Package\1st_load  -    Truncate cdp_ODS_Freshdesk_tickets"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 17"
@@ -18527,27 +18572,35 @@ group by [requester_email]
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 18]"
       DTS:CreationName=""
-      DTS:DTSID="{DE11C9FD-A9A3-436C-8105-C5FDE1C7ED55}"
+      DTS:DTSID="{49C37852-2908-4EE2-9E72-3DAEC4BA28E0}"
       DTS:From="Package\1st_load  -    172,27,160,70_Freshdesk_tickets --&gt; SUPERDW cdp_ODS_Freshdesk_tickets"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 18"
       DTS:To="Package\1st_load  -    Truncate cdp_STG_DIM_customer_KPIs" />
     <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 20]"
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{B788C10A-0B1A-405F-B16E-07408E47FD98}"
+      DTS:DTSID="{10DE60CF-283F-46A4-A534-D48C3B2BCC2C}"
       DTS:From="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs"
       DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 20"
-      DTS:To="Package\1st_load  -    Truncate cdp_DWH_DIM_customer_KPIs" />
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update last transaction all channels" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 21]"
       DTS:CreationName=""
-      DTS:DTSID="{745A2F61-1D03-4E80-BC26-99AEA5D577B5}"
+      DTS:DTSID="{51921765-8A5C-481B-81F3-C61492E180B6}"
       DTS:From="Package\1st_load  -    Truncate cdp_DWH_DIM_customer_KPIs"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 21"
       DTS:To="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{3ED360DA-5B54-4066-B949-51CAFBEA576C}"
+      DTS:From="Package\Update last transaction all channels"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\1st_load  -    Truncate cdp_DWH_DIM_customer_KPIs" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -18568,7 +18621,7 @@ group by [requester_email]
         <NodeLayout
           Size="583.2,41.6"
           Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs"
-          TopLeft="722.704774380382,543.380387815496" />
+          TopLeft="785.561918307976,536.03921124195" />
         <NodeLayout
           Size="461.6,41.6"
           Id="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs"
@@ -18589,6 +18642,10 @@ group by [requester_email]
           Size="296.8,41.6"
           Id="Package\create supporting tables for coupons KPIs calc"
           TopLeft="859.444444444447,397.777777777777" />
+        <NodeLayout
+          Size="245.6,41.6"
+          Id="Package\Update last transaction all channels"
+          TopLeft="1143.65715148887,658.729418422607" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="1045.66668148268,253.382622985179">
@@ -18629,26 +18686,26 @@ group by [requester_email]
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-89.4063367307316,104.002610037719"
+              EndConnector="-26.549192803138,96.6614334641734"
               Start="0,0"
-              End="-89.4063367307316,96.502610037719">
+              End="-26.549192803138,89.1614334641734">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,58.230836703828" />
+                    End="0,53.8381819387544" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,58.230836703828"
-                    Point2="0,62.230836703828"
-                    Point3="-4,62.230836703828" />
+                    Point1="0,53.8381819387544"
+                    Point2="0,57.8381819387544"
+                    Point3="-4,57.8381819387544" />
                   <mssgle:LineSegment
-                    End="-85.4063367307316,62.230836703828" />
+                    End="-22.549192803138,57.8381819387544" />
                   <mssgle:CubicBezierSegment
-                    Point1="-85.4063367307316,62.230836703828"
-                    Point2="-89.4063367307316,62.230836703828"
-                    Point3="-89.4063367307316,66.230836703828" />
+                    Point1="-22.549192803138,57.8381819387544"
+                    Point2="-26.549192803138,57.8381819387544"
+                    Point3="-26.549192803138,61.8381819387544" />
                   <mssgle:LineSegment
-                    End="-89.4063367307316,96.502610037719" />
+                    End="-26.549192803138,89.1614334641734" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -18714,31 +18771,31 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 20]"
-          TopLeft="1110.17144104705,543.380387815496">
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1077.16191830798,577.63921124195">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="423.200011852811,-202.61345101903"
+              EndConnector="149.695233180894,81.0902071806569"
               Start="0,0"
-              End="423.200011852811,-195.11345101903">
+              End="149.695233180894,73.5902071806569">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-97.0506505164361" />
+                    End="0,44.3392108824498" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-97.0506505164361"
-                    Point2="0,-101.050650516436"
-                    Point3="4,-101.050650516436" />
+                    Point1="0,44.3392108824498"
+                    Point2="0,48.3392108824498"
+                    Point3="4,48.3392108824498" />
                   <mssgle:LineSegment
-                    End="419.200011852811,-101.050650516436" />
+                    End="145.695233180894,48.3392108824498" />
                   <mssgle:CubicBezierSegment
-                    Point1="419.200011852811,-101.050650516436"
-                    Point2="423.200011852811,-101.050650516436"
-                    Point3="423.200011852811,-105.050650516436" />
+                    Point1="145.695233180894,48.3392108824498"
+                    Point2="149.695233180894,48.3392108824498"
+                    Point3="149.695233180894,52.3392108824498" />
                   <mssgle:LineSegment
-                    End="423.200011852811,-195.11345101903" />
+                    End="149.695233180894,73.5902071806569" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -18773,6 +18830,40 @@ group by [requester_email]
                     Point3="-49.5619055355501,24.3073859022322" />
                   <mssgle:LineSegment
                     End="-49.5619055355501,42.9084047218529" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1306.05715148887,658.729418422607">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="227.31430141099,-317.962481626141"
+              Start="0,0"
+              End="227.31430141099,-310.462481626141">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-155.320243447384" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-155.320243447384"
+                    Point2="0,-159.320243447384"
+                    Point3="4,-159.320243447384" />
+                  <mssgle:LineSegment
+                    End="223.31430141099,-159.320243447384" />
+                  <mssgle:CubicBezierSegment
+                    Point1="223.31430141099,-159.320243447384"
+                    Point2="227.31430141099,-159.320243447384"
+                    Point3="227.31430141099,-163.320243447384" />
+                  <mssgle:LineSegment
+                    End="227.31430141099,-310.462481626141" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19293,267 +19384,7 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output]"
-          TopLeft="905.224502798421,978.433617928917">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-201.926533994592,8.34957887835594"
-              Start="0,0"
-              End="-194.426533994592,8.34957887835594">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-96.9632669972959,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-96.9632669972959,0"
-                    Point2="-100.963266997296,0"
-                    Point3="-100.963266997296,4" />
-                  <mssgle:LineSegment
-                    End="-100.963266997296,4.34957887835594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-100.963266997296,4.34957887835594"
-                    Point2="-100.963266997296,8.34957887835594"
-                    Point3="-104.963266997296,8.34957887835594" />
-                  <mssgle:LineSegment
-                    End="-194.426533994592,8.34957887835594" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output9]"
-          TopLeft="633.967356447715,922.810086374665">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,43.1731104326079"
-              Start="0,0"
-              End="0,35.6731104326079">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35.6731104326079" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output8]"
-          TopLeft="605.085722771469,154.776472175493">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-92.4380965420988,45.2705894536213"
-              Start="0,0"
-              End="-92.4380965420988,37.7705894536213">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.8519267730622" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.8519267730622"
-                    Point2="0,26.8519267730622"
-                    Point3="-4,26.8519267730622" />
-                  <mssgle:LineSegment
-                    End="-88.4380965420988,26.8519267730622" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-88.4380965420988,26.8519267730622"
-                    Point2="-92.4380965420988,26.8519267730622"
-                    Point3="-92.4380965420988,30.8519267730622" />
-                  <mssgle:LineSegment
-                    End="-92.4380965420988,37.7705894536213" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output7]"
-          TopLeft="931.809539678146,1619.27844266067">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-85.5183711602463,33.4543354003292"
-              Start="0,0"
-              End="-78.0183711602463,33.4543354003292">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-38.7591855801231,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-38.7591855801231,0"
-                    Point2="-42.7591855801231,0"
-                    Point3="-42.7591855801231,4" />
-                  <mssgle:LineSegment
-                    End="-42.7591855801231,29.4543354003292" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-42.7591855801231,29.4543354003292"
-                    Point2="-42.7591855801231,33.4543354003292"
-                    Point3="-46.7591855801231,33.4543354003292" />
-                  <mssgle:LineSegment
-                    End="-78.0183711602463,33.4543354003292" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output6]"
-          TopLeft="502.571428571429,382.171428571429">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="92.3238188464622,68.0874012726928"
-              Start="0,0"
-              End="92.3238188464622,60.5874012726928">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.3855557263172" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,36.3855557263172"
-                    Point2="0,40.3855557263172"
-                    Point3="4,40.3855557263172" />
-                  <mssgle:LineSegment
-                    End="88.3238188464622,40.3855557263172" />
-                  <mssgle:CubicBezierSegment
-                    Point1="88.3238188464622,40.3855557263172"
-                    Point2="92.3238188464622,40.3855557263172"
-                    Point3="92.3238188464622,44.3855557263172" />
-                  <mssgle:LineSegment
-                    End="92.3238188464622,60.5874012726928" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output5]"
-          TopLeft="970.476207003302,1168.72157197356">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-126.361909270773,59.1372557313384"
-              Start="0,0"
-              End="-118.861909270773,59.1372557313384">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-59.1809546353866,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-59.1809546353866,0"
-                    Point2="-63.1809546353866,0"
-                    Point3="-63.1809546353866,4" />
-                  <mssgle:LineSegment
-                    End="-63.1809546353866,55.1372557313384" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-63.1809546353866,55.1372557313384"
-                    Point2="-63.1809546353866,59.1372557313384"
-                    Point3="-67.1809546353866,59.1372557313384" />
-                  <mssgle:LineSegment
-                    End="-118.861909270773,59.1372557313384" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output4]"
-          TopLeft="625.809533070545,1107.71765030484">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="149.104764661984,99.3411774000631"
-              Start="0,0"
-              End="149.104764661984,91.8411774000631">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,45.6705887000315" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,45.6705887000315"
-                    Point2="0,49.6705887000315"
-                    Point3="4,49.6705887000315" />
-                  <mssgle:LineSegment
-                    End="145.104764661984,49.6705887000315" />
-                  <mssgle:CubicBezierSegment
-                    Point1="145.104764661984,49.6705887000315"
-                    Point2="149.104764661984,49.6705887000315"
-                    Point3="149.104764661984,53.6705887000315" />
-                  <mssgle:LineSegment
-                    End="149.104764661984,91.8411774000631" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output3]"
-          TopLeft="834.285728493516,728.141187950319">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-133.600004632132,45.5999973745907"
-              Start="0,0"
-              End="-126.100004632132,45.5999973745907">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-62.8000023160661,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-62.8000023160661,0"
-                    Point2="-66.8000023160661,0"
-                    Point3="-66.8000023160661,4" />
-                  <mssgle:LineSegment
-                    End="-66.8000023160661,41.5999973745907" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-66.8000023160661,41.5999973745907"
-                    Point2="-66.8000023160661,45.5999973745907"
-                    Point3="-70.8000023160661,45.5999973745907" />
-                  <mssgle:LineSegment
-                    End="-126.100004632132,45.5999973745907" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output2]"
           TopLeft="910.685714344103,362.836974566842">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -19587,7 +19418,7 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output1]"
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output8]"
           TopLeft="776.552392889529,1523.0341795078">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -19609,31 +19440,31 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output]"
-          TopLeft="594.228579048235,73.8823515426741">
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output7]"
+          TopLeft="905.224502798421,978.433617928917">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="10.857143723234,39.2941206328189"
+              EndConnector="-201.926533994592,8.34957887835594"
               Start="0,0"
-              End="10.857143723234,31.7941206328189">
+              End="-194.426533994592,8.34957887835594">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.6470603164094" />
+                    End="-96.9632669972959,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,15.6470603164094"
-                    Point2="0,19.6470603164094"
-                    Point3="4,19.6470603164094" />
+                    Point1="-96.9632669972959,0"
+                    Point2="-100.963266997296,0"
+                    Point3="-100.963266997296,4" />
                   <mssgle:LineSegment
-                    End="6.857143723234,19.6470603164094" />
+                    End="-100.963266997296,4.34957887835594" />
                   <mssgle:CubicBezierSegment
-                    Point1="6.857143723234,19.6470603164094"
-                    Point2="10.857143723234,19.6470603164094"
-                    Point3="10.857143723234,23.6470603164094" />
+                    Point1="-100.963266997296,4.34957887835594"
+                    Point2="-100.963266997296,8.34957887835594"
+                    Point3="-104.963266997296,8.34957887835594" />
                   <mssgle:LineSegment
-                    End="10.857143723234,31.7941206328189" />
+                    End="-194.426533994592,8.34957887835594" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19643,19 +19474,19 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output1]"
-          TopLeft="353.571432327738,72">
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output6]"
+          TopLeft="633.967356447715,922.810086374665">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,41.176472175493"
+              EndConnector="0,43.1731104326079"
               Start="0,0"
-              End="0,33.676472175493">
+              End="0,35.6731104326079">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.676472175493" />
+                    End="0,35.6731104326079" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19665,19 +19496,201 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output2]"
-          TopLeft="912.967353664543,293.956304635308">
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output5]"
+          TopLeft="605.085722771469,154.776472175493">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,27.2806699315339"
+              EndConnector="-92.4380965420988,45.2705894536213"
               Start="0,0"
-              End="0,19.7806699315339">
+              End="-92.4380965420988,37.7705894536213">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.7806699315339" />
+                    End="0,22.8519267730622" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.8519267730622"
+                    Point2="0,26.8519267730622"
+                    Point3="-4,26.8519267730622" />
+                  <mssgle:LineSegment
+                    End="-88.4380965420988,26.8519267730622" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-88.4380965420988,26.8519267730622"
+                    Point2="-92.4380965420988,26.8519267730622"
+                    Point3="-92.4380965420988,30.8519267730622" />
+                  <mssgle:LineSegment
+                    End="-92.4380965420988,37.7705894536213" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output4]"
+          TopLeft="931.809539678146,1619.27844266067">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-85.5183711602463,33.4543354003292"
+              Start="0,0"
+              End="-78.0183711602463,33.4543354003292">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-38.7591855801231,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-38.7591855801231,0"
+                    Point2="-42.7591855801231,0"
+                    Point3="-42.7591855801231,4" />
+                  <mssgle:LineSegment
+                    End="-42.7591855801231,29.4543354003292" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.7591855801231,29.4543354003292"
+                    Point2="-42.7591855801231,33.4543354003292"
+                    Point3="-46.7591855801231,33.4543354003292" />
+                  <mssgle:LineSegment
+                    End="-78.0183711602463,33.4543354003292" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output3]"
+          TopLeft="502.571428571429,382.171428571429">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="92.3238188464622,68.0874012726928"
+              Start="0,0"
+              End="92.3238188464622,60.5874012726928">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.3855557263172" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.3855557263172"
+                    Point2="0,40.3855557263172"
+                    Point3="4,40.3855557263172" />
+                  <mssgle:LineSegment
+                    End="88.3238188464622,40.3855557263172" />
+                  <mssgle:CubicBezierSegment
+                    Point1="88.3238188464622,40.3855557263172"
+                    Point2="92.3238188464622,40.3855557263172"
+                    Point3="92.3238188464622,44.3855557263172" />
+                  <mssgle:LineSegment
+                    End="92.3238188464622,60.5874012726928" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output2]"
+          TopLeft="970.476207003302,1168.72157197356">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-126.361909270773,59.1372557313384"
+              Start="0,0"
+              End="-118.861909270773,59.1372557313384">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-59.1809546353866,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-59.1809546353866,0"
+                    Point2="-63.1809546353866,0"
+                    Point3="-63.1809546353866,4" />
+                  <mssgle:LineSegment
+                    End="-63.1809546353866,55.1372557313384" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-63.1809546353866,55.1372557313384"
+                    Point2="-63.1809546353866,59.1372557313384"
+                    Point3="-67.1809546353866,59.1372557313384" />
+                  <mssgle:LineSegment
+                    End="-118.861909270773,59.1372557313384" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output1]"
+          TopLeft="625.809533070545,1107.71765030484">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="149.104764661984,99.3411774000631"
+              Start="0,0"
+              End="149.104764661984,91.8411774000631">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.6705887000315" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.6705887000315"
+                    Point2="0,49.6705887000315"
+                    Point3="4,49.6705887000315" />
+                  <mssgle:LineSegment
+                    End="145.104764661984,49.6705887000315" />
+                  <mssgle:CubicBezierSegment
+                    Point1="145.104764661984,49.6705887000315"
+                    Point2="149.104764661984,49.6705887000315"
+                    Point3="149.104764661984,53.6705887000315" />
+                  <mssgle:LineSegment
+                    End="149.104764661984,91.8411774000631" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[Sort Output]"
+          TopLeft="834.285728493516,728.141187950319">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-133.600004632132,45.5999973745907"
+              Start="0,0"
+              End="-126.100004632132,45.5999973745907">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-62.8000023160661,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-62.8000023160661,0"
+                    Point2="-66.8000023160661,0"
+                    Point3="-66.8000023160661,4" />
+                  <mssgle:LineSegment
+                    End="-66.8000023160661,41.5999973745907" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-66.8000023160661,41.5999973745907"
+                    Point2="-66.8000023160661,45.5999973745907"
+                    Point3="-70.8000023160661,45.5999973745907" />
+                  <mssgle:LineSegment
+                    End="-126.100004632132,45.5999973745907" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19721,6 +19734,50 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output5]"
+          TopLeft="1004.21226047371,597.640346998891">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.134453212797"
+              Start="0,0"
+              End="0,24.634453212797">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.634453212797" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output4]"
+          TopLeft="1034.92382559193,1492.2196189425">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.3058819925909"
+              Start="0,0"
+              End="0,26.8058819925909">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.8058819925909" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output3]"
           TopLeft="1025.08572971967,929.647069067773">
           <EdgeLayout.Curve>
@@ -19755,19 +19812,19 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output4]"
-          TopLeft="1034.92382559193,1492.2196189425">
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output2]"
+          TopLeft="912.967353664543,293.956304635308">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,34.3058819925909"
+              EndConnector="0,27.2806699315339"
               Start="0,0"
-              End="0,26.8058819925909">
+              End="0,19.7806699315339">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.8058819925909" />
+                    End="0,19.7806699315339" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -19777,19 +19834,53 @@ group by [requester_email]
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output5]"
-          TopLeft="1004.21226047371,597.640346998891">
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output1]"
+          TopLeft="353.571432327738,72">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,32.134453212797"
+              EndConnector="0,41.176472175493"
               Start="0,0"
-              End="0,24.634453212797">
+              End="0,33.676472175493">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.634453212797" />
+                    End="0,33.676472175493" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\1st_load  -    cdp_ODS_Freshdesk_tickets + other calculations over dwh --&gt; cdp_STG_DIM_customer_KPIs.Paths[OLE DB Source Output]"
+          TopLeft="594.228579048235,73.8823515426741">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.857143723234,39.2941206328189"
+              Start="0,0"
+              End="10.857143723234,31.7941206328189">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.6470603164094" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.6470603164094"
+                    Point2="0,19.6470603164094"
+                    Point3="4,19.6470603164094" />
+                  <mssgle:LineSegment
+                    End="6.857143723234,19.6470603164094" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.857143723234,19.6470603164094"
+                    Point2="10.857143723234,19.6470603164094"
+                    Point3="10.857143723234,23.6470603164094" />
+                  <mssgle:LineSegment
+                    End="10.857143723234,31.7941206328189" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -20059,7 +20150,7 @@ group by [requester_email]
     design-time-name="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="226.4,41.6"
           Id="Package\1st_load  -    cdp_STG_DIM_customer_KPIs  --&gt;  cdp_DWH_DIM_customer_KPIs\cdp_DWH_DIM_customer_KPIs"
@@ -20093,9 +20184,7 @@ group by [requester_email]
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

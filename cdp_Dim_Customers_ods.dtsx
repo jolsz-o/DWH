@@ -5,22 +5,22 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="SUPERDW"
   DTS:CreatorName="SPP\amitchickov"
-  DTS:DTSID="{E3D1A4AD-4B4F-4E81-912E-8AA0E0156B9F}"
+  DTS:DTSID="{8CEFCEE5-4FCC-4D0F-B20E-A605A76C2009}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.93"
   DTS:LocaleID="1045"
   DTS:ObjectName="cdp_Dim_Customers_ods"
   DTS:PackageType="5"
   DTS:ProtectionLevel="2"
-  DTS:VersionBuild="321"
-  DTS:VersionGUID="{66ED5D99-50F6-415E-887F-AE8A5E941B96}">
+  DTS:VersionBuild="326"
+  DTS:VersionGUID="{7D15264A-EE0D-42F7-A3D5-E34E3F86DCBC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[172.27.160.70.CDP]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{5D1B3E6D-36EE-4F16-A422-3138513040ED}"
+      DTS:DTSID="{FEAE69BF-88F0-4E57-A8DA-A6DA91B561B2}"
       DTS:ObjectName="172.27.160.70.CDP">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -30,19 +30,19 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
       DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-      DTS:DTSID="{288E2E15-BD8A-4040-8298-293DEC483CB9}"
+      DTS:DTSID="{6E8B797B-70DC-43DB-A1B9-92AACED48847}"
       DTS:ObjectName="MagentoDB_new.promoviewonly">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
           <EncryptedData
             Type="http://www.w3.org/2001/04/xmlenc#Element"
-            Salt="uV2l5tOzRxM="
-            IV="SiaDTvz0szlfnugqWQhiCA==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            Salt="ZkIyLcPLOw8="
+            IV="jJ45FGcx2czwxlHR1G/CJA==" xmlns="http://www.w3.org/2001/04/xmlenc#">
             <EncryptionMethod
               Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
             <CipherData>
-              <CipherValue>SiaDTvz0szlfnugqWQhiCMD62LIBbKNuRQtrsjbUihMEIAVcKlkS+OM0cFle0vfIF1gexzubcxeqDlRsU7TekuVdKXPPHhVvBsY99W+UwnZRdNmP1W5C4GxD9BO05qxCHqFxPR6yhszvoDXXCimEYJBlXUZS+xWtxxWHI0Fn5lzRuavejVCVTSc4bo7Bh3bm</CipherValue>
+              <CipherValue>jJ45FGcx2czwxlHR1G/CJPWZwsLQHInp5a2P1eFxLvZL3n4PgjUQmP/uKDndHDs2JxYwoF27EyW1H6/Jkl3pfZc20W0DG+7ddSRWbK0/+J61n102VlkICeOUAPG+rZLkZCNNCLyZNcJeHkxTiDPKbd3ChcL4zi0mTWdoXa+T4/EW5sHlzGeKZ31yVNEO0mNW</CipherValue>
             </CipherData>
           </EncryptedData>
         </DTS:ConnectionManager>
@@ -51,7 +51,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{A4EF0005-0C90-4C40-BFFF-60F690526E5C}"
+      DTS:DTSID="{5ACE539F-B05B-4B51-80DF-875FC9B8E625}"
       DTS:ObjectName="SUPERDW.SuperPharmPoland">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -65,7 +65,7 @@
       DTS:refId="Package\172,27,160,70_LS_customers --&gt; SUPERDW cdp_ODS_LS_customers_SapakimDB"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{7B3B866A-8E02-45E7-8F0D-F5EEFCC17443}"
+      DTS:DTSID="{241CABBC-38A0-42E9-A4B1-C57867077CBD}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="172,27,160,70_LS_customers --&gt; SUPERDW cdp_ODS_LS_customers_SapakimDB"
@@ -1685,7 +1685,7 @@ where isnull([kod],0) not in (
       DTS:refId="Package\Magento  lifestyle_customer_customer --&gt; SUPERDW cdp_ODS_lifestyle_customer_customer_magento"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{B4DC6EB2-6634-4C0B-9FBB-DCA1887D6022}"
+      DTS:DTSID="{6C9A4C2C-7E3A-460A-84B0-EE36C3341088}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Magento  lifestyle_customer_customer --&gt; SUPERDW cdp_ODS_lifestyle_customer_customer_magento"
@@ -1949,7 +1949,7 @@ where isnull([kod],0) not in (
       DTS:refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{2635bd6e-bf8e-41a8-a09b-f3a920a61380}"
+      DTS:DTSID="{D5622CFF-8DBB-420A-BBE9-B0EF9EE30B62}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber"
@@ -1979,6 +1979,7 @@ where isnull([kod],0) not in (
 customer_id,
 cast(subscriber_email as char(200)) as subscriber_email,
 case when subscriber_status = 3 then 0 else 1 end as subscriber_status
+, store_id
 FROM newsletter_subscriber
 where subscriber_status in (1,3)
 ;</property>
@@ -2046,6 +2047,15 @@ where subscriber_status in (1,3)
                       lineageId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].Columns[subscriber_status]"
                       name="subscriber_status"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].Columns[store_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].ExternalColumns[store_id]"
+                      lineageId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].Columns[store_id]"
+                      name="store_id"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2062,6 +2072,10 @@ where subscriber_status in (1,3)
                       refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].ExternalColumns[subscriber_status]"
                       dataType="i4"
                       name="subscriber_status" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].ExternalColumns[store_id]"
+                      dataType="i4"
+                      name="store_id" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -2085,6 +2099,11 @@ where subscriber_status in (1,3)
                       dataType="i4"
                       lineageId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Error Output].Columns[subscriber_status]"
                       name="subscriber_status" />
+                    <outputColumn
+                      refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Error Output].Columns[store_id]"
+                      dataType="i4"
+                      lineageId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Error Output].Columns[store_id]"
+                      name="store_id" />
                     <outputColumn
                       refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -2193,6 +2212,12 @@ where subscriber_status in (1,3)
                       cachedName="subscriber_status"
                       externalMetadataColumnId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber.Inputs[OLE DB Destination Input].ExternalColumns[subscriber_status]"
                       lineageId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].Columns[subscriber_status]" />
+                    <inputColumn
+                      refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber.Inputs[OLE DB Destination Input].Columns[store_id]"
+                      cachedDataType="i4"
+                      cachedName="store_id"
+                      externalMetadataColumnId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber.Inputs[OLE DB Destination Input].ExternalColumns[store_id]"
+                      lineageId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber.Outputs[ADO NET Source Output].Columns[store_id]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2203,12 +2228,16 @@ where subscriber_status in (1,3)
                     <externalMetadataColumn
                       refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber.Inputs[OLE DB Destination Input].ExternalColumns[subscriber_email]"
                       dataType="wstr"
-                      length="225"
+                      length="400"
                       name="subscriber_email" />
                     <externalMetadataColumn
                       refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber.Inputs[OLE DB Destination Input].ExternalColumns[subscriber_status]"
                       dataType="i4"
                       name="subscriber_status" />
+                    <externalMetadataColumn
+                      refId="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber.Inputs[OLE DB Destination Input].ExternalColumns[store_id]"
+                      dataType="i4"
+                      name="store_id" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2252,7 +2281,7 @@ where subscriber_status in (1,3)
       DTS:refId="Package\Magento customer_grid_flat --&gt; SUPERDW  cdp_ODS_customer_grid_flat_magento"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{632BC3FE-BEAE-453B-8F3F-FDCB2A683844}"
+      DTS:DTSID="{83AD636A-A30B-4199-838C-58BA883A108B}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Magento customer_grid_flat --&gt; SUPERDW  cdp_ODS_customer_grid_flat_magento"
@@ -3391,7 +3420,7 @@ from magento.customer_grid_flat
       DTS:refId="Package\Truncate table cdp_ODS_customer_grid_flat_magento"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{AB06BE42-3262-4CD8-A140-7B74DCB7F6DA}"
+      DTS:DTSID="{1A66834D-FB77-4EC5-83D1-79B172F3AC11}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate table cdp_ODS_customer_grid_flat_magento"
@@ -3400,7 +3429,7 @@ from magento.customer_grid_flat
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{A4EF0005-0C90-4C40-BFFF-60F690526E5C}"
+          SQLTask:Connection="{5ACE539F-B05B-4B51-80DF-875FC9B8E625}"
           SQLTask:SqlStatementSource="truncate table [cdp_ODS_customer_grid_flat_magento];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -3408,7 +3437,7 @@ from magento.customer_grid_flat
       DTS:refId="Package\Truncate table cdp_ODS_lifestyle_customer_customer_magento"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{894A9946-563C-4DB0-8010-43FA69CE8078}"
+      DTS:DTSID="{C1A9FBA8-33AE-44A2-BE49-E6A07CF7A803}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate table cdp_ODS_lifestyle_customer_customer_magento"
@@ -3417,7 +3446,7 @@ from magento.customer_grid_flat
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{A4EF0005-0C90-4C40-BFFF-60F690526E5C}"
+          SQLTask:Connection="{5ACE539F-B05B-4B51-80DF-875FC9B8E625}"
           SQLTask:SqlStatementSource="truncate table [cdp_ODS_lifestyle_customer_customer_magento];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -3425,7 +3454,7 @@ from magento.customer_grid_flat
       DTS:refId="Package\Truncate table cdp_ODS_LS_customers_SapakimDB"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{8FF9A22B-EB3B-4A14-8B57-43090BCBF0F2}"
+      DTS:DTSID="{27610C15-D5DC-42E0-A0DE-290A4CF8DFDA}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate table cdp_ODS_LS_customers_SapakimDB"
@@ -3434,7 +3463,7 @@ from magento.customer_grid_flat
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{A4EF0005-0C90-4C40-BFFF-60F690526E5C}"
+          SQLTask:Connection="{5ACE539F-B05B-4B51-80DF-875FC9B8E625}"
           SQLTask:SqlStatementSource="truncate table [dbo].[cdp_ODS_LS_customers_SapakimDB]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -3442,7 +3471,7 @@ from magento.customer_grid_flat
       DTS:refId="Package\Truncate table cdp_ODS_newsletter_subscriber"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{6a3a186f-b1e3-49a1-8f27-599a169442f1}"
+      DTS:DTSID="{69D70480-7C7A-473C-ADA8-79988AC43F0F}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate table cdp_ODS_newsletter_subscriber"
@@ -3451,7 +3480,7 @@ from magento.customer_grid_flat
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{A4EF0005-0C90-4C40-BFFF-60F690526E5C}"
+          SQLTask:Connection="{5ACE539F-B05B-4B51-80DF-875FC9B8E625}"
           SQLTask:SqlStatementSource="truncate table cdp_ODS_newsletter_subscriber;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -3460,7 +3489,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{9AF207CB-74EC-45A3-9CD4-F1F050F18DDD}"
+      DTS:DTSID="{03B0DB68-F488-4E6E-8ACD-24C3BA541199}"
       DTS:From="Package\Truncate table cdp_ODS_customer_grid_flat_magento"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -3468,7 +3497,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{FC37D1E9-A896-4862-8586-463FA78E5162}"
+      DTS:DTSID="{C15AB573-93DA-4975-B30C-A2A71121EAB1}"
       DTS:From="Package\172,27,160,70_LS_customers --&gt; SUPERDW cdp_ODS_LS_customers_SapakimDB"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -3476,7 +3505,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{27558011-63A3-4D3D-A467-6AD1D5D240EA}"
+      DTS:DTSID="{2D009E57-DDA9-4F33-8955-9AD395B8C973}"
       DTS:From="Package\Truncate table cdp_ODS_newsletter_subscriber"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
@@ -3484,7 +3513,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
-      DTS:DTSID="{13D05D6D-B085-48A2-A3CE-C288490A1C77}"
+      DTS:DTSID="{002AA8CA-8583-4641-A7B6-172DA9C2922D}"
       DTS:From="Package\Magento customer_grid_flat --&gt; SUPERDW  cdp_ODS_customer_grid_flat_magento"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
@@ -3492,7 +3521,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
-      DTS:DTSID="{FED4999B-AFDB-4261-8DB9-0FC30AB781F3}"
+      DTS:DTSID="{37EED233-71F9-4C3A-A4D5-E40CA5E355AF}"
       DTS:From="Package\Truncate table cdp_ODS_lifestyle_customer_customer_magento"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
@@ -3500,7 +3529,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
       DTS:CreationName=""
-      DTS:DTSID="{F53F5C04-24FF-4AD4-822F-1C19580E1159}"
+      DTS:DTSID="{CDEB2BD4-81A8-449F-99B6-23D414836F6E}"
       DTS:From="Package\Magento  lifestyle_customer_customer --&gt; SUPERDW cdp_ODS_lifestyle_customer_customer_magento"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 5"
@@ -3508,7 +3537,7 @@ from magento.customer_grid_flat
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
       DTS:CreationName=""
-      DTS:DTSID="{8AB7182F-4878-4A11-8F82-90DAC04FE5B6}"
+      DTS:DTSID="{16223E22-F1EC-43D6-97DE-70B6A555D2F2}"
       DTS:From="Package\Truncate table cdp_ODS_LS_customers_SapakimDB"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 7"
@@ -3604,18 +3633,18 @@ from magento.customer_grid_flat
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="496.8873063231,634.745105778167">
+          TopLeft="496.887306323101,634.745105778167">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,36.8679622129855"
+              EndConnector="0,36.8679622129849"
               Start="0,0"
-              End="0,29.3679622129855">
+              End="0,29.3679622129849">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.3679622129855" />
+                    End="0,29.3679622129849" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3670,18 +3699,18 @@ from magento.customer_grid_flat
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="498.127895443363,552.640893377482">
+          TopLeft="498.127895443364,552.640893377482">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,40.5042124006849"
+              EndConnector="0,40.5042124006851"
               Start="0,0"
-              End="0,33.0042124006849">
+              End="0,33.0042124006851">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.0042124006849" />
+                    End="0,33.0042124006851" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3952,25 +3981,37 @@ from magento.customer_grid_flat
         <NodeLayout
           Size="230.4,41.6"
           Id="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\cdp_ODS_newsletter_subscriber"
-          TopLeft="252.571432872695,242.870591641462" />
+          TopLeft="366.857149104683,187.811767339871" />
         <NodeLayout
           Size="228,41.6"
           Id="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber\ADO NET newsletter_subscriber"
-          TopLeft="255.428575778494,120.517648749038" />
+          TopLeft="158.857145562464,114.400001604417" />
         <EdgeLayout
           Id="Package\Magento  newsletter_subscriber --&gt; SUPERDW cdp_ODS_newsletter_subscriber.Paths[ADO NET Source Output]"
-          TopLeft="368.600004325594,162.117648749038">
+          TopLeft="272.857145562464,156.000001604417">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,80.7529428924237"
+              EndConnector="209.200003542219,31.8117657354545"
               Start="0,0"
-              End="0,73.2529428924237">
+              End="209.200003542219,24.3117657354545">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,73.2529428924237" />
+                    End="0,11.9058828677272" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.9058828677272"
+                    Point2="0,15.9058828677272"
+                    Point3="4,15.9058828677272" />
+                  <mssgle:LineSegment
+                    End="205.200003542219,15.9058828677272" />
+                  <mssgle:CubicBezierSegment
+                    Point1="205.200003542219,15.9058828677272"
+                    Point2="209.200003542219,15.9058828677272"
+                    Point3="209.200003542219,19.9058828677272" />
+                  <mssgle:LineSegment
+                    End="209.200003542219,24.3117657354545" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

@@ -5,22 +5,22 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="SUPERDW"
   DTS:CreatorName="SPP\amitchickov"
-  DTS:DTSID="{B77A9962-37EE-4AC4-B44D-5E488151C549}"
+  DTS:DTSID="{5A72366D-540C-4B40-BB81-B55713446794}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.93"
   DTS:LocaleID="1045"
-  DTS:ObjectName="cdp_Dim_Customers_stg_JO"
+  DTS:ObjectName="cdp_Dim_Customers_stg_2"
   DTS:PackageType="5"
   DTS:ProtectionLevel="2"
-  DTS:VersionBuild="338"
-  DTS:VersionGUID="{00955F6D-3B2F-43D9-88D5-E7026E0BD181}">
+  DTS:VersionBuild="337"
+  DTS:VersionGUID="{F9F8DD96-DA7C-4E60-AB82-856CA7E21B16}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[172.27.160.70.CDP]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{FECA6E79-9EFA-413B-9803-337B7F1B85A5}"
+      DTS:DTSID="{328B2B1A-665D-4FD1-A0CA-38091E79FE1C}"
       DTS:ObjectName="172.27.160.70.CDP">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -30,19 +30,19 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[MagentoDB_new.promoviewonly]"
       DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-      DTS:DTSID="{8B12C316-D7BC-4D9E-898B-63F557D5283F}"
+      DTS:DTSID="{D3B3992B-4991-4D25-90DA-2FB9D8BF346E}"
       DTS:ObjectName="MagentoDB_new.promoviewonly">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectionString="uid=promoviewonly;Dsn=MagentoDB_new;">
           <EncryptedData
             Type="http://www.w3.org/2001/04/xmlenc#Element"
-            Salt="02ZnM/y4VMg="
-            IV="H3QLHROGEZmSw99NR9RH4A==" xmlns="http://www.w3.org/2001/04/xmlenc#">
+            Salt="NFzimbpuZSc="
+            IV="HbqLGnVUJS1xPr2yATODCg==" xmlns="http://www.w3.org/2001/04/xmlenc#">
             <EncryptionMethod
               Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
             <CipherData>
-              <CipherValue>H3QLHROGEZmSw99NR9RH4NbMz5aRywSvrFW1V1Z4WZ8qMduHNFGDxJQblHjYwkcWgGUk792uH6WfZs3z8Nm+Ndlo7rxnF1c8WYGU4lR85Ua7KApjbPIzeP9QZKbl23GHvbTFkDewhohJ/v3qq7KZ/MZRWA/guODdEEfX84qmD6UoSdt/073o6pIU6nDFTo0K</CipherValue>
+              <CipherValue>HbqLGnVUJS1xPr2yATODClKxQpY9mGItqVw5LVNseExfim6X6a5Fu8CzpYjBeH+nQxDII82lYB4a5GnyMgyMqqGKlzvs/Dn3Hzmbo91k/jUedV80jxfqqhm5f5grvt8Rwf36AFo+sndaS3ka77kAfLo55bxuyMIrwXockwcr/J1viZ4c2s4Yd5+yBlCN6/Eh</CipherValue>
             </CipherData>
           </EncryptedData>
         </DTS:ConnectionManager>
@@ -51,7 +51,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[SUPERDW.SuperPharmPoland]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+      DTS:DTSID="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
       DTS:ObjectName="SUPERDW.SuperPharmPoland">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -65,7 +65,7 @@
       DTS:refId="Package\Truncate table cdp_stg_Dim_Customers"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{6F0CE44B-9E36-4E93-97D7-66C70A66BA1F}"
+      DTS:DTSID="{CB695260-54AB-4E88-8CA3-773BBD8929EA}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate table cdp_stg_Dim_Customers"
@@ -74,7 +74,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+          SQLTask:Connection="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
           SQLTask:SqlStatementSource="truncate table [cdp_stg_Dim_Customers]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -82,7 +82,7 @@
       DTS:refId="Package\union of ODSs (ls) + (Magento email &lt;&gt; LS) + (sales no magento_id + email &lt;&gt; LS, Magento) --&gt; cdp_stg_Dim_Customers"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{27DBA53C-03AC-475A-8F0F-137FD5903E37}"
+      DTS:DTSID="{B66A73EB-050C-404B-84E7-0D227C4C28F7}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="union of ODSs (ls) + (Magento email &lt;&gt; LS) + (sales no magento_id + email &lt;&gt; LS, Magento) --&gt; cdp_stg_Dim_Customers"
@@ -2364,7 +2364,7 @@ where number = 1
       DTS:refId="Package\update (ls) with magento details from magento table - VIA email"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{089E2002-76D6-4A0B-A1BD-A31EB32A3DA1}"
+      DTS:DTSID="{01FF0223-E301-42C6-8F86-EC62ED88D1FD}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="update (ls) with magento details from magento table - VIA email"
@@ -2373,7 +2373,7 @@ where number = 1
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+          SQLTask:Connection="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
           SQLTask:SqlStatementSource="--4) update (ls) with magento details from magento table - VIA email - for emails that appear in ls (not in 'Magento email &lt;&gt; LS')&#xA;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   connect Magento details via email to Magento whole table&#xA;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   e.g: ls &amp; magento customers that have same email&#xA;----------------------------------------------------------------------------------------------------------------------------------&#xA;update cdp_stg_Dim_Customers&#xA;set [connected_email_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[email] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[email]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[connected_email_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[magento_id] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[entity_id] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[entity_id]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[magento_id] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[fname_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  when #uni.[source] = 'ls' and m.[billing_firstname] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_firstname]&#x9;&#x9;&#x9;&#x9;&#x9;              &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[fname_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[lname_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_lastname] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_lastname]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[lname_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[phone_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_telephone] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_telephone]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[phone_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[gender_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[gender] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[gender]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[gender_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[Country_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_country_id] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_country_id]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[Country_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[City_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_city] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_city]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[City_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[Street_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_street] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then cast(m.[billing_street] as varchar(100))&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[Street_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[Zip_Code_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_postcode] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_postcode]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[Zip_Code_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[created_at_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[created_at] is not null and #uni.[magento_id] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[created_at]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[created_at_magento] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;Magento_newsletter_subscription = #uni.Magento_newsletter_subscription &#xA;from cdp_stg_Dim_Customers #uni&#xA;left join [cdp_ODS_customer_grid_flat_magento] m on m.[email] COLLATE Polish_CI_AS = #uni.[main_email]&#xA;;&#xA;&#xA;&#xA;&#xA;update cdp_stg_Dim_Customers&#xA;set &#xA;[fname_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  when #uni.[source] = 'ls' and m.[name] is not null and #uni.[fname_magento] is null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[name]&#x9;&#x9;&#x9;&#x9;&#x9;              &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[fname_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end&#xA;&#xA;from cdp_stg_Dim_Customers #uni&#xA;left join [cdp_ODS_customer_grid_flat_magento] m on m.[email] COLLATE Polish_CI_AS = #uni.[main_email]&#xA;;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2381,7 +2381,7 @@ where number = 1
       DTS:refId="Package\update (ls) with magento details from magento table - VIA IDs"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{7A22F58A-FED6-48BA-9C32-DF2FA85EF0FA}"
+      DTS:DTSID="{2F61C9EF-994A-4563-8298-90C701255AD6}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="update (ls) with magento details from magento table - VIA IDs"
@@ -2390,7 +2390,7 @@ where number = 1
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+          SQLTask:Connection="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
           SQLTask:SqlStatementSource="--3) update (ls) with magento details from magento table - VIA IDs - for emails that appear in ls (not in 'Magento email &lt;&gt; LS')&#xA;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; connect Magento details via IDs to Magento whole table&#xA;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; e.g: ls &amp; magento customers that have different email but connected with IDs&#xA;-------------------------------------------------------------------------------------------------------------------------------------------------&#xA;update cdp_stg_Dim_Customers&#xA;set [connected_email_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[email] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[email]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[connected_email_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[magento_id] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[entity_id] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[entity_id]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[magento_id] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[fname_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and isnull(m.[billing_firstname],m.[name]) is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then isnull(m.[billing_firstname],m.[name])&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[fname_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[lname_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_lastname] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_lastname]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[lname_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[phone_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_telephone] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_telephone]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[phone_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[gender_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[gender] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[gender]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[gender_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[Country_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_country_id] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_country_id]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[Country_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[City_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_city] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_city]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[City_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[Street_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_street] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then cast(m.[billing_street] as varchar(100))&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[Street_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[Zip_Code_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[billing_postcode] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[billing_postcode]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[Zip_Code_magento] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;[created_at_magento] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;              when #uni.[source] = 'ls' and m.[created_at] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    then m.[created_at]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;    else #uni.[created_at_magento] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  end,&#xA;Magento_newsletter_subscription = #uni.Magento_newsletter_subscription &#xA;from cdp_stg_Dim_Customers #uni&#xA;left join [cdp_ODS_lifestyle_customer_customer_magento] c on c.[lifestyle_customer_id] = #uni.[ls_id]&#xA;left join [cdp_ODS_customer_grid_flat_magento] m on m.[entity_id] = c.[magento_customer_id]&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2398,7 +2398,7 @@ where number = 1
       DTS:refId="Package\update (Magento) with ls details from ls table - VIA IDs"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{31F10835-32D1-41B4-AC53-11FBE15FAFC8}"
+      DTS:DTSID="{022F6706-EE8E-4A65-AD86-B6E0BC4ED59D}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="update (Magento) with ls details from ls table - VIA IDs"
@@ -2407,7 +2407,7 @@ where number = 1
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+          SQLTask:Connection="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
           SQLTask:SqlStatementSource="update cdp_stg_Dim_Customers&#xA;set [connected_email_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Email_Address] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Email_Address] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[connected_email_ls] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[ls_id] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[LoyaltyID] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[LoyaltyID] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[ls_id]  &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[fname_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Name] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Name] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[fname_ls] COLLATE SQL_Polish_CP1250_CI_AS &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[lname_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Surname] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Surname] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[lname_ls] COLLATE SQL_Polish_CP1250_CI_AS &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[phone_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Mobile_number] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Mobile_number] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[phone_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[gender_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Gender] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Gender] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[gender_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Country_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS'  and ll.[Country] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Country] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Country_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[City_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[City] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[City] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[City_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Street_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Street] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Street] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Street_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Number_of_building_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Number_of_building] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Number_of_building] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Number_of_building_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Number_of_flat_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Number_of_flat] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Number_of_flat] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Number_of_flat_ls]  COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Zip_Code_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Zip_Code] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Zip_Code] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Zip_Code_ls] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Registration_Date_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Registration_Date] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Registration_Date] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Registration_Date_ls]  &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Card_Number_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Card_Number] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Card_Number] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Card_Number_ls] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Number_of_form_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Number_of_form] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Number_of_form] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Number_of_form_ls] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Registration_at_cash_counter_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Registration_at_cash_counter] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Registration_at_cash_counter] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Registration_at_cash_counter_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[App_Token_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[App_Token] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[App_Token] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[App_Token_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Date_of_birth_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Date_of_birth] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Date_of_birth] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Date_of_birth_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Modification_Date_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Modification_Date] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Modification_Date] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Modification_Date_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Registration_channel_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Registration_channel] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Registration_channel] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Registration_channel_ls] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Correctness_of_address_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Correctness_of_address] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Correctness_of_address] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Correctness_of_address_ls] COLLATE SQL_Polish_CP1250_CI_AS&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Club_terms_&amp;_conditions_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Club_terms_&amp;_conditions] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Club_terms_&amp;_conditions] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Club_terms_&amp;_conditions_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[RODO_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[RODO_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[RODO_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[RODO_consent_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[SMS_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[SMS_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[SMS_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[SMS_consent_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Email_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Email_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Email_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Email_consent_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Mobile_Push_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Mobile_Push_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Mobile_Push_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Mobile_Push_consent_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[DATE_Club_terms_&amp;_conditions_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[DATE_Club_terms_&amp;_conditions_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[DATE_Club_terms_&amp;_conditions_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[DATE_Club_terms_&amp;_conditions_consent_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[DATE_RODO_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[DATE_RODO_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[DATE_RODO_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[DATE_RODO_consent_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[DATE_SMS_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[DATE_SMS_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[DATE_SMS_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[DATE_SMS_consent_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[DATE_Email_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[DATE_Email_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[DATE_Email_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[DATE_Email_consent_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[DATE_Mobile_Push_consent_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[DATE_Mobile_Push_consent] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[DATE_Mobile_Push_consent] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[DATE_Mobile_Push_consent_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Current_balance_of_points_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Current_balance_of_points] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Current_balance_of_points] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Current_balance_of_points_ls]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Current_level_of_points_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Current_level_of_points] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Current_level_of_points] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Current_level_of_points_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Date_of_level_of_points_change_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Date_of_level_of_points_change] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Date_of_level_of_points_change] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Date_of_level_of_points_change_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Date_of_upcoming_points_expiration_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Date_of_upcoming_points_expiration] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Date_of_upcoming_points_expiration] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Date_of_upcoming_points_expiration_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Number_of_points_to_be_expired_soon_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Number_of_points_to_be_expired_soon] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Number_of_points_to_be_expired_soon] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Number_of_points_to_be_expired_soon_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Direct_mailing_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Direct_mailing] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Direct_mailing] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Direct_mailing_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Communication_on_behalf_of_Third_Party_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Communication_on_behalf_of_Third_Party] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Communication_on_behalf_of_Third_Party] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Communication_on_behalf_of_Third_Party_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Sharing _data_with_Third_Party_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS' and ll.[Sharing _data_with_Third_Party] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Sharing _data_with_Third_Party] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Sharing _data_with_Third_Party_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;[Employee_flag_ls] = case &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;        when #uni.[source] = 'Magento email &lt;&gt; LS'  and ll.[Employee_flag] is not null&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  then ll.[Employee_flag] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;  else #uni.[Employee_flag_ls] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;end,&#xA;Magento_newsletter_subscription = #uni.Magento_newsletter_subscription &#xA;from cdp_stg_Dim_Customers #uni&#xA;left join [cdp_ODS_lifestyle_customer_customer_magento] c on c.[magento_customer_id] = #uni.[magento_id]&#xA;left join [cdp_ODS_LS_customers_sapakimdb] ll on ll.[LoyaltyID] = c.[lifestyle_customer_id]&#xA;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2415,7 +2415,7 @@ where number = 1
       DTS:refId="Package\update gender ls and magento"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{FE0B19A8-2D9C-44D2-B111-C4D1CB3438BC}"
+      DTS:DTSID="{6EC72273-0B0A-4F9B-A0D2-1987E587257B}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="update gender ls and magento"
@@ -2424,49 +2424,15 @@ where number = 1
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+          SQLTask:Connection="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
           SQLTask:SqlStatementSource="update [cdp_stg_Dim_Customers]&#xA;set [gender_ls] = case when [gender_ls] = '' then NULL&#xA;                       else [gender_ls]&#xA;&#x9;&#x9;&#x9;&#x9;  end,&#xA;    [gender_magento] = NULL&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\update magento country from created_id column"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{0B851FBB-3AC9-4F24-B392-D4C5DA68F12B}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="update magento country from created_id column"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
-          SQLTask:SqlStatementSource="update [cdp_stg_Dim_Customers]&#xA;&#xA;set [Country_magento] = &#xA;&#xA;case &#xA;when stg.Country_magento is null and magento.created_in = 'Drugstore PL' then 'PL'&#xA;when stg.Country_magento is null and magento.created_in = 'Drugstore IT' then 'IT'&#xA;else stg.Country_magento end &#xA;&#xA;from [cdp_stg_Dim_Customers] stg&#xA;left join (&#xA;select &#xA;[entity_id], [created_in] &#xA;from [dbo].[cdp_ODS_customer_grid_flat_magento]&#xA;          ) magento&#xA;&#xA;on stg.magento_id = magento.entity_id&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\update magento country from newsletter subscriber table"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{cf89e546-ae88-4a58-80c2-476e3d91e319}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="update magento country from newsletter subscriber table"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
-          SQLTask:SqlStatementSource="update [cdp_stg_Dim_Customers]&#xA;&#xA;set [Country_magento] = &#xA;&#xA;case &#xA;when stg.Country_magento is null and magento.store_id = 5 then 'IT'&#xA;when stg.Country_magento is null and magento.store_id = 2 then 'PL'&#xA;else stg.Country_magento end &#xA;&#xA;from [cdp_stg_Dim_Customers] stg&#xA;left join (&#xA;&#x9;&#x9;&#x9;select [subscriber_email], min([store_id]) as [store_id]&#xA;&#x9;&#x9;&#x9;from [cdp_ODS_newsletter_subscriber_JO]&#xA;&#x9;&#x9;&#x9;group by [subscriber_email]&#xA;          ) magento&#xA;&#xA;on lower(trim(stg.main_email)) = lower(trim(magento.subscriber_email))&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Update Magento_newsletter_subscription column"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{12217585-0AC8-4691-BF9D-FBF81742DE23}"
+      DTS:DTSID="{3DB9907E-1F87-45EC-867B-5F110EA46D0F}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Update Magento_newsletter_subscription column"
@@ -2475,7 +2441,7 @@ where number = 1
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B588207-0A7E-4DF5-B9A0-F980DF444FC1}"
+          SQLTask:Connection="{01977F96-27BF-45AA-8A7C-B88E6E9C3D8A}"
           SQLTask:SqlStatementSource="update [cdp_stg_Dim_Customers]&#xA;set [Magento_newsletter_subscription] = isnull(magento.subscriber_status,0)&#xA;&#xA;from [cdp_stg_Dim_Customers] stg&#xA;left join (&#xA;&#x9;&#x9;&#x9;select [subscriber_email], max([subscriber_status]) as [subscriber_status]&#xA;&#x9;&#x9;&#x9;from [cdp_ODS_newsletter_subscriber]&#xA;&#x9;&#x9;&#x9;group by [subscriber_email]&#xA;          ) magento&#xA;on lower(trim(stg.main_email)) = lower(trim(magento.subscriber_email))&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -2484,7 +2450,7 @@ where number = 1
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{7C6A2AB6-8025-47EF-BE50-A877E5CACEF7}"
+      DTS:DTSID="{97814790-0F3B-41FC-A196-2BDDDE108488}"
       DTS:From="Package\union of ODSs (ls) + (Magento email &lt;&gt; LS) + (sales no magento_id + email &lt;&gt; LS, Magento) --&gt; cdp_stg_Dim_Customers"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -2492,7 +2458,7 @@ where number = 1
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{81ECB11C-32FE-438E-A86E-FC3AACA835B5}"
+      DTS:DTSID="{F131AEE4-7C9E-4EEC-887E-2DEB58CC89FE}"
       DTS:From="Package\Update Magento_newsletter_subscription column"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -2500,7 +2466,7 @@ where number = 1
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
       DTS:CreationName=""
-      DTS:DTSID="{3848903E-2A80-4281-9E17-53137B295880}"
+      DTS:DTSID="{74316EA6-4265-4B64-901C-F1D563B74E09}"
       DTS:From="Package\update (ls) with magento details from magento table - VIA IDs"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 10"
@@ -2508,7 +2474,7 @@ where number = 1
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
       DTS:CreationName=""
-      DTS:DTSID="{2F9FB81F-BF86-440F-A580-012278265DB2}"
+      DTS:DTSID="{73EF96F4-BB26-4D2D-8C10-EAD7C5BE3605}"
       DTS:From="Package\update (ls) with magento details from magento table - VIA email"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 11"
@@ -2516,31 +2482,15 @@ where number = 1
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{560C5F9D-679D-440A-A088-7D874F8C2C6E}"
+      DTS:DTSID="{E0D27AAA-3BF8-4329-A4EB-4874AA42B5D2}"
       DTS:From="Package\update (Magento) with ls details from ls table - VIA IDs"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\update gender ls and magento" />
     <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
-      DTS:CreationName=""
-      DTS:DTSID="{EBE3055F-8290-4D8C-BD6A-42640380F820}"
-      DTS:From="Package\update gender ls and magento"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 3"
-      DTS:To="Package\update magento country from created_id column" />
-    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
-      DTS:CreationName=""
-      DTS:DTSID="{18360746-5094-4EC4-9BDF-2969380FDB1B}"
-      DTS:From="Package\update magento country from created_id column"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 4"
-      DTS:To="Package\update magento country from newsletter subscriber table" />
-    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
       DTS:CreationName=""
-      DTS:DTSID="{2974F6BF-2CBA-4EC7-B5BC-F939E99BE207}"
+      DTS:DTSID="{E95CF560-64A4-44AA-B128-4085A6086DC0}"
       DTS:From="Package\Truncate table cdp_stg_Dim_Customers"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 8"
@@ -2557,7 +2507,7 @@ where number = 1
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="266.4,41.6"
           Id="Package\Truncate table cdp_stg_Dim_Customers"
@@ -2731,58 +2681,6 @@ where number = 1
           Size="44.8,40"
           Id="a676a827-c250-4bf2-aee2-989c274a55a0"
           TopLeft="456.285722056216,68.5176480197576" />
-        <NodeLayout
-          Size="309.6,41.6"
-          Id="Package\update magento country from created_id column"
-          TopLeft="708.571440638328,582.050428331105" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="562.791842517909,606.826898006207">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="145.779598120419,0"
-              Start="0,0"
-              End="138.279598120419,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="138.279598120419,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="349.6,41.6"
-          Id="Package\update magento country from newsletter subscriber table"
-          TopLeft="694.693889381587,684.369754211418" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="866.432665009958,623.650428331105">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60.7193258803136"
-              Start="0,0"
-              End="0,53.2193258803136">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,53.2193258803136" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
